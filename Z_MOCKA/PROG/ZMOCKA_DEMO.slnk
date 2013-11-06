@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PROG NAME="ZMOCKA_DEMO" VARCL="X" SUBC="1" RSTAT="T" RMAND="001" RLOAD="D" FIXPT="X" UCCHECK="X">
+ <textPool>
+  <language SPRAS="D">
+   <textElement ID="R" ENTRY="Programm ZMOCKA_DEMO" LENGTH="20 "/>
+  </language>
+ </textPool>
+ <source>*&amp;---------------------------------------------------------------------*
+*&amp; Report  ZMOCKA_DEMO
+*&amp;
+*&amp;---------------------------------------------------------------------*
+*&amp;
+*&amp;
+*&amp;---------------------------------------------------------------------*
+
+* mockA is a mocking framework for ABAP that makes creating mock implementations easier than ever before. It is Open Source.
+*   lead developers:
+*     Uwe Kunath - kunath.uwe[at]googlemail.com
+*
+*   Copyright 2013 Uwe Kunath
+*    mockA can be found at https://github.com/uweku/mockA/
+*
+*   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+*   you may not use this file except in compliance with the License.
+*   You may obtain a copy of the License at
+*
+*       http://www.apache.org/licenses/LICENSE-2.0
+*
+*   Unless required by applicable law or agreed to in writing, software
+*   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+*   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*   See the License for the specific language governing permissions and
+*   limitations under the License.
+
+REPORT  zmocka_demo.
+
+DATA lo_mocker TYPE REF TO zif_mocka_mocker.
+DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
+lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( zif_mocka_is_in_time_info=&gt;gc_name ).
+
+DATA lo_is_in_time_into TYPE REF TO zif_mocka_is_in_time_info.
+DATA lv_delay TYPE i.
+DATA lv_has_been_called TYPE abap_bool.
+DATA lv_call_count TYPE i.
+
+lo_mocker_method = lo_mocker-&gt;method( &apos;get_delay&apos; ).
+lo_mocker_method-&gt;with(
+    i_p1             = &apos;LH&apos;
+    i_p2             = &apos;300&apos;
+    i_p3             = sy-datlo
+).
+lo_mocker_method-&gt;returns( 100 ).
+
+*in NW &gt;= 7.02 you may also use:
+*lo_mocker-&gt;method( &apos;get_delay&apos; )-&gt;with(
+*    i_p1             = &apos;LH&apos;
+*    i_p2             = &apos;300&apos;
+*    i_p3             = sy-datlo
+*)-&gt;returns( 100 ).
+
+lo_is_in_time_into ?= lo_mocker-&gt;generate_mockup( ).
+lv_has_been_called = lo_mocker-&gt;has_method_been_called( &apos;get_delay&apos; ).
+WRITE: &apos;called?&apos;, lv_has_been_called.
+NEW-LINE.
+
+lo_is_in_time_into-&gt;get_delay(
+  EXPORTING
+    iv_carrid = &apos;LH&apos;
+    iv_connid = &apos;300&apos;
+    iv_fldate = sy-datlo
+  RECEIVING
+    rv_delay  = lv_delay
+).
+WRITE: &apos;Delay:&apos;, lv_delay.
+NEW-LINE.
+
+lv_has_been_called = lo_mocker-&gt;has_method_been_called( &apos;get_delay&apos; ).
+WRITE: &apos;called?&apos;, lv_has_been_called.
+NEW-LINE.
+lv_call_count = lo_mocker-&gt;method_call_count( &apos;get_delay&apos; ).
+WRITE: &apos;call count&apos;, lv_call_count.</source>
+</PROG>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CLAS CLSNAME="ZCL_MOCKA_VALUE_COMPARISON" VERSION="1" LANGU="E" DESCRIPT="verifies if two values are equal" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSABSTRCT="X" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" WITH_UNIT_TESTS="X" DURATION_TYPE="0 " RISK_LEVEL="0 ">
+ <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+ <localTypes>*&amp;---------------------------------------------------------------------*
+*&amp;       Class Lcl_Assert
+*&amp;---------------------------------------------------------------------*
+*        Text
+*----------------------------------------------------------------------*
+Type-Pools: Abap.</localTypes>
+ <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class
+define ASSERT_WRONG_STATE.
+ assert CONDITION 0 = 1.
+end-of-definition.</localMacros>
+ <localTestClasses>*&quot;* use this source file for your ABAP unit test classes</localTestClasses>
+ <classDocumentation OBJECT="ZCL_MOCKA_VALUE_COMPARISON">
+  <language SPRAS="E">
+   <textLine TDFORMAT="U1" TDLINE="&amp;FUNCTIONALITY&amp;"/>
+   <textLine TDFORMAT="AS" TDLINE="The class CL_ABAP_UNIT_ASSERT contains the following static methods for"/>
+   <textLine TDLINE="the verification of test expectations within"/>
+   <textLine TDFORMAT="=" TDLINE=" &lt;DS:ABEN.ABAP_UNIT_GLOSRY&gt;ABAP Unit&lt;/&gt; test methods:"/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;ASSERT_EQUALS&lt;/&gt;"/>
+   <textLine TDFORMAT="/" TDLINE="Ensure the equality of two data objects. Please note that the arguments"/>
+   <textLine TDLINE="are passed by reference. Objects are tested for identity only. Please"/>
+   <textLine TDLINE="stick to the method ASSERT_THAT and the interface"/>
+   <textLine TDFORMAT="=" TDLINE="&lt;DS:IF.IF_CONSTRAINT&gt;IF_CONSTRAINT&lt;/&gt; for custom assertions."/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;ASSERT_EQUALS_FLOAT&lt;/&gt;"/>
+   <textLine TDFORMAT="/" TDLINE="Ensure the equality of two decimal floats with a relative tolerance."/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;ASSERT_DIFFERS&lt;/&gt;"/>
+   <textLine TDFORMAT="/" TDLINE="Ensure the value of two data objects not to be equal."/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;ASSERT_BOUND&lt;/&gt;"/>
+   <textLine TDFORMAT="/" TDLINE="Ensure whether the reference of a reference variable is valid."/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;ASSERT_NOT_BOUND&lt;/&gt;"/>
+   <textLine TDFORMAT="/" TDLINE="Ensure whether the reference of a reference variable is invalid."/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;ASSERT_INITIAL&lt;/&gt;"/>
+   <textLine TDFORMAT="/" TDLINE="Ensure that a data object has its initial value."/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;ASSERT_NOT_INITIAL&lt;/&gt;"/>
+   <textLine TDFORMAT="/" TDLINE="Ensure that a data object does not have its initial value."/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;ASSERT_SUBRC&lt;/&gt;"/>
+   <textLine TDFORMAT="/" TDLINE="Requests specific value of SY-SUBRC."/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;ASSERT_TABLE_CONTAINS &lt;/&gt;"/>
+   <textLine TDFORMAT="/" TDLINE="Ensure that a internal table contains a certain line."/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;ASSERT_TEXT_MATCHES &lt;/&gt;"/>
+   <textLine TDFORMAT="/" TDLINE="Ensure that a text matches to a"/>
+   <textLine TDFORMAT="=" TDLINE=" &lt;DS:ABEN.REGEX_SYNTAX&gt;regular expression&lt;/&gt;."/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;ASSERT_THAT &lt;/&gt;"/>
+   <textLine TDFORMAT="/" TDLINE="Ensure that the actual value adheres to a given"/>
+   <textLine TDFORMAT="=" TDLINE="&lt;DS:IF.IF_CONSTRAINT&gt;Constraint&lt;/&gt;."/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;FAIL&lt;/&gt;"/>
+   <textLine TDFORMAT="/" TDLINE="Terminate the test with an unconditional error."/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;ABORT&lt;/&gt;"/>
+   <textLine TDFORMAT="/" TDLINE="Cancel the test due to a missing prerequisite."/>
+   <textLine TDFORMAT="AS" TDLINE="All the methods have the optional importing parameters MSG, LEVEL, and"/>
+   <textLine TDLINE="QUIT, which always have the same meaning:"/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;MSG&lt;/&gt; (Type: CSEQUENCE)"/>
+   <textLine TDFORMAT="/" TDLINE="Contains a more detailed description of the error (if applicable)"/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;LEVEL&lt;/&gt; (Type: AUNIT_LEVEL)"/>
+   <textLine TDFORMAT="/" TDLINE="Indicates the severity of the error; the following values are possible:"/>
+   <textLine TDFORMAT="B2" TDLINE="TOLERABLE - Minor error (may be tolerable)"/>
+   <textLine TDFORMAT="B2" TDLINE="CRITICAL - Critical error (default value)"/>
+   <textLine TDFORMAT="B2" TDLINE="FATAL    - Fatal error"/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;QUIT&lt;/&gt; (Type: AUNIT_FLOWCTRL)"/>
+   <textLine TDFORMAT="/" TDLINE="Determines the flow control in the case of an error. The following"/>
+   <textLine TDLINE="values can be passed:"/>
+   <textLine TDFORMAT="B2" TDLINE="NO - No termination in the case of an error; processing of the current"/>
+   <textLine TDLINE="method continues after the relevant method is called"/>
+   <textLine TDFORMAT="B2" TDLINE="METHOD  - The currently processed test method is terminated (default"/>
+   <textLine TDLINE="value)"/>
+   <textLine TDFORMAT="B2" TDLINE="CLASS   - The currently processed test class is terminated"/>
+   <textLine TDFORMAT="B2" TDLINE="PROGRAM - The test of the currently processed main program is"/>
+   <textLine TDLINE="terminated: The current test class is terminated and all other test"/>
+   <textLine TDLINE="classes in the program are ignored."/>
+   <textLine TDFORMAT="AS" TDLINE="All the assert methods have the following mandatory importing parameter:"/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;ACT&lt;/&gt; (Type: Any)"/>
+   <textLine TDFORMAT="/" TDLINE="The object to be verified"/>
+   <textLine TDFORMAT="AS" TDLINE="The comparing method ASSERT_EQUALS additionally requires a parameter for"/>
+   <textLine TDLINE="the expectation:"/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;EXP&lt;/&gt; (Type: Any)"/>
+   <textLine TDFORMAT="/" TDLINE="The identically expected object"/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;ZH&gt;TOL&lt;/&gt; (Type: f)"/>
+   <textLine TDFORMAT="/" TDLINE="Allows you to compare floating point numbers for the passed tolerance"/>
+   <textLine TDFORMAT="U1" TDLINE="&amp;FURTHER_SOURCES_OF_INF&amp;"/>
+   <textLine TDFORMAT="B1" TDLINE="&lt;DS:KENO.3F7182087A5E002FE10000000A1148F9&gt;Knowledge Warehouse&lt;/&gt;"/>
+   <textLine TDFORMAT="B1" TDLINE="Package SABP_UNIT_SAMPLE"/>
+  </language>
+ </classDocumentation>
+ <typeUsage CLSNAME="ZCL_MOCKA_VALUE_COMPARISON" TYPEGROUP="ABAP" VERSION="1" TPUTYPE="0" IMPLICIT="X"/>
+ <forwardDeclaration>ABAP</forwardDeclaration>
+ <typeClasDef CLSNAME="ZCL_MOCKA_VALUE_COMPARISON" TYPEGROUP="CL_AUNIT_ASSERT" VERSION="1" TPUTYPE="1" IMPLICIT="X"/>
+ <attribute CLSNAME="ZCL_MOCKA_VALUE_COMPARISON" CMPNAME="RTOL_MIN" VERSION="1" LANGU="D" DESCRIPT="Minimum Tolerance for comparsion type F" EXPOSURE="0" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;1.E-15&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="F" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <method CLSNAME="ZCL_MOCKA_VALUE_COMPARISON" CMPNAME="ASSERT_EQUALS" VERSION="1" LANGU="D" DESCRIPT="Ensure Equality of Two Data Objects" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="1" BCMTDCAT="00" BCMTDSYN="0">
+  <parameter CLSNAME="ZCL_MOCKA_VALUE_COMPARISON" CMPNAME="ASSERT_EQUALS" SCONAME="EXP" VERSION="1" LANGU="D" DESCRIPT="Data Object with Expected Type" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
+  <parameter CLSNAME="ZCL_MOCKA_VALUE_COMPARISON" CMPNAME="ASSERT_EQUALS" SCONAME="ACT" VERSION="1" LANGU="D" DESCRIPT="Data Object with Current Value" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
+  <parameter CLSNAME="ZCL_MOCKA_VALUE_COMPARISON" CMPNAME="ASSERT_EQUALS" SCONAME="RV_EQUALS" VERSION="1" LANGU="D" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ABAP_BOOL"/>
+  <source>METHOD assert_equals.
+  DATA lo_type TYPE REF TO cl_abap_typedescr.
+  rv_equals = abap_true.
+  TRY.
+      IF exp EQ act.
+        rv_equals = abap_true.
+      ELSE.
+        rv_equals = abap_false.
+      ENDIF.
+    CATCH cx_root.
+      rv_equals = abap_false.
+  ENDTRY.
+ENDMETHOD.</source>
+ </method>
+</CLAS>
