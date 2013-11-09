@@ -1,5 +1,4 @@
-mockA
-=====
+![mockA](http://uwekunath.files.wordpress.com/2013/10/mocka.png?raw=true)
 
 mockA is a free Mocking Framework for ABAP published under Apache License v2
 
