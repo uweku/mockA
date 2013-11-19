@@ -66,6 +66,7 @@ CLASS lcl_test_mocker DEFINITION FOR TESTING.
     METHODS mock_raises_exc_x2 FOR TESTING.
     METHODS mock_changing_par_x2 FOR TESTING.
     METHODS mock_included_interface_method FOR TESTING.
+    METHODS mock_method_with_old_exc FOR TESTING.
 ENDCLASS.                    &quot;lcl_test_mocker DEFINITION
 
 *----------------------------------------------------------------------*
@@ -807,5 +808,20 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
   ENDMETHOD.                    &quot;mock_included_interface_method
+  METHOD mock_method_with_old_exc.
+    DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
+    DATA lo_mocker TYPE REF TO zif_mocka_mocker.
+    DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
+    DATA lo_fake TYPE REF TO if_http_client.
+
+    TRY.
+        lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;IF_HTTP_CLIENT&apos; ).
+        lo_fake ?= lo_mocker-&gt;generate_mockup( ).
+      CATCH zcx_mocka.
+        lv_has_exception_been_raised = abap_true.
+    ENDTRY.
+    cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
+
+  ENDMETHOD.                    &quot;mock_method_with_old_exc
 ENDCLASS.                    &quot;lcl_test_mocker IMPLEMENTATION</source>
 </PROG>

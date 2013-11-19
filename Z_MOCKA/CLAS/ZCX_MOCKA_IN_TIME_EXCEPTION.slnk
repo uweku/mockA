@@ -8,8 +8,5 @@
 *&quot;* components in the private section</localTypes>
  <localMacros>*&quot;* use this source file for any macro definitions you need
 *&quot;* in the implementation part of the class</localMacros>
- <textPool>
-  <language SPRAS="E"/>
- </textPool>
  <inheritance CLSNAME="ZCX_MOCKA_IN_TIME_EXCEPTION" REFCLSNAME="CX_STATIC_CHECK" VERSION="1" STATE="1"/>
 </CLAS>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CLAS CLSNAME="ZCX_MOCKA" VERSION="1" LANGU="E" DESCRIPT="Root exception class of mockA" CATEGORY="40" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" MSG_ID="ZMOCKA_EXC_MOCK" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="CX_NO_CHECK">
- <implementing CLSNAME="ZCX_MOCKA" REFCLSNAME="IF_T100_MESSAGE" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1" EDITORDER="0 "/>
+ <implementing CLSNAME="ZCX_MOCKA" REFCLSNAME="IF_T100_MESSAGE" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1"/>
  <localImplementation>*&quot;* use this source file for the definition and implementation of
 *&quot;* local helper classes, interface definitions and type
 *&quot;* declarations</localImplementation>
@@ -9,9 +9,6 @@
 *&quot;* components in the private section</localTypes>
  <localMacros>*&quot;* use this source file for any macro definitions you need
 *&quot;* in the implementation part of the class</localMacros>
- <textPool>
-  <language SPRAS="E"/>
- </textPool>
  <typeUsage CLSNAME="ZCX_MOCKA" TYPEGROUP="ABAP" VERSION="1" TPUTYPE="0" IMPLICIT="X"/>
  <forwardDeclaration>ABAP</forwardDeclaration>
  <attribute CLSNAME="ZCX_MOCKA" CMPNAME="ABSTRACT_EXCEPTION" VERSION="1" LANGU="D" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="22 " SRCCOLUMN1="4 " SRCROW2="29 " SRCCOLUMN2="28 " LOCKED="X" TYPESRC_LENG="316 " TYPESRC="begin of ABSTRACT_EXCEPTION,
@@ -99,7 +96,7 @@
       attr4 type scx_attrname value &apos;&apos;,
     end of NO_SUCH_METHOD
 "/>
- <attribute CLSNAME="ZCX_MOCKA" CMPNAME="UNIT_TEST_EXEC_NOT_ALLOWED" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="11 " ATTDECLTYP="2" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="103 " SRCCOLUMN1="4 " SRCROW2="110 " SRCCOLUMN2="36 " LOCKED="X" TYPESRC_LENG="331 " TYPESRC="begin of UNIT_TEST_EXEC_NOT_ALLOWED,
+ <attribute CLSNAME="ZCX_MOCKA" CMPNAME="UNIT_TEST_EXEC_NOT_ALLOWED" VERSION="1" LANGU="D" EXPOSURE="2" STATE="1" EDITORDER="11 " ATTDECLTYP="2" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="103 " SRCCOLUMN1="4 " SRCROW2="110 " SRCCOLUMN2="36 " LOCKED="X" TYPESRC_LENG="323 " TYPESRC="begin of UNIT_TEST_EXEC_NOT_ALLOWED,
       msgid type symsgid value &apos;ZMOCKA_EXC_MOCK&apos;,
       msgno type symsgno value &apos;010&apos;,
       attr1 type scx_attrname value &apos;&apos;,

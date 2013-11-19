@@ -15,6 +15,13 @@ define ASSERT_WRONG_STATE.
  assert CONDITION 0 = 1.
 end-of-definition.</localMacros>
  <localTestClasses>*&quot;* use this source file for your ABAP unit test classes</localTestClasses>
+ <textPool>
+  <language SPRAS="E">
+   <textElement ID="I" KEY="100" ENTRY="{Invalid Data Reference}" LENGTH="30 "/>
+   <textElement ID="I" KEY="101" ENTRY="{Invalid Object Reference}" LENGTH="30 "/>
+   <textElement ID="I" KEY="102" ENTRY="{Nesting Too Deep}" LENGTH="30 "/>
+  </language>
+ </textPool>
  <classDocumentation OBJECT="ZCL_MOCKA_VALUE_COMPARISON">
   <language SPRAS="E">
    <textLine TDFORMAT="U1" TDLINE="&amp;FUNCTIONALITY&amp;"/>
