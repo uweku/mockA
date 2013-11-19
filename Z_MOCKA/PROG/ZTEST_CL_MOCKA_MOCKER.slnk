@@ -67,6 +67,9 @@ CLASS lcl_test_mocker DEFINITION FOR TESTING.
     METHODS mock_changing_par_x2 FOR TESTING.
     METHODS mock_included_interface_method FOR TESTING.
     METHODS mock_method_with_old_exc FOR TESTING.
+    METHODS mock_attribute FOR TESTING.
+    METHODS mock_attribute_of_class FOR TESTING.
+    METHODS mock_invalid_attribute FOR TESTING.
 ENDCLASS.                    &quot;lcl_test_mocker DEFINITION
 
 *----------------------------------------------------------------------*
@@ -823,5 +826,64 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
   ENDMETHOD.                    &quot;mock_method_with_old_exc
+  METHOD mock_attribute.
+    DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
+    DATA lo_mocker TYPE REF TO zif_mocka_mocker.
+    DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
+    DATA lo_fake TYPE REF TO if_http_client.
+    DATA lo_attribute TYPE REF TO zif_mocka_mocker_attribute.
+
+    TRY.
+        lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;IF_HTTP_CLIENT&apos; ).
+        lo_attribute = lo_mocker-&gt;attribute( &apos;PROPERTYTYPE_LOGON_POPUP&apos; ).
+        lo_attribute-&gt;returns( 3 ).
+        lo_fake ?= lo_mocker-&gt;generate_mockup( ).
+      CATCH zcx_mocka.
+        lv_has_exception_been_raised = abap_true.
+    ENDTRY.
+    cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
+    cl_aunit_assert=&gt;assert_equals( act = lo_fake-&gt;propertytype_logon_popup exp = 3 ).
+
+  ENDMETHOD.                    &quot;mock_attribute
+  METHOD mock_attribute_of_class.
+
+    DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
+    DATA lo_mocker TYPE REF TO zif_mocka_mocker.
+    DATA lo_fake TYPE REF TO zif_mocka_mocker.
+    DATA lo_attribute TYPE REF TO zif_mocka_mocker_attribute.
+    DATA lv_interface TYPE seoclsname.
+
+    TRY.
+        lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;ZCL_MOCKA_MOCKER&apos; ).
+        lo_attribute = lo_mocker-&gt;attribute( &apos;MV_INTERFACE&apos; ).
+        lo_attribute-&gt;returns( &apos;ZIF_TEST&apos; ).
+        lo_fake ?= lo_mocker-&gt;generate_mockup( ).
+        lv_interface = lo_fake-&gt;get_interface( ).
+      CATCH zcx_mocka.
+        lv_has_exception_been_raised = abap_true.
+    ENDTRY.
+    cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
+    cl_aunit_assert=&gt;assert_equals( act = lv_interface exp = &apos;ZIF_TEST&apos; ).
+
+  ENDMETHOD.                    &quot;mock_attribute_of_class
+
+  METHOD mock_invalid_attribute.
+    DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
+    DATA lo_mocker TYPE REF TO zif_mocka_mocker.
+    DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
+    DATA lo_fake TYPE REF TO if_http_client.
+    DATA lo_attribute TYPE REF TO zif_mocka_mocker_attribute.
+
+    TRY.
+        lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;IF_HTTP_CLIENT&apos; ).
+        lo_attribute = lo_mocker-&gt;attribute( &apos;INVALID_ATTRIBUTE&apos; ).
+        lo_attribute-&gt;returns( 3 ).
+        lo_fake ?= lo_mocker-&gt;generate_mockup( ).
+      CATCH zcx_mocka.
+        lv_has_exception_been_raised = abap_true.
+    ENDTRY.
+    cl_aunit_assert=&gt;assert_not_initial( lv_has_exception_been_raised ).
+
+  ENDMETHOD.                    &quot;mock_invalid_attribute
 ENDCLASS.                    &quot;lcl_test_mocker IMPLEMENTATION</source>
 </PROG>

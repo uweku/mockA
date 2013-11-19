@@ -9,6 +9,9 @@
 *&quot;* components in the private section</localTypes>
  <localMacros>*&quot;* use this source file for any macro definitions you need
 *&quot;* in the implementation part of the class</localMacros>
+ <textPool>
+  <language SPRAS="E"/>
+ </textPool>
  <typeUsage CLSNAME="ZCX_MOCKA" TYPEGROUP="ABAP" VERSION="1" TPUTYPE="0" IMPLICIT="X"/>
  <forwardDeclaration>ABAP</forwardDeclaration>
  <attribute CLSNAME="ZCX_MOCKA" CMPNAME="ABSTRACT_EXCEPTION" VERSION="1" LANGU="D" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="22 " SRCCOLUMN1="4 " SRCROW2="29 " SRCCOLUMN2="28 " LOCKED="X" TYPESRC_LENG="316 " TYPESRC="begin of ABSTRACT_EXCEPTION,
@@ -20,6 +23,7 @@
       attr4 type scx_attrname value &apos;&apos;,
     end of ABSTRACT_EXCEPTION
 "/>
+ <attribute CLSNAME="ZCX_MOCKA" CMPNAME="ATTRIBUTE" VERSION="1" LANGU="E" DESCRIPT="Full Component Name" EXPOSURE="2" STATE="1" EDITORDER="16 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="SEOCPDNAME" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
  <attribute CLSNAME="ZCX_MOCKA" CMPNAME="EXCEPTION" VERSION="1" LANGU="D" DESCRIPT="Object Type Name" EXPOSURE="2" STATE="1" EDITORDER="15 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="SEOCLSNAME" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
  <attribute CLSNAME="ZCX_MOCKA" CMPNAME="GENERIC_TEXT" VERSION="1" LANGU="D" EXPOSURE="2" STATE="1" EDITORDER="14 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
  <attribute CLSNAME="ZCX_MOCKA" CMPNAME="INTERFACE" VERSION="1" LANGU="D" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ABAP_ABSTYPENAME" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
@@ -68,6 +72,15 @@
       attr3 type scx_attrname value &apos;&apos;,
       attr4 type scx_attrname value &apos;&apos;,
     end of NO_RETURNING_PARAMETERS
+"/>
+ <attribute CLSNAME="ZCX_MOCKA" CMPNAME="NO_SUCH_ATTRIBUTE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="17 " ATTDECLTYP="2" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="112 " SRCCOLUMN1="4 " SRCROW2="119 " SRCCOLUMN2="27 " LOCKED="X" TYPESRC_LENG="313 " TYPESRC="begin of NO_SUCH_ATTRIBUTE,
+      msgid type symsgid value &apos;ZMOCKA_EXC_MOCK&apos;,
+      msgno type symsgno value &apos;011&apos;,
+      attr1 type scx_attrname value &apos;&apos;,
+      attr2 type scx_attrname value &apos;&apos;,
+      attr3 type scx_attrname value &apos;&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of NO_SUCH_ATTRIBUTE
 "/>
  <attribute CLSNAME="ZCX_MOCKA" CMPNAME="NO_SUCH_EXCEPTION" VERSION="1" LANGU="D" EXPOSURE="2" STATE="1" EDITORDER="6 " ATTDECLTYP="2" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="58 " SRCCOLUMN1="4 " SRCROW2="65 " SRCCOLUMN2="27 " LOCKED="X" TYPESRC_LENG="329 " TYPESRC="begin of NO_SUCH_EXCEPTION,
       msgid type symsgid value &apos;ZMOCKA_EXC_MOCK&apos;,

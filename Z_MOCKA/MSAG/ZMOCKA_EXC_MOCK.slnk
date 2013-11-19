@@ -22,5 +22,7 @@
  <t100 SPRSL="E" ARBGB="ZMOCKA_EXC_MOCK" MSGNR="009" TEXT="Method &amp;1 of interface &amp;2 has no CHANGING parameters"/>
  <t100 SPRSL="D" ARBGB="ZMOCKA_EXC_MOCK" MSGNR="010" TEXT="Unit Tests können nicht ausgeführt werden. Siehe SAUNIT_CLIENT_SETUP"/>
  <t100 SPRSL="E" ARBGB="ZMOCKA_EXC_MOCK" MSGNR="010" TEXT="Unit Test execution is not allowed in this client=&gt;Tx SAUNIT_CLIENT_SETUP"/>
+ <t100 SPRSL="D" ARBGB="ZMOCKA_EXC_MOCK" MSGNR="011" TEXT="Attribut &amp;1 ist im Interface &amp;2 nicht bekannt"/>
+ <t100 SPRSL="E" ARBGB="ZMOCKA_EXC_MOCK" MSGNR="011" TEXT="Attribute &amp;1 of interface &amp;2 is unknown"/>
  <t100t SPRSL="E" ARBGB="ZMOCKA_EXC_MOCK" STEXT="Message class for exception texts (ZCX_MOCKA)"/>
 </MSAG>
