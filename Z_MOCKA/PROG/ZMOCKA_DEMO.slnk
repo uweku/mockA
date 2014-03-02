@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PROG NAME="ZMOCKA_DEMO" VARCL="X" SUBC="1" RSTAT="T" RMAND="001" RLOAD="D" FIXPT="X" UCCHECK="X">
+<PROG NAME="ZMOCKA_DEMO" VARCL="X" SUBC="1" RSTAT="T" RMAND="001" RLOAD="E" FIXPT="X" UCCHECK="X">
  <textPool>
   <language SPRAS="D">
    <textElement ID="R" ENTRY="Programm ZMOCKA_DEMO" LENGTH="20 "/>
+  </language>
+  <language SPRAS="E">
+   <textElement ID="R" ENTRY="Demo Report which shows how a mock obect can be created" LENGTH="55 "/>
   </language>
  </textPool>
  <source>*&amp;---------------------------------------------------------------------*

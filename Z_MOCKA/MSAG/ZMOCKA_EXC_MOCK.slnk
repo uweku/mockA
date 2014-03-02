@@ -24,5 +24,7 @@
  <t100 SPRSL="E" ARBGB="ZMOCKA_EXC_MOCK" MSGNR="010" TEXT="Unit Test execution is not allowed in this client=&gt;Tx SAUNIT_CLIENT_SETUP"/>
  <t100 SPRSL="D" ARBGB="ZMOCKA_EXC_MOCK" MSGNR="011" TEXT="Attribut &amp;1 ist im Interface &amp;2 nicht bekannt"/>
  <t100 SPRSL="E" ARBGB="ZMOCKA_EXC_MOCK" MSGNR="011" TEXT="Attribute &amp;1 of interface &amp;2 is unknown"/>
+ <t100 SPRSL="E" ARBGB="ZMOCKA_EXC_MOCK" MSGNR="012" TEXT="There is no constructor in interfaces (&amp;1)"/>
+ <t100 SPRSL="E" ARBGB="ZMOCKA_EXC_MOCK" MSGNR="013" TEXT="The inbound-parameters of method &amp;1, interface &amp;2 could not be determined"/>
  <t100t SPRSL="E" ARBGB="ZMOCKA_EXC_MOCK" STEXT="Message class for exception texts (ZCX_MOCKA)"/>
 </MSAG>

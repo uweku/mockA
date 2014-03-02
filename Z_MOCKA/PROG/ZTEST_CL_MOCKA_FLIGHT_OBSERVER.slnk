@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PROG NAME="ZTEST_CL_MOCKA_FLIGHT_OBSERVER" VARCL="X" SUBC="1" RMAND="001" RLOAD="D" FIXPT="X" UCCHECK="X">
+<PROG NAME="ZTEST_CL_MOCKA_FLIGHT_OBSERVER" VARCL="X" SUBC="1" RMAND="001" RLOAD="E" FIXPT="X" UCCHECK="X">
  <textPool>
   <language SPRAS="D">
    <textElement ID="R" ENTRY="Programm ZTEST_CL_MOCKA_FLIGHT_OBSERVER" LENGTH="39 "/>
+  </language>
+  <language SPRAS="E">
+   <textElement ID="R" ENTRY="Unit test which tests ZCL_MOCKA_FLIGHT_OBSERVER with mock objects" LENGTH="65 "/>
   </language>
  </textPool>
  <source>*&amp;---------------------------------------------------------------------*
