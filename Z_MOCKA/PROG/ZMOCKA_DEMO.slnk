@@ -2,10 +2,10 @@
 <PROG NAME="ZMOCKA_DEMO" VARCL="X" SUBC="1" RSTAT="T" RMAND="001" RLOAD="E" FIXPT="X" UCCHECK="X">
  <textPool>
   <language SPRAS="D">
-   <textElement ID="R" ENTRY="Programm ZMOCKA_DEMO" LENGTH="20 "/>
+   <textElement ID="R" ENTRY="Demo 2 (als Testprogramm implementiert)" LENGTH="70 "/>
   </language>
   <language SPRAS="E">
-   <textElement ID="R" ENTRY="Demo Report which shows how a mock obect can be created" LENGTH="55 "/>
+   <textElement ID="R" ENTRY="Demo 2 (implemented as test report)" LENGTH="35 "/>
   </language>
  </textPool>
  <source>*&amp;---------------------------------------------------------------------*
@@ -65,6 +65,14 @@ lo_is_in_time_into ?= lo_mocker-&gt;generate_mockup( ).
 lv_has_been_called = lo_mocker-&gt;has_method_been_called( &apos;get_delay&apos; ).
 WRITE: &apos;called?&apos;, lv_has_been_called.
 NEW-LINE.
+lo_mocker_method = lo_mocker-&gt;method( &apos;get_delay&apos; ).
+lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
+    i_p1             = &apos;LH&apos;
+    i_p2             = &apos;300&apos;
+    i_p3             = sy-datlo
+).
+WRITE: &apos;called with LH/300&apos;,sy-datlo,&apos;?&apos;, lv_has_been_called.
+NEW-LINE.
 
 lo_is_in_time_into-&gt;get_delay(
   EXPORTING
@@ -79,6 +87,22 @@ NEW-LINE.
 
 lv_has_been_called = lo_mocker-&gt;has_method_been_called( &apos;get_delay&apos; ).
 WRITE: &apos;called?&apos;, lv_has_been_called.
+NEW-LINE.
+lo_mocker_method = lo_mocker-&gt;method( &apos;get_delay&apos; ).
+lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
+    i_p1             = &apos;LH&apos;
+    i_p2             = &apos;300&apos;
+    i_p3             = sy-datlo
+).
+WRITE: &apos;called with LH/300&apos;,sy-datlo,&apos;?&apos;, lv_has_been_called.
+NEW-LINE.
+
+lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
+    i_p1             = &apos;LH&apos;
+    i_p2             = &apos;301&apos;
+    i_p3             = sy-datlo
+).
+WRITE: &apos;called with LH/301&apos;,sy-datlo,&apos;?&apos;, lv_has_been_called.
 NEW-LINE.
 lv_call_count = lo_mocker-&gt;method_call_count( &apos;get_delay&apos; ).
 WRITE: &apos;call count&apos;, lv_call_count.</source>

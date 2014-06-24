@@ -2,10 +2,10 @@
 <PROG NAME="ZTEST_CL_MOCKA_FLIGHT_OBSERVER" VARCL="X" SUBC="1" RMAND="001" RLOAD="E" FIXPT="X" UCCHECK="X">
  <textPool>
   <language SPRAS="D">
-   <textElement ID="R" ENTRY="Programm ZTEST_CL_MOCKA_FLIGHT_OBSERVER" LENGTH="39 "/>
+   <textElement ID="R" ENTRY="Demo 1 (als Unit Test implementiert)" LENGTH="70 "/>
   </language>
   <language SPRAS="E">
-   <textElement ID="R" ENTRY="Unit test which tests ZCL_MOCKA_FLIGHT_OBSERVER with mock objects" LENGTH="65 "/>
+   <textElement ID="R" ENTRY="Demo 1 (implemented as Unit Test)" LENGTH="33 "/>
   </language>
  </textPool>
  <source>*&amp;---------------------------------------------------------------------*

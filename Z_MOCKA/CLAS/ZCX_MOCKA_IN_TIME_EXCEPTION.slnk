@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CLAS CLSNAME="ZCX_MOCKA_IN_TIME_EXCEPTION" VERSION="1" LANGU="E" DESCRIPT="Demo exception class for mockA" CATEGORY="40" EXPOSURE="2" STATE="1" RELEASE="0" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="CX_STATIC_CHECK">
+<CLAS CLSNAME="ZCX_MOCKA_IN_TIME_EXCEPTION" VERSION="1" LANGU="E" DESCRIPT="Sample-Exception class for unit tests (Mocking-Framework)" CATEGORY="40" EXPOSURE="2" STATE="1" RELEASE="0" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="CX_STATIC_CHECK">
  <localImplementation>*&quot;* use this source file for the definition and implementation of
 *&quot;* local helper classes, interface definitions and type
 *&quot;* declarations</localImplementation>
@@ -8,8 +8,5 @@
 *&quot;* components in the private section</localTypes>
  <localMacros>*&quot;* use this source file for any macro definitions you need
 *&quot;* in the implementation part of the class</localMacros>
- <textPool>
-  <language SPRAS="E"/>
- </textPool>
  <inheritance CLSNAME="ZCX_MOCKA_IN_TIME_EXCEPTION" REFCLSNAME="CX_STATIC_CHECK" VERSION="1" STATE="1"/>
 </CLAS>

@@ -2,10 +2,10 @@
 <PROG NAME="ZTEST_CL_MOCKA_MOCKER" VARCL="X" SUBC="1" RSTAT="T" RMAND="001" RLOAD="E" FIXPT="X" UCCHECK="X">
  <textPool>
   <language SPRAS="D">
-   <textElement ID="R" ENTRY="Programm ZTEST_CL_MOCKA_MOCKER" LENGTH="30 "/>
+   <textElement ID="R" ENTRY="mockA Unit Tests" LENGTH="70 "/>
   </language>
   <language SPRAS="E">
-   <textElement ID="R" ENTRY="Unit Test for ZCL_MOCKA_MOCKER" LENGTH="30 "/>
+   <textElement ID="R" ENTRY="mockA Unit Tests" LENGTH="16 "/>
   </language>
  </textPool>
  <source>*&amp;---------------------------------------------------------------------*
@@ -73,9 +73,8 @@ CLASS lcl_test_mocker DEFINITION FOR TESTING.
     METHODS mock_attribute FOR TESTING.
     METHODS mock_attribute_of_class FOR TESTING.
     METHODS mock_invalid_attribute FOR TESTING.
-    METHODS mock_class_with_construc_param FOR TESTING.
-    METHODS mock_class_with_method_output FOR TESTING.
-    METHODS mock_intf_with_construc_param FOR TESTING.
+    METHODS is_method_called_positive FOR TESTING.
+    METHODS is_method_called_negative FOR TESTING.
 ENDCLASS.                    &quot;lcl_test_mocker DEFINITION
 
 *----------------------------------------------------------------------*
@@ -891,93 +890,56 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     cl_aunit_assert=&gt;assert_not_initial( lv_has_exception_been_raised ).
 
   ENDMETHOD.                    &quot;mock_invalid_attribute
-
-  METHOD mock_class_with_construc_param.
-*   this unit test shows how constructor parameters can be passed to a mock object that is based on a specific non-final class
-
-    DATA lo_is_in_time_info TYPE REF TO zif_mocka_is_in_time_info.
-    DATA lo_flight_alert_process TYPE REF TO zif_mocka_flight_alert_process.
-
-    DATA lo_return_is_in_time_info TYPE REF TO zif_mocka_is_in_time_info.
-    DATA lo_return_flight_alert_process TYPE REF TO zif_mocka_flight_alert_process.
-
-    DATA lo_mocker TYPE REF TO zif_mocka_mocker.
-    DATA lo_flight_observer TYPE REF TO zcl_mocka_flight_observer.
-
-    lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( zif_mocka_is_in_time_info=&gt;gc_name ).
-    lo_is_in_time_info ?= lo_mocker-&gt;generate_mockup( ).
-
-    lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( zif_mocka_flight_alert_process=&gt;gc_name ).
-    lo_flight_alert_process ?= lo_mocker-&gt;generate_mockup( ).
-
-    lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( zcl_mocka_flight_observer=&gt;gc_name ).
-    lo_mocker-&gt;pass_to_super_constructor( i_p1 = lo_flight_alert_process i_p2 = lo_is_in_time_info ).
-    lo_flight_observer ?= lo_mocker-&gt;generate_mockup( ).
-
-    lo_return_flight_alert_process = lo_flight_observer-&gt;get_flight_alert_processor( ).
-    lo_return_is_in_time_info = lo_flight_observer-&gt;get_is_in_time_info( ).
-
-    cl_aunit_assert=&gt;assert_equals( exp = lo_flight_alert_process act = lo_return_flight_alert_process ).
-    cl_aunit_assert=&gt;assert_equals( exp = lo_is_in_time_info act = lo_return_is_in_time_info ).
-
-  ENDMETHOD.                    &quot;mock_class_with_construc_param
-
-  METHOD mock_class_with_method_output.
-*   this unit test shows how a mock object can be created based on a non-final class
-    DATA lo_is_in_time_info TYPE REF TO zif_mocka_is_in_time_info.
-    DATA lo_flight_alert_process TYPE REF TO zif_mocka_flight_alert_process.
-
+  METHOD is_method_called_positive.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
-    DATA lo_flight_observer TYPE REF TO zcl_mocka_flight_observer.
+    DATA lo_in_time TYPE REF TO zif_mocka_is_in_time_info.
 
-*   unit test setup
-    lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( zif_mocka_is_in_time_info=&gt;gc_name ).
-    lo_mocker_method = lo_mocker-&gt;method( &apos;GET_DELAY&apos; ).
-    lo_mocker_method-&gt;with( i_p1 = &apos;NA&apos; i_p2 = 007 i_p3 = sy-datlo ).
-    lo_mocker_method-&gt;returns( 5 ).&quot;will not cause the observer to trigger an alert
-    lo_is_in_time_info ?= lo_mocker-&gt;generate_mockup( ).
+    DATA lv_has_been_called TYPE abap_bool.
 
-    lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( zif_mocka_flight_alert_process=&gt;gc_name ).
-    lo_flight_alert_process ?= lo_mocker-&gt;generate_mockup( ).
+    lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;ZIF_MOCKA_IS_IN_TIME_INFO&apos; ).
+    lo_mocker_method = lo_mocker-&gt;method( &apos;IS_IN_TIME&apos; ).
+    lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121108&apos; ).
+    lo_mocker_method-&gt;returns( abap_true ).
+*   please be aware of fluent API: in NW releases &gt;= 7.02 you could also use:
+*    lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121108&apos; )-&gt;returns( abap_true ).
 
-*   mock also the observer object
-    lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( zcl_mocka_flight_observer=&gt;gc_name ).
-    lo_mocker-&gt;pass_to_super_constructor( i_p1 = lo_flight_alert_process i_p2 = lo_is_in_time_info ).
-    lo_mocker_method = lo_mocker-&gt;method( &apos;observe_flight&apos; ).
-    lo_mocker_method-&gt;with( i_p1 = &apos;NA&apos; i_p2 = 007 i_p3 = sy-datlo ).
-    lo_mocker_method-&gt;returns( abap_true ).&quot;overrides the earlier specified behavior
-    lo_flight_observer ?= lo_mocker-&gt;generate_mockup( ).
+*   this call creates the mockup
+    lo_in_time ?= lo_mocker-&gt;generate_mockup( ).
+    lv_has_been_called = lo_mocker_method-&gt;has_been_called_with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121108&apos; ).
+    cl_aunit_assert=&gt;assert_initial( lv_has_been_called ).
+*   call interface methods of the mockup - IS_IN_TIME
+    lo_in_time-&gt;is_in_time( iv_carrid = &apos;LH&apos; iv_connid = 402 iv_fldate = &apos;20121108&apos; ).
 
-*   get the overridden result back from the observer
-    DATA lv_alert_triggered TYPE abap_bool.
-    lv_alert_triggered = lo_flight_observer-&gt;observe_flight(
-        iv_carrid          = &apos;NA&apos;
-        iv_connid          = 007
-        iv_fldate          = sy-datlo
-    ).
+    lv_has_been_called = lo_mocker_method-&gt;has_been_called_with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121108&apos; ).
+    cl_aunit_assert=&gt;assert_not_initial( lv_has_been_called ).
 
-    cl_aunit_assert=&gt;assert_equals( act = lv_alert_triggered exp = abap_true ).
+  ENDMETHOD.                    &quot;is_method_called_positive
 
-  ENDMETHOD.                    &quot;mock_class_with_method_output
-
-  METHOD mock_intf_with_construc_param.
-*   this unit test shows how the mocking framework will raise an exception if you try to register constructor parameters for mock objects that are based on an interface
-
-    DATA lo_is_in_time_info TYPE REF TO zif_mocka_is_in_time_info.
-    DATA lv_dummy_parameter TYPE i.
+  METHOD is_method_called_negative.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
-    DATA lo_cx_mocka TYPE REF TO zcx_mocka.
+    DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
+    DATA lo_in_time TYPE REF TO zif_mocka_is_in_time_info.
 
-    TRY.
-        lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( zif_mocka_is_in_time_info=&gt;gc_name ).
-        lo_mocker-&gt;pass_to_super_constructor( i_p1 = lv_dummy_parameter ).
-        lo_is_in_time_info ?= lo_mocker-&gt;generate_mockup( ).
-      CATCH zcx_mocka INTO lo_cx_mocka.
-    ENDTRY.
-    cl_aunit_assert=&gt;assert_not_initial( lo_cx_mocka ).&quot;assert that an exception has been raised
-    cl_aunit_assert=&gt;assert_initial( lo_is_in_time_info ).&quot;asserts that the mocking framework fails fast
+    DATA lv_has_been_called TYPE abap_bool.
 
-  ENDMETHOD.                    &quot;mock_interface_with_construc_param
+    lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;ZIF_MOCKA_IS_IN_TIME_INFO&apos; ).
+    lo_mocker_method = lo_mocker-&gt;method( &apos;IS_IN_TIME&apos; ).
+    lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121108&apos; ).
+    lo_mocker_method-&gt;returns( abap_true ).
+*   please be aware of fluent API: in NW releases &gt;= 7.02 you could also use:
+*    lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121108&apos; )-&gt;returns( abap_true ).
+
+*   this call creates the mockup
+    lo_in_time ?= lo_mocker-&gt;generate_mockup( ).
+    lv_has_been_called = lo_mocker_method-&gt;has_been_called_with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20140624&apos; ).
+    cl_aunit_assert=&gt;assert_initial( lv_has_been_called ).&quot;initial as the method IS_IN_TIME has not yet been called with the requested parameters
+*   call interface methods of the mockup - IS_IN_TIME
+    lo_in_time-&gt;is_in_time( iv_carrid = &apos;LH&apos; iv_connid = 402 iv_fldate = &apos;20121108&apos; ).
+
+    lv_has_been_called = lo_mocker_method-&gt;has_been_called_with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20140624&apos; ).
+    cl_aunit_assert=&gt;assert_initial( lv_has_been_called ).&quot;initial as the method IS_IN_TIME has still not been called with the requested parameters
+
+  ENDMETHOD.                    &quot;is_method_called_negative
 ENDCLASS.                    &quot;lcl_test_mocker IMPLEMENTATION</source>
 </PROG>
