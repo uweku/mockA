@@ -108,6 +108,8 @@ START-OF-SELECTION.
         APPEND object TO objects.
         object-obj_name = 'ZCL_MOCKA_FLIGHT_OBSERVER'.
         APPEND object TO objects.
+        object-obj_name = 'ZCL_MOCKA_MOCKER_ATTRIBUTE'.
+        APPEND object TO objects.
         object-obj_name = 'ZCX_MOCKA_IN_TIME_EXCEPTION'.
         APPEND object TO objects.
 
@@ -121,6 +123,8 @@ START-OF-SELECTION.
         object-obj_name = 'ZIF_MOCKA_IS_IN_TIME_INFO'.
         APPEND object TO objects.
         object-obj_name = 'ZIF_MOCKA_MOCKER_METHOD_RUNTIM'.
+        APPEND object TO objects.
+        object-obj_name = 'ZIF_MOCKA_MOCKER_ATTRIBUTE'.
         APPEND object TO objects.
 
         object-object = 'PROG'.
