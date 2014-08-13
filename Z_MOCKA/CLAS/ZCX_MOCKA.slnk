@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CLAS CLSNAME="ZCX_MOCKA" VERSION="1" LANGU="E" DESCRIPT="Root exception class of mockA" CATEGORY="40" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" MSG_ID="ZMOCKA_EXC_MOCK" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="CX_NO_CHECK">
+<CLAS CLSNAME="ZCX_MOCKA" VERSION="1" LANGU="D" DESCRIPT="Root exception class of mockA" CATEGORY="40" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" MSG_ID="ZMOCKA_EXC_MOCK" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="CX_NO_CHECK">
  <implementing CLSNAME="ZCX_MOCKA" REFCLSNAME="IF_T100_MESSAGE" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1" EDITORDER="0 "/>
  <localImplementation>*&quot;* use this source file for the definition and implementation of
 *&quot;* local helper classes, interface definitions and type

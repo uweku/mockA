@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CLAS CLSNAME="ZCL_MOCKA_MOCKER" VERSION="1" LANGU="E" DESCRIPT="implements the creator of mock objects" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
- <types CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="TY_S_METHODS" VERSION="1" LANGU="E" DESCRIPT="beschreibt eine zu simulierende Methode" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="6 " SRCCOLUMN1="4 " SRCROW2="6 " SRCCOLUMN2="127 " TYPESRC_LENG="125 " TYPESRC="BEGIN OF ty_s_methods,    name TYPE seocpdname,    method_mocker TYPE REF TO ZIF_MOCKA_MOCKER_method,    END OF ty_s_methods
+<CLAS CLSNAME="ZCL_MOCKA_MOCKER" VERSION="1" LANGU="D" DESCRIPT="implements the creator of mock objects" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
+ <types CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="TY_S_METHODS" VERSION="1" LANGU="D" DESCRIPT="beschreibt eine zu simulierende Methode" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="6 " SRCCOLUMN1="4 " SRCROW2="6 " SRCCOLUMN2="127 " TYPESRC_LENG="125 " TYPESRC="BEGIN OF ty_s_methods,    name TYPE seocpdname,    method_mocker TYPE REF TO ZIF_MOCKA_MOCKER_method,    END OF ty_s_methods
 "/>
- <types CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="TY_S_ATTRIBUTES" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="8 " SRCCOLUMN1="4 " SRCROW2="8 " SRCCOLUMN2="139 " TYPESRC_LENG="137 " TYPESRC="BEGIN OF ty_s_attributes,    name TYPE seocpdname,    attribute_mocker TYPE REF TO ZIF_MOCKA_MOCKER_attribute,    END OF ty_s_attributes
+ <types CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="TY_S_ATTRIBUTES" VERSION="1" LANGU="D" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="8 " SRCCOLUMN1="4 " SRCROW2="8 " SRCCOLUMN2="139 " TYPESRC_LENG="137 " TYPESRC="BEGIN OF ty_s_attributes,    name TYPE seocpdname,    attribute_mocker TYPE REF TO ZIF_MOCKA_MOCKER_attribute,    END OF ty_s_attributes
 "/>
- <types CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="TY_T_METHODS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="10 " SRCCOLUMN1="4 " SRCROW2="10 " SRCCOLUMN2="42 " TYPESRC_LENG="40 " TYPESRC="ty_t_methods TYPE TABLE OF ty_s_methods
+ <types CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="TY_T_METHODS" VERSION="1" LANGU="D" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="10 " SRCCOLUMN1="4 " SRCROW2="10 " SRCCOLUMN2="42 " TYPESRC_LENG="40 " TYPESRC="ty_t_methods TYPE TABLE OF ty_s_methods
 "/>
- <types CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="TY_T_ATTRIBUTES" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="12 " SRCCOLUMN1="4 " SRCROW2="12 " SRCCOLUMN2="48 " TYPESRC_LENG="46 " TYPESRC="ty_t_attributes TYPE TABLE OF ty_s_attributes
+ <types CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="TY_T_ATTRIBUTES" VERSION="1" LANGU="D" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="12 " SRCCOLUMN1="4 " SRCROW2="12 " SRCCOLUMN2="48 " TYPESRC_LENG="46 " TYPESRC="ty_t_attributes TYPE TABLE OF ty_s_attributes
 "/>
- <types CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="TY_S_GENERATED_CLASS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="14 " SRCCOLUMN1="4 " SRCROW2="14 " SRCCOLUMN2="120 " TYPESRC_LENG="118 " TYPESRC="BEGIN OF TY_S_GENERATED_CLASS,    name type SEOCLSNAME,    technical_name TYPE string,    end of ty_s_generated_class
+ <types CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="TY_S_GENERATED_CLASS" VERSION="1" LANGU="D" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="14 " SRCCOLUMN1="4 " SRCROW2="14 " SRCCOLUMN2="120 " TYPESRC_LENG="118 " TYPESRC="BEGIN OF TY_S_GENERATED_CLASS,    name type SEOCLSNAME,    technical_name TYPE string,    end of ty_s_generated_class
 "/>
  <friends CLSNAME="ZCL_MOCKA_MOCKER" REFCLSNAME="ZCL_MOCKA_MOCKER_METHOD" FRIENDTYPE="0" VERSION="1" STATE="1"/>
  <implementing CLSNAME="ZCL_MOCKA_MOCKER" REFCLSNAME="ZIF_MOCKA_MOCKER" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1" EDITORDER="0 "/>
@@ -93,9 +93,9 @@ ENDMETHOD.</source>
     INSERT LINES OF mt_constructor_parameters INTO TABLE lt_constructor_parameters.
     CREATE OBJECT ro_mockup
       TYPE
-        (mv_generated_class)
+      (mv_generated_class)
       PARAMETER-TABLE
-        lt_constructor_parameters.
+      lt_constructor_parameters.
     RETURN.
   ENDIF.
   FIELD-SYMBOLS &lt;ls_method_mock&gt; LIKE LINE OF mt_method_mocks.
@@ -243,9 +243,9 @@ ENDMETHOD.</source>
   DATA lo_attribute TYPE REF TO zif_mocka_mocker_attribute.
   DATA lr_value TYPE REF TO data.
   DATA lv_attribute TYPE string.
-  FIELD-SYMBOLS &lt;l_value&gt; TYPE ANY.
+  FIELD-SYMBOLS &lt;l_value&gt; TYPE any.
   LOOP AT mo_objectdescr-&gt;attributes ASSIGNING &lt;ls_attribute&gt; WHERE is_constant = abap_false.
-    IF &lt;ls_attribute&gt;-visibility = &apos;0&apos;.&quot;no mocking of private attributes
+    IF &lt;ls_attribute&gt;-visibility = &apos;0&apos; OR &lt;ls_attribute&gt;-visibility = &apos;I&apos;.&quot;no mocking of private attributes
       CONTINUE.
     ENDIF.
 
@@ -514,9 +514,9 @@ ENDMETHOD.</source>
   INSERT LINES OF mt_constructor_parameters INTO TABLE lt_constructor_parameters.
   CREATE OBJECT ro_mockup
     TYPE
-      (mv_generated_class)
+    (mv_generated_class)
     PARAMETER-TABLE
-      lt_constructor_parameters.
+    lt_constructor_parameters.
 
   DATA ls_generated_class TYPE ty_s_generated_class.
   ls_generated_class-name = mv_interface.

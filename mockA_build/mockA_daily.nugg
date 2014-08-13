@@ -131,9 +131,9 @@ ENDMETHOD.</source>
     INSERT LINES OF mt_constructor_parameters INTO TABLE lt_constructor_parameters.
     CREATE OBJECT ro_mockup
       TYPE
-        (mv_generated_class)
+      (mv_generated_class)
       PARAMETER-TABLE
-        lt_constructor_parameters.
+      lt_constructor_parameters.
     RETURN.
   ENDIF.
   FIELD-SYMBOLS &lt;ls_method_mock&gt; LIKE LINE OF mt_method_mocks.
@@ -281,9 +281,9 @@ ENDMETHOD.</source>
   DATA lo_attribute TYPE REF TO zif_mocka_mocker_attribute.
   DATA lr_value TYPE REF TO data.
   DATA lv_attribute TYPE string.
-  FIELD-SYMBOLS &lt;l_value&gt; TYPE ANY.
+  FIELD-SYMBOLS &lt;l_value&gt; TYPE any.
   LOOP AT mo_objectdescr-&gt;attributes ASSIGNING &lt;ls_attribute&gt; WHERE is_constant = abap_false.
-    IF &lt;ls_attribute&gt;-visibility = &apos;0&apos;.&quot;no mocking of private attributes
+    IF &lt;ls_attribute&gt;-visibility = &apos;0&apos; OR &lt;ls_attribute&gt;-visibility = &apos;I&apos;.&quot;no mocking of private attributes
       CONTINUE.
     ENDIF.
 
@@ -552,9 +552,9 @@ ENDMETHOD.</source>
   INSERT LINES OF mt_constructor_parameters INTO TABLE lt_constructor_parameters.
   CREATE OBJECT ro_mockup
     TYPE
-      (mv_generated_class)
+    (mv_generated_class)
     PARAMETER-TABLE
-      lt_constructor_parameters.
+    lt_constructor_parameters.
 
   DATA ls_generated_class TYPE ty_s_generated_class.
   ls_generated_class-name = mv_interface.
