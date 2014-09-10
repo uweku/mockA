@@ -267,9 +267,9 @@
     DATA lv_attribute TYPE string.
     FIELD-SYMBOLS &lt;l_value&gt; TYPE any.
     LOOP AT mo_objectdescr-&gt;attributes ASSIGNING &lt;ls_attribute&gt; WHERE is_constant = abap_false.
-*      IF &lt;ls_attribute&gt;-visibility = gc_visibility-protected OR &lt;ls_attribute&gt;-visibility = gc_visibility-private.&quot;no mocking of private attributes
-*        CONTINUE.
-*      ENDIF.
+      IF &lt;ls_attribute&gt;-visibility = gc_visibility-private.&quot;no mocking of private attributes
+        CONTINUE.
+      ENDIF.
 
       lo_attribute = me-&gt;zif_mocka_mocker~attribute( &lt;ls_attribute&gt;-name ).
 
