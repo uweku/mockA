@@ -63,7 +63,7 @@ lo_mocker_method-&gt;returns( 100 ).
 
 lo_is_in_time_into ?= lo_mocker-&gt;generate_mockup( ).
 lv_has_been_called = lo_mocker-&gt;has_method_been_called( &apos;get_delay&apos; ).
-WRITE: &apos;called?&apos;, lv_has_been_called.
+WRITE: &apos;get_delay( ) called? :&apos;, lv_has_been_called.
 NEW-LINE.
 lo_mocker_method = lo_mocker-&gt;method( &apos;get_delay&apos; ).
 lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
@@ -71,7 +71,7 @@ lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
     i_p2             = &apos;300&apos;
     i_p3             = sy-datlo
 ).
-WRITE: &apos;called with LH/300&apos;,sy-datlo,&apos;?&apos;, lv_has_been_called.
+WRITE: &apos;get_delay( ) called with LH/300&apos;,sy-datlo,&apos;? :&apos;, lv_has_been_called.
 NEW-LINE.
 
 lo_is_in_time_into-&gt;get_delay(
@@ -86,7 +86,7 @@ WRITE: &apos;Delay:&apos;, lv_delay.
 NEW-LINE.
 
 lv_has_been_called = lo_mocker-&gt;has_method_been_called( &apos;get_delay&apos; ).
-WRITE: &apos;called?&apos;, lv_has_been_called.
+WRITE: &apos;get_delay( ) called? :&apos;, lv_has_been_called.
 NEW-LINE.
 lo_mocker_method = lo_mocker-&gt;method( &apos;get_delay&apos; ).
 lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
@@ -94,7 +94,7 @@ lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
     i_p2             = &apos;300&apos;
     i_p3             = sy-datlo
 ).
-WRITE: &apos;called with LH/300&apos;,sy-datlo,&apos;?&apos;, lv_has_been_called.
+WRITE: &apos;get_delay( ) called with LH/300&apos;,sy-datlo,&apos;? :&apos;, lv_has_been_called.
 NEW-LINE.
 
 lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
@@ -102,8 +102,8 @@ lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
     i_p2             = &apos;301&apos;
     i_p3             = sy-datlo
 ).
-WRITE: &apos;called with LH/301&apos;,sy-datlo,&apos;?&apos;, lv_has_been_called.
+WRITE: &apos;get_delay( ) called with LH/301&apos;,sy-datlo,&apos;? :&apos;, lv_has_been_called.
 NEW-LINE.
 lv_call_count = lo_mocker-&gt;method_call_count( &apos;get_delay&apos; ).
-WRITE: &apos;call count&apos;, lv_call_count.</source>
+WRITE: &apos;call count of get_delay( ) :&apos;, lv_call_count.</source>
 </PROG>
