@@ -22,6 +22,7 @@
   <parameter CLSNAME="ZCL_MOCKA_HELPER_MOCKER" CMPNAME="GENERATE_SUBROUTINE_POOL" SCONAME="EV_SUBRC" VERSION="1" LANGU="E" DESCRIPT="Rückgabewert von ABAP-Anweisungen" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="SY-SUBRC"/>
   <parameter CLSNAME="ZCL_MOCKA_HELPER_MOCKER" CMPNAME="GENERATE_SUBROUTINE_POOL" SCONAME="EV_MESSAGE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="STRING"/>
   <source>METHOD generate_subroutine_pool.
+* helper method that generates the local class that implements the mock object functions
   FREE: ev_prog,
         ev_subrc,
         ev_message.

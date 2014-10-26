@@ -26,15 +26,13 @@
  <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MV_TIMES_CALLED" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="6 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="I" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
  <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~CHANGES">
   <source>METHOD zif_mocka_mocker_method~changes.
-
+* registers outbound CHANGING parameters
   DATA lv_parameter_count TYPE i.
   DATA lv_actual_parameter_count TYPE i.
   DATA lr_ref TYPE REF TO data.
   FIELD-SYMBOLS &lt;lv_in&gt; TYPE any.
   FIELD-SYMBOLS &lt;lv_to&gt; TYPE any.
-*  IF i_p1 IS SUPPLIED.
   ADD 1 TO lv_parameter_count.
-*  ENDIF.
   IF i_p2 IS SUPPLIED.
     ADD 1 TO lv_parameter_count.
   ENDIF.
@@ -56,8 +54,6 @@
   IF i_p8 IS SUPPLIED.
     ADD 1 TO lv_parameter_count.
   ENDIF.
-
-
 
   FIELD-SYMBOLS &lt;ls_method&gt; TYPE abap_methdescr.
   DATA lo_objdescr TYPE REF TO cl_abap_objectdescr.
@@ -153,7 +149,7 @@ ENDMETHOD.</source>
  </interfaceMethod>
  <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~EXPORTS">
   <source>METHOD zif_mocka_mocker_method~exports.
-
+* registers EXPORTING parameters
   DATA lv_parameter_count TYPE i.
   DATA lv_actual_parameter_count TYPE i.
   DATA lr_ref TYPE REF TO data.
@@ -450,6 +446,7 @@ ENDMETHOD.</source>
  </interfaceMethod>
  <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~RAISES_BY_NAME">
   <source>METHOD zif_mocka_mocker_method~raises_by_name.
+* registers an exception that is specified by a name
   DATA: ls_class_descr TYPE vseoclass,
         ls_seoclskey TYPE seoclskey,
         lv_exception TYPE seoclsname.
@@ -512,6 +509,7 @@ ENDMETHOD.</source>
  </interfaceMethod>
  <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~RETURNS">
   <source>METHOD zif_mocka_mocker_method~returns.
+* registers the method&apos;s RETURNING parameter
   TRY.
       me-&gt;zif_mocka_mocker_method~exports( i_return ).
     CATCH zcx_mocka.
