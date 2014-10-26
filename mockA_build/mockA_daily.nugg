@@ -13,6 +13,9 @@
    <language SPRAS="D">
     <textElement ID="I" KEY="001" ENTRY="Es können keine weiteren Subroutine-Pools erzeugt werden" LENGTH="100 "/>
    </language>
+   <language SPRAS="E">
+    <textElement ID="I" KEY="001" ENTRY="The subroutine pool has not been generated" LENGTH="120 "/>
+   </language>
   </textPool>
   <method CLSNAME="ZCL_MOCKA_HELPER_MOCKER" CMPNAME="GENERATE_SUBROUTINE_POOL" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="1" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZCL_MOCKA_HELPER_MOCKER" CMPNAME="GENERATE_SUBROUTINE_POOL" SCONAME="IT_CODE" VERSION="1" LANGU="E" DESCRIPT="Tabelle von Strings" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="STRING_TABLE"/>
@@ -189,7 +192,7 @@ ENDMETHOD.</source>
         ENDIF.
       ELSE.
         APPEND &apos;PROTECTED SECTION.&apos; TO lt_code.
-        APPEND &apos;DATA: mo_mocker TYPE REF TO ZIF_MOCKA_MOCKER.&apos; TO lt_code.
+        APPEND &apos;DATA: mo_mocker TYPE REF TO ZIF_MOCKA_MOCKER.&apos; TO lt_code. &quot;#EC NOTEXT
       ENDIF.
       IF mv_is_interface_mock = abap_false.
         LOOP AT mo_objectdescr-&gt;methods ASSIGNING &lt;ls_method&gt; WHERE is_class = abap_false AND name NE &apos;CONSTRUCTOR&apos;.
@@ -220,7 +223,7 @@ ENDMETHOD.</source>
       ENDIF.
 
       IF lv_is_public_section = abap_true.
-        APPEND &apos;METHODS constructor IMPORTING !io_mocker TYPE REF TO ZIF_MOCKA_MOCKER !it_attributes type ABAP_ATTRDESCR_TAB&apos; TO lt_code.
+        APPEND &apos;METHODS constructor IMPORTING !io_mocker TYPE REF TO ZIF_MOCKA_MOCKER !it_attributes type ABAP_ATTRDESCR_TAB&apos; TO lt_code. &quot;#EC NOTEXT
 
         READ TABLE mo_objectdescr-&gt;methods ASSIGNING &lt;ls_method&gt; WITH KEY name = &apos;CONSTRUCTOR&apos;.
         IF sy-subrc = 0.
@@ -259,9 +262,9 @@ ENDMETHOD.</source>
     CONCATENATE &apos;CLASS&apos; lv_classname &apos;IMPLEMENTATION.&apos; INTO lv_line SEPARATED BY space.
     APPEND lv_line TO lt_code.
 
-    APPEND &apos;METHOD constructor.&apos; TO lt_code.
+    APPEND &apos;METHOD constructor.&apos; TO lt_code.                &quot;#EC NOTEXT
     IF mv_is_interface_mock = abap_false.
-      APPEND &apos;call method super-&gt;constructor&apos; TO lt_code.
+      APPEND &apos;call method super-&gt;constructor&apos; TO lt_code.   &quot;#EC NOTEXT
       READ TABLE mo_objectdescr-&gt;methods ASSIGNING &lt;ls_method&gt; WITH KEY name = &apos;CONSTRUCTOR&apos;.
       IF sy-subrc = 0.
         CLEAR: lt_temp_code.
@@ -292,12 +295,12 @@ ENDMETHOD.</source>
       ENDIF.
       APPEND &apos;.&apos; TO lt_code.
     ENDIF.
-    APPEND &apos;mo_mocker = io_mocker.&apos; TO lt_code.
+    APPEND &apos;mo_mocker = io_mocker.&apos; TO lt_code.             &quot;#EC NOTEXT
 
 * map attributes by constructor
-    APPEND &apos;DATA lo_attribute TYPE REF TO zif_mocka_mocker_attribute.&apos; TO lt_code.
-    APPEND &apos;FIELD-SYMBOLS &lt;l_value&gt; TYPE ANY.&apos; TO lt_code.
-    APPEND &apos;DATA lr_value TYPE REF TO data.&apos; TO lt_code.
+    APPEND &apos;DATA lo_attribute TYPE REF TO zif_mocka_mocker_attribute.&apos; TO lt_code. &quot;#EC NOTEXT
+    APPEND &apos;FIELD-SYMBOLS &lt;l_value&gt; TYPE ANY.&apos; TO lt_code.  &quot;#EC NOTEXT
+    APPEND &apos;DATA lr_value TYPE REF TO data.&apos; TO lt_code.    &quot;#EC NOTEXT
 
     FIELD-SYMBOLS &lt;ls_attribute&gt; TYPE abap_attrdescr.
     DATA lo_attribute TYPE REF TO zif_mocka_mocker_attribute.
@@ -311,16 +314,16 @@ ENDMETHOD.</source>
 
       lo_attribute = me-&gt;zif_mocka_mocker~attribute( &lt;ls_attribute&gt;-name ).
 
-      CONCATENATE &apos;lo_attribute = mo_mocker-&gt;attribute( &apos;&apos;&apos; &lt;ls_attribute&gt;-name &apos;&apos;&apos; ).&apos; INTO lv_line.
+      CONCATENATE &apos;lo_attribute = mo_mocker-&gt;attribute( &apos;&apos;&apos; &lt;ls_attribute&gt;-name &apos;&apos;&apos; ).&apos; INTO lv_line. &quot;#EC NOTEXT
       APPEND lv_line TO lt_code.
-      APPEND &apos;lr_value = lo_attribute-&gt;return( ).&apos; TO lt_code.
-      APPEND &apos;IF lr_value IS BOUND.&apos; TO lt_code.
-      APPEND &apos;ASSIGN lr_value-&gt;* TO &lt;l_value&gt;.&apos; TO lt_code.
+      APPEND &apos;lr_value = lo_attribute-&gt;return( ).&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;IF lr_value IS BOUND.&apos; TO lt_code.            &quot;#EC NOTEXT
+      APPEND &apos;ASSIGN lr_value-&gt;* TO &lt;l_value&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
       IF mv_is_interface_mock = abap_false.
-        CONCATENATE &lt;ls_attribute&gt;-name &apos;= &lt;l_value&gt;.&apos; INTO lv_line SEPARATED BY space.
+        CONCATENATE &lt;ls_attribute&gt;-name &apos;= &lt;l_value&gt;.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
       ELSE.
         CONCATENATE mv_interface &apos;~&apos; &lt;ls_attribute&gt;-name INTO lv_line.
-        CONCATENATE lv_line &apos;= &lt;l_value&gt;.&apos; INTO lv_line SEPARATED BY space.
+        CONCATENATE lv_line &apos;= &lt;l_value&gt;.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
       ENDIF.
       APPEND lv_line TO lt_code.
       APPEND &apos;ENDIF.&apos; TO lt_code.
@@ -352,29 +355,29 @@ ENDMETHOD.</source>
       CONCATENATE &apos;METHOD&apos; lv_line &apos;.&apos; INTO lv_line SEPARATED BY space.
       APPEND lv_line TO lt_code.
 
-      APPEND &apos;DATA: lr_return TYPE REF TO DATA.&apos; TO lt_code.
-      APPEND &apos;DATA: lv_exception TYPE seoclsname.&apos; TO lt_code.
-      APPEND &apos;DATA: lo_mocker_method TYPE REF TO ZIF_MOCKA_MOCKER_METHOD.&apos; TO lt_code.
-      APPEND &apos;DATA: lo_mocker_method_runtime TYPE REF TO ZIF_MOCKA_MOCKER_METHOD_RUNTIM.&apos; TO lt_code.
-      APPEND &apos;FIELD-SYMBOLS: &lt;lv_return&gt; TYPE any.&apos; TO lt_code.
+      APPEND &apos;DATA: lr_return TYPE REF TO DATA.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA: lv_exception TYPE seoclsname.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA: lo_mocker_method TYPE REF TO ZIF_MOCKA_MOCKER_METHOD.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA: lo_mocker_method_runtime TYPE REF TO ZIF_MOCKA_MOCKER_METHOD_RUNTIM.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;FIELD-SYMBOLS: &lt;lv_return&gt; TYPE any.&apos; TO lt_code. &quot;#EC NOTEXT
       IF &lt;ls_method&gt;-alias_for IS NOT INITIAL.
-        CONCATENATE &apos;lo_mocker_method ?= mo_mocker-&gt;method( &apos;&apos;&apos; &lt;ls_method&gt;-alias_for &apos;&apos;&apos; ).&apos; INTO lv_line.
+        CONCATENATE &apos;lo_mocker_method ?= mo_mocker-&gt;method( &apos;&apos;&apos; &lt;ls_method&gt;-alias_for &apos;&apos;&apos; ).&apos; INTO lv_line. &quot;#EC NOTEXT
       ELSE.
-        CONCATENATE &apos;lo_mocker_method ?= mo_mocker-&gt;method( &apos;&apos;&apos; &lt;ls_method&gt;-name &apos;&apos;&apos; ).&apos; INTO lv_line.
+        CONCATENATE &apos;lo_mocker_method ?= mo_mocker-&gt;method( &apos;&apos;&apos; &lt;ls_method&gt;-name &apos;&apos;&apos; ).&apos; INTO lv_line. &quot;#EC NOTEXT
       ENDIF.
       APPEND lv_line TO lt_code.
 
-      APPEND &apos;DATA ls_importing TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA ls_changing_in TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA ls_exporting TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA ls_changing_out TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA lt_importing TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA lt_changing_in TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA lt_exporting TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA lt_changing_out TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;FIELD-SYMBOLS &lt;ls_exporting&gt; TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;FIELD-SYMBOLS &lt;lv_exporting_out&gt; TYPE any.&apos; TO lt_code.
-      APPEND &apos;FIELD-SYMBOLS &lt;lv_exporting_from_mocker&gt; TYPE any.&apos; TO lt_code.
+      APPEND &apos;DATA ls_importing TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA ls_changing_in TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA ls_exporting TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA ls_changing_out TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA lt_importing TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA lt_changing_in TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA lt_exporting TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA lt_changing_out TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;FIELD-SYMBOLS &lt;ls_exporting&gt; TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;FIELD-SYMBOLS &lt;lv_exporting_out&gt; TYPE any.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;FIELD-SYMBOLS &lt;lv_exporting_from_mocker&gt; TYPE any.&apos; TO lt_code. &quot;#EC NOTEXT
 
 *   map IMPORTING parameters
       LOOP AT &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WHERE parm_kind = &apos;I&apos;.
@@ -383,37 +386,37 @@ ENDMETHOD.</source>
           CONCATENATE &apos;IF&apos; &lt;ls_parameter&gt;-name &apos;IS SUPPLIED.&apos; INTO lv_line SEPARATED BY space.
         ENDIF.
         APPEND lv_line TO lt_code.
-        CONCATENATE &apos;ls_importing-parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line.
+        CONCATENATE &apos;ls_importing-parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line. &quot;#EC NOTEXT
         APPEND lv_line TO lt_code.
-        CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_importing-value.&apos; INTO lv_line SEPARATED BY space.
+        CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_importing-value.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
         APPEND lv_line TO lt_code.
-        APPEND &apos;APPEND ls_importing TO lt_importing.&apos; TO lt_code.
+        APPEND &apos;APPEND ls_importing TO lt_importing.&apos; TO lt_code. &quot;#EC NOTEXT
         IF &lt;ls_parameter&gt;-is_optional = abap_true.
           APPEND &apos;ENDIF.&apos; TO lt_code.
         ENDIF.
       ENDLOOP.
 *   map CHANGING parameters
       LOOP AT &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WHERE parm_kind = &apos;C&apos;.
-        CONCATENATE &apos;ls_changing_in-parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line.
+        CONCATENATE &apos;ls_changing_in-parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line. &quot;#EC NOTEXT
         APPEND lv_line TO lt_code.
         IF &lt;ls_parameter&gt;-is_optional = abap_true.
           CONCATENATE &apos;IF&apos; &lt;ls_parameter&gt;-name &apos;IS SUPPLIED.&apos; INTO lv_line SEPARATED BY space.
         ENDIF.
         APPEND lv_line TO lt_code.
-        CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_changing_in-value.&apos; INTO lv_line SEPARATED BY space.
+        CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_changing_in-value.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
         APPEND lv_line TO lt_code.
-        APPEND &apos;APPEND ls_changing_in TO lt_changing_in.&apos; TO lt_code.
+        APPEND &apos;APPEND ls_changing_in TO lt_changing_in.&apos; TO lt_code. &quot;#EC NOTEXT
         IF &lt;ls_parameter&gt;-is_optional = abap_true.
           APPEND &apos;ENDIF.&apos; TO lt_code.
         ENDIF.
       ENDLOOP.
 
 *   register method call
-      APPEND &apos;lo_mocker_method_runtime ?= lo_mocker_method.&apos; TO lt_code.
-      APPEND &apos;lo_mocker_method_runtime-&gt;increase_times_called( ).&apos; TO lt_code.
-      APPEND &apos;lo_mocker_method_runtime-&gt;REGISTER_HAS_BEEN_CALLED_WITH( it_importing = lt_importing it_changing_in = lt_changing_in ).&apos; TO lt_code.
-*   is there any exception registered?
-      APPEND &apos;lv_exception = lo_mocker_method-&gt;raise( it_importing = lt_importing it_changing_in = lt_changing_in ).&apos; TO lt_code.
+      APPEND &apos;lo_mocker_method_runtime ?= lo_mocker_method.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;lo_mocker_method_runtime-&gt;increase_times_called( ).&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;lo_mocker_method_runtime-&gt;REGISTER_HAS_BEEN_CALLED_WITH( it_importing = lt_importing it_changing_in = lt_changing_in ).&apos; TO lt_code. &quot;#EC NOTEXT
+*     is there any exception registered?
+      APPEND &apos;lv_exception = lo_mocker_method-&gt;raise( it_importing = lt_importing it_changing_in = lt_changing_in ).&apos; TO lt_code. &quot;#EC NOTEXT
 
       ls_method_key-clsname = mv_interface.
       ls_method_key-cmpname = &lt;ls_method&gt;-name.
@@ -440,14 +443,17 @@ ENDMETHOD.</source>
         IF sy-subrc = 0.
           lv_is_class_based_exception = me-&gt;is_exception_class( &lt;ls_exception&gt;-sconame ).
         ENDIF.
+        IF lt_exceptions IS INITIAL.
+          lv_is_class_based_exception = abap_true.
+        ENDIF.
       ENDIF.
       IF lv_is_class_based_exception = abap_true.
-        APPEND &apos;DATA lo_cx_exc TYPE REF TO cx_root.&apos; TO lt_code.
-        APPEND &apos;IF lv_exception IS NOT INITIAL.&apos; TO lt_code.
-        APPEND &apos;  TRANSLATE lv_exception TO UPPER CASE.&apos; TO lt_code.
-        APPEND &apos;  CREATE OBJECT lo_cx_exc TYPE (lv_exception).&apos; TO lt_code.
-        APPEND &apos;  RAISE EXCEPTION lo_cx_exc.&apos; TO lt_code.
-        APPEND &apos;ENDIF.&apos; TO lt_code.
+        APPEND &apos;DATA lo_cx_exc TYPE REF TO cx_root.&apos; TO lt_code. &quot;#EC NOTEXT
+        APPEND &apos;IF lv_exception IS NOT INITIAL.&apos; TO lt_code. &quot;#EC NOTEXT
+        APPEND &apos;  TRANSLATE lv_exception TO UPPER CASE.&apos; TO lt_code. &quot;#EC NOTEXT
+        APPEND &apos;  CREATE OBJECT lo_cx_exc TYPE (lv_exception).&apos; TO lt_code. &quot;#EC NOTEXT
+        APPEND &apos;  RAISE EXCEPTION lo_cx_exc.&apos; TO lt_code.   &quot;#EC NOTEXT
+        APPEND &apos;ENDIF.&apos; TO lt_code.                         &quot;#EC NOTEXT
       ENDIF.
 
 *   call mocker method to retrieve values
@@ -466,28 +472,28 @@ ENDMETHOD.</source>
       ENDIF.
 
       IF lv_has_changing_parameter = abap_true OR lv_has_exporting_parameter = abap_true.
-        APPEND &apos;CALL METHOD lo_mocker_method-&gt;export&apos; TO lt_code.
+        APPEND &apos;CALL METHOD lo_mocker_method-&gt;export&apos; TO lt_code. &quot;#EC NOTEXT
       ENDIF.
 
       IF lv_has_returning_parameter = abap_true.
-        APPEND &apos;CALL METHOD lo_mocker_method-&gt;return&apos; TO lt_code.
+        APPEND &apos;CALL METHOD lo_mocker_method-&gt;return&apos; TO lt_code. &quot;#EC NOTEXT
       ENDIF.
 
       IF lv_has_changing_parameter = abap_true
         OR lv_has_exporting_parameter = abap_true
         OR lv_has_returning_parameter = abap_true.
-        APPEND &apos;EXPORTING it_importing = lt_importing it_changing_in = lt_changing_in&apos; TO lt_code.
+        APPEND &apos;EXPORTING it_importing = lt_importing it_changing_in = lt_changing_in&apos; TO lt_code. &quot;#EC NOTEXT
       ENDIF.
 
 *   map RETURNING parameter, if any
       IF lv_has_returning_parameter = abap_true.
         APPEND &apos;RECEIVING&apos; TO lt_code.
-        APPEND &apos;r_result = lr_return.&apos; TO lt_code.
+        APPEND &apos;r_result = lr_return.&apos; TO lt_code.          &quot;#EC NOTEXT
         READ TABLE &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WITH KEY parm_kind = &apos;R&apos;.
         IF sy-subrc = 0.
-          APPEND &apos;IF lr_return IS BOUND.&apos; TO lt_code.
-          APPEND &apos;ASSIGN lr_return-&gt;* TO &lt;lv_return&gt;.&apos; TO lt_code.
-          CONCATENATE &lt;ls_parameter&gt;-name &apos; = &lt;lv_return&gt;.&apos; INTO lv_line SEPARATED BY space.
+          APPEND &apos;IF lr_return IS BOUND.&apos; TO lt_code.       &quot;#EC NOTEXT
+          APPEND &apos;ASSIGN lr_return-&gt;* TO &lt;lv_return&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
+          CONCATENATE &lt;ls_parameter&gt;-name &apos; = &lt;lv_return&gt;.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
           APPEND lv_line TO lt_code.
           APPEND &apos;ENDIF.&apos; TO lt_code.
         ENDIF.
@@ -501,25 +507,25 @@ ENDMETHOD.</source>
 
 
         IF lv_has_exporting_parameter = abap_true.
-          APPEND &apos;et_exporting = lt_exporting&apos; TO lt_code.
+          APPEND &apos;et_exporting = lt_exporting&apos; TO lt_code.  &quot;#EC NOTEXT
         ENDIF.
         IF lv_has_changing_parameter = abap_true.
-          APPEND &apos;et_changing_out = lt_changing_out&apos; TO lt_code.
+          APPEND &apos;et_changing_out = lt_changing_out&apos; TO lt_code. &quot;#EC NOTEXT
         ENDIF.
         APPEND &apos;.&apos; TO lt_code.
 
         LOOP AT &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WHERE parm_kind = &apos;E&apos;.
           CONCATENATE &apos;FREE: &apos; &lt;ls_parameter&gt;-name &apos;.&apos; INTO lv_line SEPARATED BY space.
           APPEND lv_line TO lt_code.
-          CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_exporting-value.&apos; INTO lv_line SEPARATED BY space.
+          CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_exporting-value.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
           APPEND lv_line TO lt_code.
-          CONCATENATE &apos;READ TABLE lt_exporting ASSIGNING &lt;ls_exporting&gt; WITH KEY parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line.
+          CONCATENATE &apos;READ TABLE lt_exporting ASSIGNING &lt;ls_exporting&gt; WITH KEY parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line. &quot;#EC NOTEXT
           APPEND lv_line TO lt_code.
-          APPEND &apos;IF sy-subrc = 0.&apos; TO lt_code.
-          APPEND &apos;ASSIGN ls_exporting-value-&gt;* TO &lt;lv_exporting_out&gt;.&apos; TO lt_code.
-          APPEND &apos;ASSIGN &lt;ls_exporting&gt;-value-&gt;* TO &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code.
-          APPEND &apos;&lt;lv_exporting_out&gt; = &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code.
-          APPEND &apos;ENDIF.&apos; TO lt_code.
+          APPEND &apos;IF sy-subrc = 0.&apos; TO lt_code.             &quot;#EC NOTEXT
+          APPEND &apos;ASSIGN ls_exporting-value-&gt;* TO &lt;lv_exporting_out&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
+          APPEND &apos;ASSIGN &lt;ls_exporting&gt;-value-&gt;* TO &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
+          APPEND &apos;&lt;lv_exporting_out&gt; = &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
+          APPEND &apos;ENDIF.&apos; TO lt_code.                       &quot;#EC NOTEXT
         ENDLOOP.
 
         LOOP AT &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WHERE parm_kind = &apos;C&apos;.
@@ -527,14 +533,14 @@ ENDMETHOD.</source>
             CONCATENATE &apos;IF&apos; &lt;ls_parameter&gt;-name &apos;IS SUPPLIED.&apos; INTO lv_line SEPARATED BY space.
           ENDIF.
           APPEND lv_line TO lt_code.
-          CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_changing_out-value.&apos; INTO lv_line SEPARATED BY space.
+          CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_changing_out-value.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
           APPEND lv_line TO lt_code.
-          CONCATENATE &apos;READ TABLE lt_changing_out ASSIGNING &lt;ls_exporting&gt; WITH KEY parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line.
+          CONCATENATE &apos;READ TABLE lt_changing_out ASSIGNING &lt;ls_exporting&gt; WITH KEY parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line. &quot;#EC NOTEXT
           APPEND lv_line TO lt_code.
-          APPEND &apos;IF sy-subrc = 0.&apos; TO lt_code.
-          APPEND &apos;ASSIGN ls_changing_out-value-&gt;* TO &lt;lv_exporting_out&gt;.&apos; TO lt_code.
-          APPEND &apos;ASSIGN &lt;ls_exporting&gt;-value-&gt;* TO &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code.
-          APPEND &apos;&lt;lv_exporting_out&gt; = &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code.
+          APPEND &apos;IF sy-subrc = 0.&apos; TO lt_code.             &quot;#EC NOTEXT
+          APPEND &apos;ASSIGN ls_changing_out-value-&gt;* TO &lt;lv_exporting_out&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
+          APPEND &apos;ASSIGN &lt;ls_exporting&gt;-value-&gt;* TO &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
+          APPEND &apos;&lt;lv_exporting_out&gt; = &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
           APPEND &apos;ENDIF.&apos; TO lt_code.
           IF &lt;ls_parameter&gt;-is_optional = abap_true.
             APPEND &apos;ENDIF.&apos; TO lt_code.
@@ -835,10 +841,8 @@ ENDMETHOD.</source>
         clskey = ls_clskey
       IMPORTING
         class  = ls_class.
-    IF sy-subrc = 0.
-      IF ls_class-category = 40.
-        rv_is_exception = abap_true.
-      ENDIF.
+    IF ls_class-category = 40.
+      rv_is_exception = abap_true.
     ENDIF.
   ENDMETHOD.                    &quot;is_exception_class</source>
   </method>
@@ -880,10 +884,11 @@ ENDMETHOD.</source>
   <forwardDeclaration>ABAP</forwardDeclaration>
   <forwardDeclaration>SEOC</forwardDeclaration>
   <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MO_MOCKER" VERSION="1" LANGU="E" DESCRIPT="Beschreibt einen Mock-Erzeuger" EXPOSURE="1" STATE="1" EDITORDER="3 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZCL_MOCKA_MOCKER" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
-  <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MS_CURRENT_METHOD_CALL_PATTERN" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_METHOD_CALL_PATTERN" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
-  <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MT_METHOD_CALLS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="7 " SRCCOLUMN1="4 " SRCROW2="7 " SRCCOLUMN2="82 " TYPESRC_LENG="80 " TYPESRC="MT_METHOD_CALLS type TABLE OF ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_METHOD_CALL_PATTERN
+  <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MT_CURRENT_METHOD_CALL_PATTERN" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="5 " SRCCOLUMN1="7 " SRCROW2="5 " SRCCOLUMN2="100 " TYPESRC_LENG="96 " TYPESRC="MT_CURRENT_METHOD_CALL_PATTERN type TABLE OF ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_METHOD_CALL_PATTERN
 "/>
-  <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MT_METHOD_CALL_PATTERNS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="5 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="11 " SRCCOLUMN1="4 " SRCROW2="11 " SRCCOLUMN2="90 " TYPESRC_LENG="88 " TYPESRC="mt_method_call_patterns TYPE TABLE OF ZIF_MOCKA_MOCKER_method=&gt;ty_s_method_call_pattern
+  <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MT_METHOD_CALLS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="7 " SRCCOLUMN1="4 " SRCROW2="7 " SRCCOLUMN2="82 " TYPESRC_LENG="81 " TYPESRC="MT_METHOD_CALLS type TABLE OF ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_METHOD_CALL_PATTERN
+"/>
+  <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MT_METHOD_CALL_PATTERNS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="5 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="11 " SRCCOLUMN1="4 " SRCROW2="11 " SRCCOLUMN2="90 " TYPESRC_LENG="89 " TYPESRC="mt_method_call_patterns TYPE TABLE OF ZIF_MOCKA_MOCKER_method=&gt;ty_s_method_call_pattern
 "/>
   <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MV_METHOD_NAME" VERSION="1" LANGU="E" DESCRIPT="Vollständiger Komponentenname" EXPOSURE="1" STATE="1" EDITORDER="4 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="SEOCPDNAME" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
   <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MV_TIMES_CALLED" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="6 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="I" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
@@ -945,12 +950,16 @@ ENDMETHOD.</source>
   ENDIF.
 
 * map importing parameters to current method call pattern
-  DATA ls_changing_out LIKE LINE OF ms_current_method_call_pattern-importing.
+  DATA ls_changing_out TYPE zif_mocka_mocker_method=&gt;ty_s_name_value_pair.
   FIELD-SYMBOLS: &lt;ls_parameter&gt; LIKE LINE OF &lt;ls_method&gt;-parameters.
   DATA lv_index TYPE i.
   DATA lv_comp TYPE string.
 
-  FREE: ms_current_method_call_pattern-changing_out.
+  FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
+  LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    FREE: &lt;ls_current_call_pattern&gt;-changing_out.
+  ENDLOOP.
+
   READ TABLE &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WITH KEY parm_kind = &apos;C&apos;.
   IF sy-subrc NE 0.
     DATA lv_interface TYPE abap_abstypename.
@@ -990,7 +999,9 @@ ENDMETHOD.</source>
         ls_changing_out-value = copy_value( lr_ref ).
     ENDCASE.
     ls_changing_out-parameter = &lt;ls_parameter&gt;-name.
-    APPEND ls_changing_out TO ms_current_method_call_pattern-changing_out.
+    LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+      APPEND ls_changing_out TO &lt;ls_current_call_pattern&gt;-changing_out.
+    ENDLOOP.
   ENDLOOP.
 
   ro_mocker_method = me.
@@ -1009,16 +1020,15 @@ ENDMETHOD.</source>
 ENDMETHOD.</source>
   </interfaceMethod>
   <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~EXPORTS">
-   <source>METHOD ZIF_MOCKA_MOCKER_method~exports.
+   <source>METHOD zif_mocka_mocker_method~exports.
 
   DATA lv_parameter_count TYPE i.
   DATA lv_actual_parameter_count TYPE i.
   DATA lr_ref TYPE REF TO data.
   FIELD-SYMBOLS &lt;lv_in&gt; TYPE any.
   FIELD-SYMBOLS &lt;lv_to&gt; TYPE any.
-*  IF i_p1 IS SUPPLIED.
+
   ADD 1 TO lv_parameter_count.
-*  ENDIF.
   IF i_p2 IS SUPPLIED.
     ADD 1 TO lv_parameter_count.
   ENDIF.
@@ -1041,17 +1051,15 @@ ENDMETHOD.</source>
     ADD 1 TO lv_parameter_count.
   ENDIF.
 
-
-
   FIELD-SYMBOLS &lt;ls_method&gt; TYPE abap_methdescr.
   DATA lo_objdescr TYPE REF TO cl_abap_objectdescr.
 
   lo_objdescr = mo_mocker-&gt;mo_objectdescr.
   READ TABLE lo_objdescr-&gt;methods ASSIGNING &lt;ls_method&gt; WITH KEY name = mv_method_name.
   IF sy-subrc NE 0.
-    RAISE EXCEPTION TYPE ZCX_MOCKA
+    RAISE EXCEPTION TYPE zcx_mocka
       EXPORTING
-        textid    = ZCX_MOCKA=&gt;no_such_method
+        textid    = zcx_mocka=&gt;no_such_method
         interface = mo_mocker-&gt;mv_interface
         method    = mv_method_name.
   ENDIF.
@@ -1060,25 +1068,32 @@ ENDMETHOD.</source>
     ADD 1 TO lv_actual_parameter_count.
   ENDLOOP.
   IF lv_parameter_count &gt; lv_actual_parameter_count.
-    RAISE EXCEPTION TYPE ZCX_MOCKA
+    RAISE EXCEPTION TYPE zcx_mocka
       EXPORTING
-        textid = ZCX_MOCKA=&gt;invalid_parameter_count.
+        textid = zcx_mocka=&gt;invalid_parameter_count.
   ENDIF.
 
 * map importing parameters to current method call pattern
-  DATA ls_exporting LIKE LINE OF ms_current_method_call_pattern-importing.
+  DATA ls_exporting TYPE zif_mocka_mocker_method=&gt;ty_s_name_value_pair.
+
   FIELD-SYMBOLS: &lt;ls_parameter&gt; LIKE LINE OF &lt;ls_method&gt;-parameters.
   DATA lv_index TYPE i.
   DATA lv_comp TYPE string.
 
-  FREE: ms_current_method_call_pattern-exporting.
+  FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
+  IF mt_current_method_call_pattern IS INITIAL.
+    APPEND INITIAL LINE TO mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+  ENDIF.
+  LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    FREE: &lt;ls_current_call_pattern&gt;-exporting.
+  ENDLOOP.
   READ TABLE &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WITH KEY parm_kind = &apos;E&apos;.
   IF sy-subrc NE 0.
     DATA lv_interface TYPE abap_abstypename.
-    lv_interface =  mo_mocker-&gt;ZIF_MOCKA_MOCKER~get_interface( ).
-    RAISE EXCEPTION TYPE ZCX_MOCKA
+    lv_interface =  mo_mocker-&gt;zif_mocka_mocker~get_interface( ).
+    RAISE EXCEPTION TYPE zcx_mocka
       EXPORTING
-        textid    = ZCX_MOCKA=&gt;no_exporting_parameters
+        textid    = zcx_mocka=&gt;no_exporting_parameters
         interface = lv_interface
         method    = mv_method_name.
   ENDIF.
@@ -1111,7 +1126,10 @@ ENDMETHOD.</source>
         ls_exporting-value = copy_value( lr_ref ).
     ENDCASE.
     ls_exporting-parameter = &lt;ls_parameter&gt;-name.
-    APPEND ls_exporting TO ms_current_method_call_pattern-exporting.
+
+    LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+      APPEND ls_exporting TO &lt;ls_current_call_pattern&gt;-exporting.
+    ENDLOOP.
   ENDLOOP.
 
   finalize_current_method_sign( ).
@@ -1141,7 +1159,7 @@ ENDMETHOD.</source>
 
   DATA lv_param_kind TYPE c.
   DATA lv_is_importing TYPE abap_bool VALUE abap_true.
-  DATA ls_method_call_pattern LIKE ms_current_method_call_pattern.
+  DATA ls_method_call_pattern LIKE LINE OF mt_current_method_call_pattern.
   IF lv_is_importing = abap_true.&quot;toDo: support changing parameters
     lv_param_kind = cl_abap_objectdescr=&gt;importing.
   ELSE.
@@ -1289,13 +1307,17 @@ ENDMETHOD.</source>
 ENDMETHOD.</source>
   </interfaceMethod>
   <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~RAISES">
-   <source>METHOD ZIF_MOCKA_MOCKER_method~raises.
-  CLEAR: ms_current_method_call_pattern-raises_by_name.
-  ms_current_method_call_pattern-raises = io_cx_root.
+   <source>METHOD zif_mocka_mocker_method~raises.
+  FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
+  LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    CLEAR: &lt;ls_current_call_pattern&gt;-raises_by_name.
+    &lt;ls_current_call_pattern&gt;-raises = io_cx_root.
+  ENDLOOP.
+  finalize_current_method_sign( ).
 ENDMETHOD.</source>
   </interfaceMethod>
   <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~RAISES_BY_NAME">
-   <source>METHOD ZIF_MOCKA_MOCKER_method~raises_by_name.
+   <source>METHOD zif_mocka_mocker_method~raises_by_name.
   DATA: ls_class_descr TYPE vseoclass,
         ls_seoclskey TYPE seoclskey,
         lv_exception TYPE seoclsname.
@@ -1310,31 +1332,34 @@ ENDMETHOD.</source>
     IMPORTING
       class  = ls_class_descr.
   IF ls_class_descr IS INITIAL.
-    lv_interface = mo_mocker-&gt;ZIF_MOCKA_MOCKER~get_interface( ).
-    RAISE EXCEPTION TYPE ZCX_MOCKA
+    lv_interface = mo_mocker-&gt;zif_mocka_mocker~get_interface( ).
+    RAISE EXCEPTION TYPE zcx_mocka
       EXPORTING
-        textid    = ZCX_MOCKA=&gt;no_such_exception
+        textid    = zcx_mocka=&gt;no_such_exception
         interface = lv_interface
         exception = lv_exception
         method    = mv_method_name.
   ENDIF.
   IF ls_class_descr-category NE seoc_category_exception.
-    RAISE EXCEPTION TYPE ZCX_MOCKA
+    RAISE EXCEPTION TYPE zcx_mocka
       EXPORTING
-        textid    = ZCX_MOCKA=&gt;invalid_exception
+        textid    = zcx_mocka=&gt;invalid_exception
         exception = lv_exception.
   ENDIF.
   IF ls_class_descr-clsabstrct = abap_true.
-    RAISE EXCEPTION TYPE ZCX_MOCKA
+    RAISE EXCEPTION TYPE zcx_mocka
       EXPORTING
-        textid    = ZCX_MOCKA=&gt;abstract_exception
+        textid    = zcx_mocka=&gt;abstract_exception
         exception = lv_exception.
   ENDIF.
-  FREE: ms_current_method_call_pattern-raises.
-  ms_current_method_call_pattern-raises_by_name = lv_exception.
-  APPEND ms_current_method_call_pattern TO mt_method_call_patterns.
 
-  FREE: ms_current_method_call_pattern.
+  FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
+  LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    FREE: &lt;ls_current_call_pattern&gt;-raises.
+    &lt;ls_current_call_pattern&gt;-raises_by_name = lv_exception.
+  ENDLOOP.
+
+  finalize_current_method_sign( ).
   ro_mocker_method = me.
 ENDMETHOD.</source>
   </interfaceMethod>
@@ -1354,21 +1379,26 @@ ENDMETHOD.</source>
 ENDMETHOD.</source>
   </interfaceMethod>
   <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~RETURNS">
-   <source>METHOD ZIF_MOCKA_MOCKER_method~returns.
+   <source>METHOD zif_mocka_mocker_method~returns.
   TRY.
-      me-&gt;ZIF_MOCKA_MOCKER_method~exports( i_return ).
-    CATCH ZCX_MOCKA.
+      me-&gt;zif_mocka_mocker_method~exports( i_return ).
+    CATCH zcx_mocka.
       DATA lr_ref TYPE REF TO data.
       FIELD-SYMBOLS: &lt;lv_in&gt; TYPE any, &lt;lv_to&gt; TYPE any.
       GET REFERENCE OF i_return INTO lr_ref.
 
       ASSIGN lr_ref-&gt;* TO &lt;lv_in&gt;.
-      CREATE DATA ms_current_method_call_pattern-returning LIKE &lt;lv_in&gt;.
-      ASSIGN ms_current_method_call_pattern-returning-&gt;* TO &lt;lv_to&gt;.
-      &lt;lv_to&gt; = &lt;lv_in&gt;.
-      APPEND ms_current_method_call_pattern TO mt_method_call_patterns.
 
-      FREE: ms_current_method_call_pattern.
+      FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
+      IF mt_current_method_call_pattern IS INITIAL.
+        APPEND INITIAL LINE TO mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+      ENDIF.
+
+      LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+        CREATE DATA &lt;ls_current_call_pattern&gt;-returning LIKE &lt;lv_in&gt;.
+        ASSIGN &lt;ls_current_call_pattern&gt;-returning-&gt;* TO &lt;lv_to&gt;.
+        &lt;lv_to&gt; = &lt;lv_in&gt;.
+      ENDLOOP.
   ENDTRY.
 
   finalize_current_method_sign( ).
@@ -1381,9 +1411,7 @@ ENDMETHOD.</source>
 ENDMETHOD.</source>
   </interfaceMethod>
   <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~WITH">
-   <source>METHOD ZIF_MOCKA_MOCKER_method~with.
-  finalize_current_method_sign( ).
-
+   <source>METHOD zif_mocka_mocker_method~with.
   DATA lt_params TYPE abap_parmbind_tab.
   DATA ls_param TYPE abap_parmbind.
   DATA lv_iv_is_importing TYPE abap_bool VALUE abap_true.
@@ -1553,20 +1581,20 @@ ENDMETHOD.</source>
   &lt;lv_out&gt; = &lt;lv_in&gt;.
 ENDMETHOD.</source>
   </method>
-  <method CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="FINALIZE_CURRENT_METHOD_SIGN" VERSION="1" LANGU="E" DESCRIPT="internal - finalizes the current method recording" EXPOSURE="1" STATE="1" EDITORDER="7 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+  <method CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="FINALIZE_CURRENT_METHOD_SIGN" VERSION="1" LANGU="E" DESCRIPT="internal - finalizes the current method recording" EXPOSURE="1" STATE="1" EDITORDER="6 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="FINALIZE_CURRENT_METHOD_SIGN" SCONAME="RO_MOCKER" VERSION="1" LANGU="E" DESCRIPT="Beschreibt einen Mockup-Erzeuger" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="ZIF_MOCKA_MOCKER"/>
    <source>METHOD finalize_current_method_sign.
   ro_mocker = mo_mocker.
-  CHECK ms_current_method_call_pattern IS NOT INITIAL.
-  APPEND ms_current_method_call_pattern TO mt_method_call_patterns.
-  FREE: ms_current_method_call_pattern.
+  CHECK mt_current_method_call_pattern IS NOT INITIAL.
+  APPEND LINES OF mt_current_method_call_pattern TO mt_method_call_patterns.
+  FREE: mt_current_method_call_pattern.
 ENDMETHOD.</source>
   </method>
   <method CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="HAS_BEEN_CALLED_WITH" VERSION="1" LANGU="E" DESCRIPT="internal - resolve method output parameters" EXPOSURE="1" STATE="1" EDITORDER="4 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="HAS_BEEN_CALLED_WITH" SCONAME="IT_IMPORTING" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR"/>
    <parameter CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="HAS_BEEN_CALLED_WITH" SCONAME="IT_CHANGING_IN" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR" PAROPTIONL="X"/>
    <parameter CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="HAS_BEEN_CALLED_WITH" SCONAME="RV_HAS_BEEN_CALLED" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ABAP_BOOL"/>
-   <source>METHOD HAS_BEEN_CALLED_WITH.
+   <source>METHOD has_been_called_with.
   FIELD-SYMBOLS &lt;ls_method&gt; TYPE abap_methdescr.
   DATA lo_objdescr TYPE REF TO cl_abap_objectdescr.
   FIELD-SYMBOLS &lt;ls_method_call_pattern&gt; TYPE zif_mocka_mocker_method=&gt;ty_s_method_call_pattern.
@@ -1578,7 +1606,7 @@ ENDMETHOD.</source>
   ENDIF.
   CHECK &lt;ls_method&gt; IS ASSIGNED.
 
-  DATA ls_importing LIKE LINE OF ms_current_method_call_pattern-importing.
+  DATA ls_importing TYPE zif_mocka_mocker_method=&gt;ty_s_name_value_pair.
   FIELD-SYMBOLS: &lt;ls_parameter&gt; LIKE LINE OF &lt;ls_method&gt;-parameters.
   DATA lv_index TYPE i.
   DATA lv_comp TYPE string.
@@ -1664,7 +1692,7 @@ ENDMETHOD.</source>
 
   FIELD-SYMBOLS &lt;ls_method&gt; TYPE abap_methdescr.
   DATA lo_objdescr TYPE REF TO cl_abap_objectdescr.
-  FIELD-SYMBOLS &lt;ls_method_call_pattern&gt; TYPE ZIF_MOCKA_MOCKER_method=&gt;ty_s_method_call_pattern.
+  FIELD-SYMBOLS &lt;ls_method_call_pattern&gt; TYPE zif_mocka_mocker_method=&gt;ty_s_method_call_pattern.
 
   lo_objdescr = mo_mocker-&gt;mo_objectdescr.
   READ TABLE mo_mocker-&gt;mo_objectdescr-&gt;methods ASSIGNING &lt;ls_method&gt; WITH KEY name = mv_method_name.
@@ -1673,7 +1701,7 @@ ENDMETHOD.</source>
   ENDIF.
   CHECK &lt;ls_method&gt; IS ASSIGNED.
 
-  DATA ls_importing LIKE LINE OF ms_current_method_call_pattern-importing.
+  DATA ls_importing TYPE zif_mocka_mocker_method=&gt;ty_s_name_value_pair.
   FIELD-SYMBOLS: &lt;ls_parameter&gt; LIKE LINE OF &lt;ls_method&gt;-parameters.
   DATA lv_index TYPE i.
   DATA lv_comp TYPE string.
@@ -1693,7 +1721,7 @@ ENDMETHOD.</source>
         IF sy-subrc = 0.
           ASSIGN ls_importing-value-&gt;* TO &lt;lv_val&gt;.
           ASSIGN &lt;ls_importing&gt;-value-&gt;* TO &lt;lv_val_importing&gt;.
-          lv_equals = ZCL_MOCKA_VALUE_COMPARISON=&gt;assert_equals( act = &lt;lv_val_importing&gt; exp = &lt;lv_val&gt; ).
+          lv_equals = zcl_mocka_value_comparison=&gt;assert_equals( act = &lt;lv_val_importing&gt; exp = &lt;lv_val&gt; ).
         ELSE.
           IF &lt;ls_method_call_pattern&gt;-importing IS NOT INITIAL.
             lv_equals = abap_false.
@@ -1715,7 +1743,7 @@ ENDMETHOD.</source>
         IF sy-subrc = 0.
           ASSIGN ls_importing-value-&gt;* TO &lt;lv_val&gt;.
           ASSIGN &lt;ls_importing&gt;-value-&gt;* TO &lt;lv_val_importing&gt;.
-          lv_equals = ZCL_MOCKA_VALUE_COMPARISON=&gt;assert_equals( act = &lt;lv_val_importing&gt; exp = &lt;lv_val&gt; ).
+          lv_equals = zcl_mocka_value_comparison=&gt;assert_equals( act = &lt;lv_val_importing&gt; exp = &lt;lv_val&gt; ).
         ELSE.
           IF &lt;ls_method_call_pattern&gt;-changing_in IS NOT INITIAL.
             lv_equals = abap_false.
@@ -1822,10 +1850,33 @@ ENDMETHOD.</source>
   ENDIF.
 
 * map importing parameters to current method call pattern
-  DATA ls_importing LIKE LINE OF ms_current_method_call_pattern-importing.&quot;has the same structure as exporting arguments
+  DATA ls_importing TYPE zif_mocka_mocker_method=&gt;ty_s_name_value_pair.&quot;has the same structure as exporting arguments
   FIELD-SYMBOLS: &lt;ls_parameter&gt; LIKE LINE OF &lt;ls_method&gt;-parameters.
   DATA lv_index TYPE i.
   DATA lv_comp TYPE string.
+
+  FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
+  DATA lv_lines TYPE i.
+  DESCRIBE TABLE mt_current_method_call_pattern LINES lv_lines.
+
+  IF lv_lines &gt; 0.
+    READ TABLE mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt; INDEX lv_lines.
+    IF iv_is_importing = abap_true AND &lt;ls_current_call_pattern&gt;-importing IS NOT INITIAL.
+      APPEND INITIAL LINE TO mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    ENDIF.
+    IF iv_is_importing = abap_false AND &lt;ls_current_call_pattern&gt;-changing_in IS NOT INITIAL.
+      APPEND INITIAL LINE TO mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    ENDIF.
+    IF &lt;ls_current_call_pattern&gt;-changing_out IS NOT INITIAL
+      OR &lt;ls_current_call_pattern&gt;-exporting IS NOT INITIAL
+      OR &lt;ls_current_call_pattern&gt;-returning IS NOT INITIAL
+      OR &lt;ls_current_call_pattern&gt;-raises IS NOT INITIAL
+      OR &lt;ls_current_call_pattern&gt;-raises_by_name IS NOT INITIAL.
+      APPEND INITIAL LINE TO mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    ENDIF.
+  ELSE.
+    APPEND INITIAL LINE TO mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+  ENDIF.
 
   LOOP AT &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WHERE parm_kind = lv_param_kind.
     ADD 1 TO lv_index.
@@ -1856,10 +1907,11 @@ ENDMETHOD.</source>
         ls_importing-value = copy_value( lr_ref ).
     ENDCASE.
     ls_importing-parameter = &lt;ls_parameter&gt;-name.
+
     IF iv_is_importing = abap_true.
-      APPEND ls_importing TO ms_current_method_call_pattern-importing.
+      APPEND ls_importing TO &lt;ls_current_call_pattern&gt;-importing.
     ELSE.
-      APPEND ls_importing TO ms_current_method_call_pattern-changing_in.
+      APPEND ls_importing TO &lt;ls_current_call_pattern&gt;-changing_in.
     ENDIF.
   ENDLOOP.
 
@@ -2055,11 +2107,11 @@ ENDMETHOD.</source>
       attr4 type scx_attrname value &apos;&apos;,
     end of NO_RETURNING_PARAMETERS
 "/>
-  <attribute CLSNAME="ZCX_MOCKA" CMPNAME="NO_SUCH_ATTRIBUTE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="17 " ATTDECLTYP="2" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="112 " SRCCOLUMN1="4 " SRCROW2="119 " SRCCOLUMN2="27 " LOCKED="X" TYPESRC_LENG="305 " TYPESRC="begin of NO_SUCH_ATTRIBUTE,
+  <attribute CLSNAME="ZCX_MOCKA" CMPNAME="NO_SUCH_ATTRIBUTE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="17 " ATTDECLTYP="2" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="112 " SRCCOLUMN1="4 " SRCROW2="119 " SRCCOLUMN2="27 " LOCKED="X" TYPESRC_LENG="331 " TYPESRC="begin of NO_SUCH_ATTRIBUTE,
       msgid type symsgid value &apos;ZMOCKA_EXC_MOCK&apos;,
       msgno type symsgno value &apos;011&apos;,
-      attr1 type scx_attrname value &apos;&apos;,
-      attr2 type scx_attrname value &apos;&apos;,
+      attr1 type scx_attrname value &apos;ATTRIBUTE&apos;,
+      attr2 type scx_attrname value &apos;INTERFACE&apos;,
       attr3 type scx_attrname value &apos;&apos;,
       attr4 type scx_attrname value &apos;&apos;,
     end of NO_SUCH_ATTRIBUTE
@@ -2210,7 +2262,7 @@ ENDMETHOD.</source>
 ENDMETHOD.</source>
   </method>
  </CLAS>
- <CLAS CLSNAME="ZCX_MOCKA_IN_TIME_EXCEPTION" VERSION="1" LANGU="E" DESCRIPT="Sample-Exception class for unit tests (Mocking-Framework)" CATEGORY="40" EXPOSURE="2" STATE="1" RELEASE="0" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="CX_STATIC_CHECK">
+ <CLAS CLSNAME="ZCX_MOCKA_IN_TIME_EXCEPTION" VERSION="1" LANGU="E" DESCRIPT="Sample-Exception class for unit tests (Mocking-Framework)" CATEGORY="40" EXPOSURE="2" STATE="1" RELEASE="0" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="CX_NO_CHECK">
   <localImplementation>*&quot;* use this source file for the definition and implementation of
 *&quot;* local helper classes, interface definitions and type
 *&quot;* declarations</localImplementation>
@@ -2222,7 +2274,7 @@ ENDMETHOD.</source>
   <textPool>
    <language SPRAS="E"/>
   </textPool>
-  <inheritance CLSNAME="ZCX_MOCKA_IN_TIME_EXCEPTION" REFCLSNAME="CX_STATIC_CHECK" VERSION="1" STATE="1"/>
+  <inheritance CLSNAME="ZCX_MOCKA_IN_TIME_EXCEPTION" REFCLSNAME="CX_NO_CHECK" VERSION="1" STATE="1"/>
  </CLAS>
  <INTF CLSNAME="ZIF_MOCKA_MOCKER" VERSION="1" LANGU="E" DESCRIPT="describes a creator of mock objects" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" UNICODE="X">
   <types CLSNAME="ZIF_MOCKA_MOCKER" CMPNAME="TY_S_METHOD_MOCKS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="7 " SRCCOLUMN1="4 " SRCROW2="7 " SRCCOLUMN2="136 " TYPESRC_LENG="133 " TYPESRC="BEGIN OF TY_S_METHOD_MOCKS,  method_name TYPE SEOCPDNAME,  method_mock TYPE REF TO ZIF_MOCKA_MOCKER_METHOD,  END OF TY_S_METHOD_MOCKS"/>
@@ -2399,14 +2451,21 @@ ENDMETHOD.</source>
   <typeUsage CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" TYPEGROUP="ABAP" VERSION="1" TPUTYPE="0" EXPLICIT="X" IMPLICIT="X"/>
   <forwardDeclaration>ABAP</forwardDeclaration>
   <attribute CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GC_NAME" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;ZIF_MOCKA_IS_IN_TIME_INFO&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ABAP_ABSTYPENAME" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
-  <method CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BOTH" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="4 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+  <method CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BOTH" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="5 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BOTH" SCONAME="IV_CARRID" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_CARR_ID"/>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BOTH" SCONAME="IV_CONNID" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_CONN_ID"/>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BOTH" SCONAME="IV_FLDATE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_DATE"/>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BOTH" SCONAME="EV_DELAY" VERSION="1" LANGU="E" DESCRIPT="Delay in Minutes" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="I"/>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BOTH" SCONAME="EV_IS_IN_TIME" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="5 " DISPID="0 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL"/>
   </method>
-  <method CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BY_OPTIONAL_PARAMS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="5 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+  <method CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BOTH_BY_OPTIONAL_PARAM" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="4 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BOTH_BY_OPTIONAL_PARAM" SCONAME="IV_CARRID" VERSION="1" LANGU="E" DESCRIPT="Airline Code" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_CARR_ID" PARVALUE="&apos;LH&apos;"/>
+   <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BOTH_BY_OPTIONAL_PARAM" SCONAME="IV_CONNID" VERSION="1" LANGU="E" DESCRIPT="Flight Connection Number" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_CONN_ID" PARVALUE="402"/>
+   <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BOTH_BY_OPTIONAL_PARAM" SCONAME="IV_FLDATE" VERSION="1" LANGU="E" DESCRIPT="Flight date" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_DATE" PARVALUE="&apos;20121124&apos;"/>
+   <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BOTH_BY_OPTIONAL_PARAM" SCONAME="EV_DELAY" VERSION="1" LANGU="E" DESCRIPT="Delay in Minutes" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="I"/>
+   <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BOTH_BY_OPTIONAL_PARAM" SCONAME="EV_IS_IN_TIME" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="5 " DISPID="0 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL"/>
+  </method>
+  <method CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BY_OPTIONAL_PARAMS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="6 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BY_OPTIONAL_PARAMS" SCONAME="IV_CARRID" VERSION="1" LANGU="E" DESCRIPT="Kurzbezeichnung der Fluggesellschaft" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_CARR_ID" PARVALUE="&apos;LH&apos;"/>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BY_OPTIONAL_PARAMS" SCONAME="IV_CONNID" VERSION="1" LANGU="E" DESCRIPT="Code der Einzelflugverbindung" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_CONN_ID" PARVALUE="402"/>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_BY_OPTIONAL_PARAMS" SCONAME="IV_FLDATE" VERSION="1" LANGU="E" DESCRIPT="Flugdatum" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_DATE" PARVALUE="&apos;20121124&apos;"/>
@@ -2418,19 +2477,17 @@ ENDMETHOD.</source>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_DELAY" SCONAME="IV_FLDATE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_DATE"/>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="GET_DELAY" SCONAME="RV_DELAY" VERSION="1" LANGU="E" DESCRIPT="Delay in Minutes" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="INT4"/>
   </method>
-  <method CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" MTDNEWEXC="X" BCMTDCAT="00" BCMTDSYN="0">
+  <method CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME" SCONAME="IV_CARRID" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_CARR_ID"/>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME" SCONAME="IV_CONNID" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_CONN_ID"/>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME" SCONAME="IV_FLDATE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_DATE"/>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME" SCONAME="RV_IS_IN_TIME" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ABAP_BOOL"/>
-   <exception CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME" SCONAME="ZCX_MOCKA_IN_TIME_EXCEPTION" VERSION="1" LANGU="E" DESCRIPT="Beispiel-Exception für Mocking Bibliothek Unit Tests" MTDTYPE="0" EDITORDER="1 "/>
   </method>
-  <method CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME_BY_CHANGING_PARAM" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" MTDNEWEXC="X" BCMTDCAT="00" BCMTDSYN="0">
+  <method CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME_BY_CHANGING_PARAM" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME_BY_CHANGING_PARAM" SCONAME="IV_CARRID" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_CARR_ID"/>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME_BY_CHANGING_PARAM" SCONAME="IV_CONNID" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="S_CONN_ID"/>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME_BY_CHANGING_PARAM" SCONAME="EV_IS_IN_TIME" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL"/>
    <parameter CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME_BY_CHANGING_PARAM" SCONAME="CV_FLDATE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="S_DATE"/>
-   <exception CLSNAME="ZIF_MOCKA_IS_IN_TIME_INFO" CMPNAME="IS_IN_TIME_BY_CHANGING_PARAM" SCONAME="ZCX_MOCKA_IN_TIME_EXCEPTION" VERSION="1" LANGU="E" DESCRIPT="Beispiel-Exception für Mocking Bibliothek Unit Tests" MTDTYPE="0" EDITORDER="1 "/>
   </method>
  </INTF>
  <INTF CLSNAME="ZIF_MOCKA_MOCKER_METHOD_RUNTIM" VERSION="1" LANGU="D" DESCRIPT="describes the access to a method&apos;s runtime information" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" UNICODE="X">
@@ -2486,7 +2543,7 @@ ENDMETHOD.</source>
 *   lead developers:
 *     Uwe Kunath - kunath.uwe[at]googlemail.com
 *
-*   Copyright 2013 Uwe Kunath
+*   Copyright Uwe Kunath
 *    mockA can be found at https://github.com/uweku/mockA/
 *
 *   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
@@ -2641,7 +2698,7 @@ ENDCLASS.                    &quot;lcl_test_observer IMPLEMENTATION</source>
 *   lead developers:
 *     Uwe Kunath - kunath.uwe[at]googlemail.com
 *
-*   Copyright 2013 Uwe Kunath
+*   Copyright Uwe Kunath
 *    mockA can be found at https://github.com/uweku/mockA/
 *
 *   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
@@ -2660,8 +2717,6 @@ REPORT  ztest_cl_mocka_mocker.
 
 TYPE-POOLS: abap.
 
-*The mocker which is tested here is expected to dynamically generate a mockup if type ZIF_MOCKA_IS_IN_TIME_INFO
-
 *----------------------------------------------------------------------*
 *       CLASS lcl_test_mocker DEFINITION
 *----------------------------------------------------------------------*
@@ -2679,21 +2734,24 @@ CLASS lcl_test_mocker DEFINITION FOR TESTING.
     METHODS create_valid_mocker_method FOR TESTING.
     METHODS create_retrieve_mocker_method FOR TESTING.
     METHODS create_invalid_mocker_method FOR TESTING.
-    METHODS mock_method_params FOR TESTING.
-    METHODS mock_is_in_time FOR TESTING.
-    METHODS mock_get_delay FOR TESTING.
-    METHODS mock_get_both FOR TESTING.
-    METHODS mock_raises_exception FOR TESTING.
-    METHODS mock_changing_params FOR TESTING.
-    METHODS mock_optional_params FOR TESTING.
-    METHODS mock_get_delay_x2 FOR TESTING.
-    METHODS mock_raises_exc_x2 FOR TESTING.
-    METHODS mock_changing_par_x2 FOR TESTING.
-    METHODS mock_included_interface_method FOR TESTING.
-    METHODS mock_method_with_old_exc FOR TESTING.
-    METHODS mock_attribute FOR TESTING.
-    METHODS mock_attribute_of_class FOR TESTING.
-    METHODS mock_invalid_attribute FOR TESTING.
+    METHODS test_method_parameter_verif FOR TESTING.
+    METHODS is_in_time FOR TESTING.
+    METHODS get_delay FOR TESTING.
+    METHODS get_delay_multi_importing FOR TESTING.
+    METHODS get_both FOR TESTING.
+    METHODS get_both_by_optional_param FOR TESTING.
+    METHODS raises_exception FOR TESTING.
+    METHODS is_in_time_by_changing_param FOR TESTING.
+    METHODS is_in_time_by_chng_param_multi FOR TESTING.
+    METHODS optional_params FOR TESTING.
+    METHODS get_delay_x2 FOR TESTING.
+    METHODS raises_exc_x2 FOR TESTING.
+    METHODS changing_parameter_x2 FOR TESTING.
+    METHODS fake_included_interface_method FOR TESTING.
+    METHODS method_with_old_exc FOR TESTING.
+    METHODS fake_interface_attribute FOR TESTING.
+    METHODS fake_instance_attribute FOR TESTING.
+    METHODS fake_invalid_attribute FOR TESTING.
     METHODS is_method_called_positive FOR TESTING.
     METHODS is_method_called_negative FOR TESTING.
 ENDCLASS.                    &quot;lcl_test_mocker DEFINITION
@@ -2802,7 +2860,7 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     cl_aunit_assert=&gt;assert_initial( lo_mocker_method ).
   ENDMETHOD.                    &quot;create_invalid_mocker_method
 
-  METHOD mock_method_params.
+  METHOD test_method_parameter_verif.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -2827,7 +2885,6 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_not_initial( lv_has_exception_been_raised ).
 
-
 *   create valid parameter combination - using RETURNING parameter
     DATA lr_flag TYPE REF TO data.
     FIELD-SYMBOLS &lt;lv_flag&gt; TYPE abap_bool.
@@ -2842,8 +2899,6 @@ CLASS lcl_test_mocker IMPLEMENTATION.
         lv_has_exception_been_raised = abap_true.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
-
-
 
 *   create valid parameter combination - using EXPORTING parameters
     CLEAR: lv_has_exception_been_raised.
@@ -2868,9 +2923,9 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_not_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_method_params
+  ENDMETHOD.                    &quot;test_method_parameter_verif
 
-  METHOD mock_is_in_time.
+  METHOD is_in_time.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -2921,7 +2976,7 @@ CLASS lcl_test_mocker IMPLEMENTATION.
 
   ENDMETHOD.                    &quot;mock
 
-  METHOD mock_get_delay.
+  METHOD get_delay.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -2971,9 +3026,52 @@ CLASS lcl_test_mocker IMPLEMENTATION.
         lv_has_exception_been_raised = abap_true.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
-  ENDMETHOD.                    &quot;mock_GET_DELAY
+  ENDMETHOD.                    &quot;GET_DELAY
 
-  METHOD mock_get_both.
+  METHOD get_delay_multi_importing.
+    DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
+    DATA lo_mocker TYPE REF TO zif_mocka_mocker.
+    DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
+
+*   create valid parameter combination
+    DATA lr_flag TYPE REF TO data.
+    FIELD-SYMBOLS &lt;lv_flag&gt; TYPE abap_bool.
+    DATA lv_is_in_time TYPE abap_bool.
+    DATA lv_delay TYPE i.
+    CLEAR: lv_has_exception_been_raised.
+    DATA lo_in_time TYPE REF TO zif_mocka_is_in_time_info.
+    DATA lv_times TYPE i.
+
+    TRY.
+        lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;ZIF_MOCKA_IS_IN_TIME_INFO&apos; ).
+        lo_mocker_method = lo_mocker-&gt;method( &apos;GET_DELAY&apos; ).
+        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121109&apos; ).
+        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121110&apos; ).
+        lo_mocker_method-&gt;returns( 5 ).
+
+*       please be aware of fluent API: in NW releases &gt;= 7.02 you could also use:
+*        lo_mocker_method = lo_mocker-&gt;method( &apos;GET_DELAY&apos; )-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121110&apos; )-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121109&apos; )-&gt;returns( 5 ).
+
+*       this call creates the mockup
+        lo_in_time ?= lo_mocker-&gt;generate_mockup( ).
+        cl_aunit_assert=&gt;assert_not_initial( lo_in_time ).
+
+*       call interface methods of the mockup - GET_DELAY
+        lv_delay = lo_in_time-&gt;get_delay( iv_carrid = &apos;LH&apos; iv_connid = 402 iv_fldate = &apos;20121109&apos; ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_delay exp = 5 ).
+        lv_delay = lo_in_time-&gt;get_delay( iv_carrid = &apos;LH&apos; iv_connid = 402 iv_fldate = &apos;20121110&apos; ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_delay exp = 5 ).
+
+*       verify number of calls for GET_DELAY
+        lv_times = lo_mocker_method-&gt;times_called( ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_times exp = 2 ).
+      CATCH zcx_mocka.
+        lv_has_exception_been_raised = abap_true.
+    ENDTRY.
+    cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
+  ENDMETHOD.                    &quot;get_delay_multi_importing
+
+  METHOD get_both.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -3033,9 +3131,49 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_get_both
+  ENDMETHOD.                    &quot;get_both
 
-  METHOD mock_raises_exception.
+  METHOD get_both_by_optional_param.
+    DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
+    DATA lo_mocker TYPE REF TO zif_mocka_mocker.
+    DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
+
+*   create valid parameter combination
+    DATA lr_flag TYPE REF TO data.
+    FIELD-SYMBOLS &lt;lv_flag&gt; TYPE abap_bool.
+    DATA lv_is_in_time TYPE abap_bool.
+    DATA lv_delay TYPE i.
+    CLEAR: lv_has_exception_been_raised.
+    DATA lo_in_time TYPE REF TO zif_mocka_is_in_time_info.
+    DATA lv_times TYPE i.
+
+    TRY.
+        lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;ZIF_MOCKA_IS_IN_TIME_INFO&apos; ).
+*       create valid parameter combination - using EXPORTING parameters
+        CLEAR: lv_has_exception_been_raised.
+        lo_mocker_method = lo_mocker-&gt;method( &apos;GET_BOTH_BY_OPTIONAL_PARAM&apos; ).
+        lo_mocker_method-&gt;exports( i_p1 = 2 i_p2 = abap_true ).
+
+*       this call creates the mockup
+        lo_in_time ?= lo_mocker-&gt;generate_mockup( ).
+        cl_aunit_assert=&gt;assert_not_initial( lo_in_time ).
+
+        lo_in_time-&gt;get_both_by_optional_param(
+            IMPORTING ev_delay = lv_delay ev_is_in_time = lv_is_in_time ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_delay exp = 2 ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_is_in_time exp = abap_true ).
+
+*       verify number of calls for GET_BOTH_BY_OPTIONAL_PARAM
+        lv_times = lo_mocker_method-&gt;times_called( ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_times exp = 1 ).
+
+      CATCH zcx_mocka.
+        lv_has_exception_been_raised = abap_true.
+    ENDTRY.
+    cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
+
+  ENDMETHOD.                    &quot;get_both_optional
+  METHOD raises_exception.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -3065,7 +3203,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
         cl_aunit_assert=&gt;assert_not_initial( lv_has_exception_been_raised ).
         lv_has_exception_been_raised = abap_false.
 
-        lo_mocker_method-&gt;raises_by_name( &apos;ZCX_MOCKA_IN_TIME_EXCEPTION&apos; ).&quot;intentionally name the valid exception in lower case
+
+        lo_mocker_method-&gt;raises_by_name( &apos;zcx_mocka_in_time_exception&apos; ).&quot;intentionally name the valid exception in lower case
 
         lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121109&apos; ).
         lo_mocker_method-&gt;returns( abap_false ).
@@ -3092,9 +3231,102 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_raises_exception
+  ENDMETHOD.                    &quot;raises_exception
 
-  METHOD mock_changing_params.
+  METHOD is_in_time_by_chng_param_multi.
+    DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
+    DATA lo_mocker TYPE REF TO zif_mocka_mocker.
+    DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
+
+*   create valid parameter combination
+    DATA lr_flag TYPE REF TO data.
+    FIELD-SYMBOLS &lt;lv_flag&gt; TYPE abap_bool.
+    DATA lv_is_in_time TYPE abap_bool.
+    DATA lv_delay TYPE i.
+    DATA lv_fldate TYPE s_date.
+    CONSTANTS lc_change_to_fldate TYPE s_date VALUE &apos;20121124&apos;.
+    CLEAR: lv_has_exception_been_raised.
+    DATA lo_in_time TYPE REF TO zif_mocka_is_in_time_info.
+    DATA lv_times TYPE i.
+
+    TRY.
+        lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;ZIF_MOCKA_IS_IN_TIME_INFO&apos; ).
+
+        lo_mocker_method = lo_mocker-&gt;method( &apos;IS_IN_TIME_BY_CHANGING_PARAM&apos; ).
+        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 ).
+        lo_mocker_method-&gt;with_changing( &apos;20121108&apos; ).
+        lo_mocker_method-&gt;with_changing( &apos;20121109&apos; ).
+        lo_mocker_method-&gt;exports( abap_false ).
+
+        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 ).
+        lo_mocker_method-&gt;with_changing( &apos;20121123&apos; ).
+        lo_mocker_method-&gt;with_changing( &apos;20121124&apos; ).
+        lo_mocker_method-&gt;changes( lc_change_to_fldate ).
+        lo_mocker_method-&gt;exports( abap_true ).
+
+*       this call creates the mockup
+        lo_in_time ?= lo_mocker-&gt;generate_mockup( ).
+        cl_aunit_assert=&gt;assert_not_initial( lo_in_time ).
+
+        CLEAR: lv_has_exception_been_raised.
+        CLEAR: lv_is_in_time.
+        lv_fldate = &apos;20121109&apos;.
+        CALL METHOD lo_in_time-&gt;is_in_time_by_changing_param
+          EXPORTING
+            iv_carrid     = &apos;LH&apos;
+            iv_connid     = 402
+          IMPORTING
+            ev_is_in_time = lv_is_in_time
+          CHANGING
+            cv_fldate     = lv_fldate.
+        cl_aunit_assert=&gt;assert_equals( act = lv_is_in_time exp = abap_false ).
+
+        CLEAR: lv_is_in_time.
+        lv_fldate = &apos;20121108&apos;.
+        CALL METHOD lo_in_time-&gt;is_in_time_by_changing_param
+          EXPORTING
+            iv_carrid     = &apos;LH&apos;
+            iv_connid     = 402
+          IMPORTING
+            ev_is_in_time = lv_is_in_time
+          CHANGING
+            cv_fldate     = lv_fldate.
+        cl_aunit_assert=&gt;assert_equals( act = lv_is_in_time exp = abap_false ).
+
+        CLEAR: lv_is_in_time.
+        lv_fldate = &apos;20121123&apos;.
+
+        CALL METHOD lo_in_time-&gt;is_in_time_by_changing_param
+          EXPORTING
+            iv_carrid     = &apos;LH&apos;
+            iv_connid     = 402
+          IMPORTING
+            ev_is_in_time = lv_is_in_time
+          CHANGING
+            cv_fldate     = lv_fldate.
+        cl_aunit_assert=&gt;assert_equals( act = lv_is_in_time exp = abap_true ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_fldate exp = lc_change_to_fldate ).
+
+        CLEAR: lv_is_in_time.
+        lv_fldate = &apos;20121124&apos;.
+        CALL METHOD lo_in_time-&gt;is_in_time_by_changing_param
+          EXPORTING
+            iv_carrid     = &apos;LH&apos;
+            iv_connid     = 402
+          IMPORTING
+            ev_is_in_time = lv_is_in_time
+          CHANGING
+            cv_fldate     = lv_fldate.
+        cl_aunit_assert=&gt;assert_equals( act = lv_is_in_time exp = abap_true ).
+
+      CATCH zcx_mocka.
+        lv_has_exception_been_raised = abap_true.
+    ENDTRY.
+    cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
+
+  ENDMETHOD.                    &quot;is_in_time_by_chng_param_multi
+
+  METHOD is_in_time_by_changing_param.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -3111,8 +3343,7 @@ CLASS lcl_test_mocker IMPLEMENTATION.
 
     TRY.
         lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;ZIF_MOCKA_IS_IN_TIME_INFO&apos; ).
-*       create valid parameter combination - using EXPORTING parameters
-        CLEAR: lv_has_exception_been_raised.
+
         lo_mocker_method = lo_mocker-&gt;method( &apos;IS_IN_TIME_BY_CHANGING_PARAM&apos; ).
         lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 ).
         lo_mocker_method-&gt;with_changing( &apos;20121108&apos; ).
@@ -3128,13 +3359,15 @@ CLASS lcl_test_mocker IMPLEMENTATION.
         lo_mocker_method-&gt;exports( abap_true ).
 
 *       please be aware of fluent API: in NW releases &gt;= 7.02 you could also use:
-*        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 )-&gt;with_changing( &apos;20121108&apos; )-&gt;exports( i_p1 = 10 i_p2 = abap_false ).
-*        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 )-&gt;with_changing( &apos;20121109&apos; )-&gt;exports( i_p1 = 2 i_p2 = abap_true ).
+*        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 )-&gt;with_changing( &apos;20121108&apos; )-&gt;exports( i_p1 = abap_false ).
+*        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 )-&gt;with_changing( &apos;20121109&apos; )-&gt;exports( i_p1 = abap_true ).
+*        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 )-&gt;with_changing( &apos;20121123&apos; )-&gt;changes( &apos;20121124&apos; )-&gt;exports( i_p1 = abap_true ).
 
 *       this call creates the mockup
         lo_in_time ?= lo_mocker-&gt;generate_mockup( ).
         cl_aunit_assert=&gt;assert_not_initial( lo_in_time ).
 
+        CLEAR: lv_has_exception_been_raised.
         CLEAR: lv_is_in_time.
         lv_fldate = &apos;20121109&apos;.
         CALL METHOD lo_in_time-&gt;is_in_time_by_changing_param
@@ -3179,8 +3412,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_changing_params
-  METHOD mock_optional_params.
+  ENDMETHOD.                    &quot;IS_IN_TIME_BY_CHANGING_PARAM
+  METHOD optional_params.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -3224,8 +3457,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_optional_params
-  METHOD mock_get_delay_x2.
+  ENDMETHOD.                    &quot;optional_params
+  METHOD get_delay_x2.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -3275,8 +3508,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_get_delay_x2
-  METHOD mock_raises_exc_x2.
+  ENDMETHOD.                    &quot;get_delay_x2
+  METHOD raises_exc_x2.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -3331,8 +3564,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_raises_exc_x2
-  METHOD mock_changing_par_x2.
+  ENDMETHOD.                    &quot;raises_exc_x2
+  METHOD changing_parameter_x2.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -3411,8 +3644,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_changing_par_x2
-  METHOD mock_included_interface_method.
+  ENDMETHOD.                    &quot;changing_parameter_x2
+  METHOD fake_included_interface_method.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -3436,8 +3669,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_included_interface_method
-  METHOD mock_method_with_old_exc.
+  ENDMETHOD.                    &quot;fake_included_interface_method
+  METHOD method_with_old_exc.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -3451,8 +3684,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_method_with_old_exc
-  METHOD mock_attribute.
+  ENDMETHOD.                    &quot;method_with_old_exc
+  METHOD fake_interface_attribute.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -3470,8 +3703,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
     cl_aunit_assert=&gt;assert_equals( act = lo_fake-&gt;propertytype_logon_popup exp = 3 ).
 
-  ENDMETHOD.                    &quot;mock_attribute
-  METHOD mock_attribute_of_class.
+  ENDMETHOD.                    &quot;attribute
+  METHOD fake_instance_attribute.
 
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
@@ -3491,9 +3724,9 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
     cl_aunit_assert=&gt;assert_equals( act = lv_interface exp = &apos;ZIF_TEST&apos; ).
 
-  ENDMETHOD.                    &quot;mock_attribute_of_class
+  ENDMETHOD.                    &quot;fake_static_attribute
 
-  METHOD mock_invalid_attribute.
+  METHOD fake_invalid_attribute.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -3502,7 +3735,7 @@ CLASS lcl_test_mocker IMPLEMENTATION.
 
     TRY.
         lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;IF_HTTP_CLIENT&apos; ).
-        lo_attribute = lo_mocker-&gt;attribute( &apos;INVALID_ATTRIBUTE&apos; ).
+        lo_attribute = lo_mocker-&gt;attribute( &apos;fake_invalid_attribute&apos; ).
         lo_attribute-&gt;returns( 3 ).
         lo_fake ?= lo_mocker-&gt;generate_mockup( ).
       CATCH zcx_mocka.
@@ -3510,7 +3743,7 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_not_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_invalid_attribute
+  ENDMETHOD.                    &quot;fake_invalid_attribute
   METHOD is_method_called_positive.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -3585,7 +3818,7 @@ ENDCLASS.                    &quot;lcl_test_mocker IMPLEMENTATION</source>
 *   lead developers:
 *     Uwe Kunath - kunath.uwe[at]googlemail.com
 *
-*   Copyright 2013 Uwe Kunath
+*   Copyright Uwe Kunath
 *    mockA can be found at https://github.com/uweku/mockA/
 *
 *   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
@@ -3628,7 +3861,7 @@ lo_mocker_method-&gt;returns( 100 ).
 
 lo_is_in_time_into ?= lo_mocker-&gt;generate_mockup( ).
 lv_has_been_called = lo_mocker-&gt;has_method_been_called( &apos;get_delay&apos; ).
-WRITE: &apos;get_delay( ) called? :&apos;, lv_has_been_called.
+WRITE: &apos;get_delay( ) called? -&gt; &quot;&apos;, lv_has_been_called, &apos;&quot; (&quot;X&quot;=yes, &quot;&quot;=no)&apos;.&quot;#EC NOTEXT
 NEW-LINE.
 lo_mocker_method = lo_mocker-&gt;method( &apos;get_delay&apos; ).
 lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
@@ -3636,7 +3869,7 @@ lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
     i_p2             = &apos;300&apos;
     i_p3             = sy-datlo
 ).
-WRITE: &apos;get_delay( ) called with LH/300&apos;,sy-datlo,&apos;? :&apos;, lv_has_been_called.
+WRITE: &apos;get_delay( ) called with LH/300&apos;,sy-datlo,&apos;? -&gt; &quot;&apos;, lv_has_been_called, &apos;&quot; (&quot;X&quot;=yes, &quot;&quot;=no)&apos;.&quot;#EC NOTEXT
 NEW-LINE.
 
 lo_is_in_time_into-&gt;get_delay(
@@ -3647,19 +3880,23 @@ lo_is_in_time_into-&gt;get_delay(
   RECEIVING
     rv_delay  = lv_delay
 ).
-WRITE: &apos;Delay:&apos;, lv_delay.
+WRITE: &apos;get_delay( ) for LH/300&apos;,sy-datlo,&apos;: &apos;, lv_delay.&quot;#EC NOTEXT
 NEW-LINE.
 
 lv_has_been_called = lo_mocker-&gt;has_method_been_called( &apos;get_delay&apos; ).
-WRITE: &apos;get_delay( ) called? :&apos;, lv_has_been_called.
+WRITE: &apos;get_delay( ) called? -&gt; &quot;&apos;, lv_has_been_called, &apos;&quot; (&quot;X&quot;=yes, &quot;&quot;=no)&apos;.&quot;#EC NOTEXT
 NEW-LINE.
+lv_call_count = lo_mocker-&gt;method_call_count( &apos;get_delay&apos; ).
+WRITE: &apos;call count of get_delay( ) :&apos;, lv_call_count.&quot;#EC NOTEXT
+NEW-LINE.
+
 lo_mocker_method = lo_mocker-&gt;method( &apos;get_delay&apos; ).
 lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
     i_p1             = &apos;LH&apos;
     i_p2             = &apos;300&apos;
     i_p3             = sy-datlo
 ).
-WRITE: &apos;get_delay( ) called with LH/300&apos;,sy-datlo,&apos;? :&apos;, lv_has_been_called.
+WRITE: &apos;get_delay( ) called with LH/300&apos;,sy-datlo,&apos;? -&gt; &quot;&apos;, lv_has_been_called, &apos;&quot; (&quot;X&quot;=yes, &quot;&quot;=no)&apos;.&quot;#EC NOTEXT
 NEW-LINE.
 
 lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
@@ -3667,10 +3904,7 @@ lv_has_been_called = lo_mocker_method-&gt;has_been_called_with(
     i_p2             = &apos;301&apos;
     i_p3             = sy-datlo
 ).
-WRITE: &apos;get_delay( ) called with LH/301&apos;,sy-datlo,&apos;? :&apos;, lv_has_been_called.
-NEW-LINE.
-lv_call_count = lo_mocker-&gt;method_call_count( &apos;get_delay&apos; ).
-WRITE: &apos;call count of get_delay( ) :&apos;, lv_call_count.</source>
+WRITE: &apos;get_delay( ) called with LH/301&apos;,sy-datlo,&apos;? -&gt; &quot;&apos;, lv_has_been_called, &apos;&quot; (&quot;X&quot;=yes, &quot;&quot;=no)&apos;.&quot;#EC NOTEXT</source>
  </PROG>
  <MSAG ARBGB="ZMOCKA_EXC_MOCK" MASTERLANG="E" RESPUSER="KUNATHU">
   <t100 SPRSL="D" ARBGB="ZMOCKA_EXC_MOCK" MSGNR="000" TEXT="&amp;1"/>

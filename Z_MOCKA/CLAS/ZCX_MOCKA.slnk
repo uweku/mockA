@@ -70,11 +70,11 @@
       attr4 type scx_attrname value &apos;&apos;,
     end of NO_RETURNING_PARAMETERS
 "/>
- <attribute CLSNAME="ZCX_MOCKA" CMPNAME="NO_SUCH_ATTRIBUTE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="17 " ATTDECLTYP="2" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="112 " SRCCOLUMN1="4 " SRCROW2="119 " SRCCOLUMN2="27 " LOCKED="X" TYPESRC_LENG="305 " TYPESRC="begin of NO_SUCH_ATTRIBUTE,
+ <attribute CLSNAME="ZCX_MOCKA" CMPNAME="NO_SUCH_ATTRIBUTE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="17 " ATTDECLTYP="2" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="112 " SRCCOLUMN1="4 " SRCROW2="119 " SRCCOLUMN2="27 " LOCKED="X" TYPESRC_LENG="331 " TYPESRC="begin of NO_SUCH_ATTRIBUTE,
       msgid type symsgid value &apos;ZMOCKA_EXC_MOCK&apos;,
       msgno type symsgno value &apos;011&apos;,
-      attr1 type scx_attrname value &apos;&apos;,
-      attr2 type scx_attrname value &apos;&apos;,
+      attr1 type scx_attrname value &apos;ATTRIBUTE&apos;,
+      attr2 type scx_attrname value &apos;INTERFACE&apos;,
       attr3 type scx_attrname value &apos;&apos;,
       attr4 type scx_attrname value &apos;&apos;,
     end of NO_SUCH_ATTRIBUTE

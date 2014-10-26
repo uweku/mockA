@@ -20,7 +20,7 @@
 *   lead developers:
 *     Uwe Kunath - kunath.uwe[at]googlemail.com
 *
-*   Copyright 2013 Uwe Kunath
+*   Copyright Uwe Kunath
 *    mockA can be found at https://github.com/uweku/mockA/
 *
 *   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
@@ -39,8 +39,6 @@ REPORT  ztest_cl_mocka_mocker.
 
 TYPE-POOLS: abap.
 
-*The mocker which is tested here is expected to dynamically generate a mockup if type ZIF_MOCKA_IS_IN_TIME_INFO
-
 *----------------------------------------------------------------------*
 *       CLASS lcl_test_mocker DEFINITION
 *----------------------------------------------------------------------*
@@ -58,21 +56,24 @@ CLASS lcl_test_mocker DEFINITION FOR TESTING.
     METHODS create_valid_mocker_method FOR TESTING.
     METHODS create_retrieve_mocker_method FOR TESTING.
     METHODS create_invalid_mocker_method FOR TESTING.
-    METHODS mock_method_params FOR TESTING.
-    METHODS mock_is_in_time FOR TESTING.
-    METHODS mock_get_delay FOR TESTING.
-    METHODS mock_get_both FOR TESTING.
-    METHODS mock_raises_exception FOR TESTING.
-    METHODS mock_changing_params FOR TESTING.
-    METHODS mock_optional_params FOR TESTING.
-    METHODS mock_get_delay_x2 FOR TESTING.
-    METHODS mock_raises_exc_x2 FOR TESTING.
-    METHODS mock_changing_par_x2 FOR TESTING.
-    METHODS mock_included_interface_method FOR TESTING.
-    METHODS mock_method_with_old_exc FOR TESTING.
-    METHODS mock_attribute FOR TESTING.
-    METHODS mock_attribute_of_class FOR TESTING.
-    METHODS mock_invalid_attribute FOR TESTING.
+    METHODS test_method_parameter_verif FOR TESTING.
+    METHODS is_in_time FOR TESTING.
+    METHODS get_delay FOR TESTING.
+    METHODS get_delay_multi_importing FOR TESTING.
+    METHODS get_both FOR TESTING.
+    METHODS get_both_by_optional_param FOR TESTING.
+    METHODS raises_exception FOR TESTING.
+    METHODS is_in_time_by_changing_param FOR TESTING.
+    METHODS is_in_time_by_chng_param_multi FOR TESTING.
+    METHODS optional_params FOR TESTING.
+    METHODS get_delay_x2 FOR TESTING.
+    METHODS raises_exc_x2 FOR TESTING.
+    METHODS changing_parameter_x2 FOR TESTING.
+    METHODS fake_included_interface_method FOR TESTING.
+    METHODS method_with_old_exc FOR TESTING.
+    METHODS fake_interface_attribute FOR TESTING.
+    METHODS fake_instance_attribute FOR TESTING.
+    METHODS fake_invalid_attribute FOR TESTING.
     METHODS is_method_called_positive FOR TESTING.
     METHODS is_method_called_negative FOR TESTING.
 ENDCLASS.                    &quot;lcl_test_mocker DEFINITION
@@ -181,7 +182,7 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     cl_aunit_assert=&gt;assert_initial( lo_mocker_method ).
   ENDMETHOD.                    &quot;create_invalid_mocker_method
 
-  METHOD mock_method_params.
+  METHOD test_method_parameter_verif.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -206,7 +207,6 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_not_initial( lv_has_exception_been_raised ).
 
-
 *   create valid parameter combination - using RETURNING parameter
     DATA lr_flag TYPE REF TO data.
     FIELD-SYMBOLS &lt;lv_flag&gt; TYPE abap_bool.
@@ -221,8 +221,6 @@ CLASS lcl_test_mocker IMPLEMENTATION.
         lv_has_exception_been_raised = abap_true.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
-
-
 
 *   create valid parameter combination - using EXPORTING parameters
     CLEAR: lv_has_exception_been_raised.
@@ -247,9 +245,9 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_not_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_method_params
+  ENDMETHOD.                    &quot;test_method_parameter_verif
 
-  METHOD mock_is_in_time.
+  METHOD is_in_time.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -300,7 +298,7 @@ CLASS lcl_test_mocker IMPLEMENTATION.
 
   ENDMETHOD.                    &quot;mock
 
-  METHOD mock_get_delay.
+  METHOD get_delay.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -350,9 +348,52 @@ CLASS lcl_test_mocker IMPLEMENTATION.
         lv_has_exception_been_raised = abap_true.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
-  ENDMETHOD.                    &quot;mock_GET_DELAY
+  ENDMETHOD.                    &quot;GET_DELAY
 
-  METHOD mock_get_both.
+  METHOD get_delay_multi_importing.
+    DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
+    DATA lo_mocker TYPE REF TO zif_mocka_mocker.
+    DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
+
+*   create valid parameter combination
+    DATA lr_flag TYPE REF TO data.
+    FIELD-SYMBOLS &lt;lv_flag&gt; TYPE abap_bool.
+    DATA lv_is_in_time TYPE abap_bool.
+    DATA lv_delay TYPE i.
+    CLEAR: lv_has_exception_been_raised.
+    DATA lo_in_time TYPE REF TO zif_mocka_is_in_time_info.
+    DATA lv_times TYPE i.
+
+    TRY.
+        lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;ZIF_MOCKA_IS_IN_TIME_INFO&apos; ).
+        lo_mocker_method = lo_mocker-&gt;method( &apos;GET_DELAY&apos; ).
+        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121109&apos; ).
+        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121110&apos; ).
+        lo_mocker_method-&gt;returns( 5 ).
+
+*       please be aware of fluent API: in NW releases &gt;= 7.02 you could also use:
+*        lo_mocker_method = lo_mocker-&gt;method( &apos;GET_DELAY&apos; )-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121110&apos; )-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121109&apos; )-&gt;returns( 5 ).
+
+*       this call creates the mockup
+        lo_in_time ?= lo_mocker-&gt;generate_mockup( ).
+        cl_aunit_assert=&gt;assert_not_initial( lo_in_time ).
+
+*       call interface methods of the mockup - GET_DELAY
+        lv_delay = lo_in_time-&gt;get_delay( iv_carrid = &apos;LH&apos; iv_connid = 402 iv_fldate = &apos;20121109&apos; ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_delay exp = 5 ).
+        lv_delay = lo_in_time-&gt;get_delay( iv_carrid = &apos;LH&apos; iv_connid = 402 iv_fldate = &apos;20121110&apos; ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_delay exp = 5 ).
+
+*       verify number of calls for GET_DELAY
+        lv_times = lo_mocker_method-&gt;times_called( ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_times exp = 2 ).
+      CATCH zcx_mocka.
+        lv_has_exception_been_raised = abap_true.
+    ENDTRY.
+    cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
+  ENDMETHOD.                    &quot;get_delay_multi_importing
+
+  METHOD get_both.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -412,9 +453,49 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_get_both
+  ENDMETHOD.                    &quot;get_both
 
-  METHOD mock_raises_exception.
+  METHOD get_both_by_optional_param.
+    DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
+    DATA lo_mocker TYPE REF TO zif_mocka_mocker.
+    DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
+
+*   create valid parameter combination
+    DATA lr_flag TYPE REF TO data.
+    FIELD-SYMBOLS &lt;lv_flag&gt; TYPE abap_bool.
+    DATA lv_is_in_time TYPE abap_bool.
+    DATA lv_delay TYPE i.
+    CLEAR: lv_has_exception_been_raised.
+    DATA lo_in_time TYPE REF TO zif_mocka_is_in_time_info.
+    DATA lv_times TYPE i.
+
+    TRY.
+        lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;ZIF_MOCKA_IS_IN_TIME_INFO&apos; ).
+*       create valid parameter combination - using EXPORTING parameters
+        CLEAR: lv_has_exception_been_raised.
+        lo_mocker_method = lo_mocker-&gt;method( &apos;GET_BOTH_BY_OPTIONAL_PARAM&apos; ).
+        lo_mocker_method-&gt;exports( i_p1 = 2 i_p2 = abap_true ).
+
+*       this call creates the mockup
+        lo_in_time ?= lo_mocker-&gt;generate_mockup( ).
+        cl_aunit_assert=&gt;assert_not_initial( lo_in_time ).
+
+        lo_in_time-&gt;get_both_by_optional_param(
+            IMPORTING ev_delay = lv_delay ev_is_in_time = lv_is_in_time ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_delay exp = 2 ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_is_in_time exp = abap_true ).
+
+*       verify number of calls for GET_BOTH_BY_OPTIONAL_PARAM
+        lv_times = lo_mocker_method-&gt;times_called( ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_times exp = 1 ).
+
+      CATCH zcx_mocka.
+        lv_has_exception_been_raised = abap_true.
+    ENDTRY.
+    cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
+
+  ENDMETHOD.                    &quot;get_both_optional
+  METHOD raises_exception.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -444,7 +525,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
         cl_aunit_assert=&gt;assert_not_initial( lv_has_exception_been_raised ).
         lv_has_exception_been_raised = abap_false.
 
-        lo_mocker_method-&gt;raises_by_name( &apos;ZCX_MOCKA_IN_TIME_EXCEPTION&apos; ).&quot;intentionally name the valid exception in lower case
+
+        lo_mocker_method-&gt;raises_by_name( &apos;zcx_mocka_in_time_exception&apos; ).&quot;intentionally name the valid exception in lower case
 
         lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121109&apos; ).
         lo_mocker_method-&gt;returns( abap_false ).
@@ -471,9 +553,102 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_raises_exception
+  ENDMETHOD.                    &quot;raises_exception
 
-  METHOD mock_changing_params.
+  METHOD is_in_time_by_chng_param_multi.
+    DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
+    DATA lo_mocker TYPE REF TO zif_mocka_mocker.
+    DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
+
+*   create valid parameter combination
+    DATA lr_flag TYPE REF TO data.
+    FIELD-SYMBOLS &lt;lv_flag&gt; TYPE abap_bool.
+    DATA lv_is_in_time TYPE abap_bool.
+    DATA lv_delay TYPE i.
+    DATA lv_fldate TYPE s_date.
+    CONSTANTS lc_change_to_fldate TYPE s_date VALUE &apos;20121124&apos;.
+    CLEAR: lv_has_exception_been_raised.
+    DATA lo_in_time TYPE REF TO zif_mocka_is_in_time_info.
+    DATA lv_times TYPE i.
+
+    TRY.
+        lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;ZIF_MOCKA_IS_IN_TIME_INFO&apos; ).
+
+        lo_mocker_method = lo_mocker-&gt;method( &apos;IS_IN_TIME_BY_CHANGING_PARAM&apos; ).
+        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 ).
+        lo_mocker_method-&gt;with_changing( &apos;20121108&apos; ).
+        lo_mocker_method-&gt;with_changing( &apos;20121109&apos; ).
+        lo_mocker_method-&gt;exports( abap_false ).
+
+        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 ).
+        lo_mocker_method-&gt;with_changing( &apos;20121123&apos; ).
+        lo_mocker_method-&gt;with_changing( &apos;20121124&apos; ).
+        lo_mocker_method-&gt;changes( lc_change_to_fldate ).
+        lo_mocker_method-&gt;exports( abap_true ).
+
+*       this call creates the mockup
+        lo_in_time ?= lo_mocker-&gt;generate_mockup( ).
+        cl_aunit_assert=&gt;assert_not_initial( lo_in_time ).
+
+        CLEAR: lv_has_exception_been_raised.
+        CLEAR: lv_is_in_time.
+        lv_fldate = &apos;20121109&apos;.
+        CALL METHOD lo_in_time-&gt;is_in_time_by_changing_param
+          EXPORTING
+            iv_carrid     = &apos;LH&apos;
+            iv_connid     = 402
+          IMPORTING
+            ev_is_in_time = lv_is_in_time
+          CHANGING
+            cv_fldate     = lv_fldate.
+        cl_aunit_assert=&gt;assert_equals( act = lv_is_in_time exp = abap_false ).
+
+        CLEAR: lv_is_in_time.
+        lv_fldate = &apos;20121108&apos;.
+        CALL METHOD lo_in_time-&gt;is_in_time_by_changing_param
+          EXPORTING
+            iv_carrid     = &apos;LH&apos;
+            iv_connid     = 402
+          IMPORTING
+            ev_is_in_time = lv_is_in_time
+          CHANGING
+            cv_fldate     = lv_fldate.
+        cl_aunit_assert=&gt;assert_equals( act = lv_is_in_time exp = abap_false ).
+
+        CLEAR: lv_is_in_time.
+        lv_fldate = &apos;20121123&apos;.
+
+        CALL METHOD lo_in_time-&gt;is_in_time_by_changing_param
+          EXPORTING
+            iv_carrid     = &apos;LH&apos;
+            iv_connid     = 402
+          IMPORTING
+            ev_is_in_time = lv_is_in_time
+          CHANGING
+            cv_fldate     = lv_fldate.
+        cl_aunit_assert=&gt;assert_equals( act = lv_is_in_time exp = abap_true ).
+        cl_aunit_assert=&gt;assert_equals( act = lv_fldate exp = lc_change_to_fldate ).
+
+        CLEAR: lv_is_in_time.
+        lv_fldate = &apos;20121124&apos;.
+        CALL METHOD lo_in_time-&gt;is_in_time_by_changing_param
+          EXPORTING
+            iv_carrid     = &apos;LH&apos;
+            iv_connid     = 402
+          IMPORTING
+            ev_is_in_time = lv_is_in_time
+          CHANGING
+            cv_fldate     = lv_fldate.
+        cl_aunit_assert=&gt;assert_equals( act = lv_is_in_time exp = abap_true ).
+
+      CATCH zcx_mocka.
+        lv_has_exception_been_raised = abap_true.
+    ENDTRY.
+    cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
+
+  ENDMETHOD.                    &quot;is_in_time_by_chng_param_multi
+
+  METHOD is_in_time_by_changing_param.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -490,8 +665,7 @@ CLASS lcl_test_mocker IMPLEMENTATION.
 
     TRY.
         lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;ZIF_MOCKA_IS_IN_TIME_INFO&apos; ).
-*       create valid parameter combination - using EXPORTING parameters
-        CLEAR: lv_has_exception_been_raised.
+
         lo_mocker_method = lo_mocker-&gt;method( &apos;IS_IN_TIME_BY_CHANGING_PARAM&apos; ).
         lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 ).
         lo_mocker_method-&gt;with_changing( &apos;20121108&apos; ).
@@ -507,13 +681,15 @@ CLASS lcl_test_mocker IMPLEMENTATION.
         lo_mocker_method-&gt;exports( abap_true ).
 
 *       please be aware of fluent API: in NW releases &gt;= 7.02 you could also use:
-*        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 )-&gt;with_changing( &apos;20121108&apos; )-&gt;exports( i_p1 = 10 i_p2 = abap_false ).
-*        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 )-&gt;with_changing( &apos;20121109&apos; )-&gt;exports( i_p1 = 2 i_p2 = abap_true ).
+*        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 )-&gt;with_changing( &apos;20121108&apos; )-&gt;exports( i_p1 = abap_false ).
+*        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 )-&gt;with_changing( &apos;20121109&apos; )-&gt;exports( i_p1 = abap_true ).
+*        lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 )-&gt;with_changing( &apos;20121123&apos; )-&gt;changes( &apos;20121124&apos; )-&gt;exports( i_p1 = abap_true ).
 
 *       this call creates the mockup
         lo_in_time ?= lo_mocker-&gt;generate_mockup( ).
         cl_aunit_assert=&gt;assert_not_initial( lo_in_time ).
 
+        CLEAR: lv_has_exception_been_raised.
         CLEAR: lv_is_in_time.
         lv_fldate = &apos;20121109&apos;.
         CALL METHOD lo_in_time-&gt;is_in_time_by_changing_param
@@ -558,8 +734,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_changing_params
-  METHOD mock_optional_params.
+  ENDMETHOD.                    &quot;IS_IN_TIME_BY_CHANGING_PARAM
+  METHOD optional_params.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -603,8 +779,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_optional_params
-  METHOD mock_get_delay_x2.
+  ENDMETHOD.                    &quot;optional_params
+  METHOD get_delay_x2.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -654,8 +830,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_get_delay_x2
-  METHOD mock_raises_exc_x2.
+  ENDMETHOD.                    &quot;get_delay_x2
+  METHOD raises_exc_x2.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -710,8 +886,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_raises_exc_x2
-  METHOD mock_changing_par_x2.
+  ENDMETHOD.                    &quot;raises_exc_x2
+  METHOD changing_parameter_x2.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -790,8 +966,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_changing_par_x2
-  METHOD mock_included_interface_method.
+  ENDMETHOD.                    &quot;changing_parameter_x2
+  METHOD fake_included_interface_method.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -815,8 +991,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_included_interface_method
-  METHOD mock_method_with_old_exc.
+  ENDMETHOD.                    &quot;fake_included_interface_method
+  METHOD method_with_old_exc.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -830,8 +1006,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_method_with_old_exc
-  METHOD mock_attribute.
+  ENDMETHOD.                    &quot;method_with_old_exc
+  METHOD fake_interface_attribute.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -849,8 +1025,8 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
     cl_aunit_assert=&gt;assert_equals( act = lo_fake-&gt;propertytype_logon_popup exp = 3 ).
 
-  ENDMETHOD.                    &quot;mock_attribute
-  METHOD mock_attribute_of_class.
+  ENDMETHOD.                    &quot;attribute
+  METHOD fake_instance_attribute.
 
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
@@ -870,9 +1046,9 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     cl_aunit_assert=&gt;assert_initial( lv_has_exception_been_raised ).
     cl_aunit_assert=&gt;assert_equals( act = lv_interface exp = &apos;ZIF_TEST&apos; ).
 
-  ENDMETHOD.                    &quot;mock_attribute_of_class
+  ENDMETHOD.                    &quot;fake_static_attribute
 
-  METHOD mock_invalid_attribute.
+  METHOD fake_invalid_attribute.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
@@ -881,7 +1057,7 @@ CLASS lcl_test_mocker IMPLEMENTATION.
 
     TRY.
         lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;IF_HTTP_CLIENT&apos; ).
-        lo_attribute = lo_mocker-&gt;attribute( &apos;INVALID_ATTRIBUTE&apos; ).
+        lo_attribute = lo_mocker-&gt;attribute( &apos;fake_invalid_attribute&apos; ).
         lo_attribute-&gt;returns( 3 ).
         lo_fake ?= lo_mocker-&gt;generate_mockup( ).
       CATCH zcx_mocka.
@@ -889,7 +1065,7 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ENDTRY.
     cl_aunit_assert=&gt;assert_not_initial( lv_has_exception_been_raised ).
 
-  ENDMETHOD.                    &quot;mock_invalid_attribute
+  ENDMETHOD.                    &quot;fake_invalid_attribute
   METHOD is_method_called_positive.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
     DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.

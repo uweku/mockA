@@ -16,10 +16,11 @@
  <forwardDeclaration>ABAP</forwardDeclaration>
  <forwardDeclaration>SEOC</forwardDeclaration>
  <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MO_MOCKER" VERSION="1" LANGU="E" DESCRIPT="Beschreibt einen Mock-Erzeuger" EXPOSURE="1" STATE="1" EDITORDER="3 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZCL_MOCKA_MOCKER" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
- <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MS_CURRENT_METHOD_CALL_PATTERN" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_METHOD_CALL_PATTERN" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
- <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MT_METHOD_CALLS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="7 " SRCCOLUMN1="4 " SRCROW2="7 " SRCCOLUMN2="82 " TYPESRC_LENG="80 " TYPESRC="MT_METHOD_CALLS type TABLE OF ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_METHOD_CALL_PATTERN
+ <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MT_CURRENT_METHOD_CALL_PATTERN" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="5 " SRCCOLUMN1="7 " SRCROW2="5 " SRCCOLUMN2="100 " TYPESRC_LENG="96 " TYPESRC="MT_CURRENT_METHOD_CALL_PATTERN type TABLE OF ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_METHOD_CALL_PATTERN
 "/>
- <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MT_METHOD_CALL_PATTERNS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="5 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="11 " SRCCOLUMN1="4 " SRCROW2="11 " SRCCOLUMN2="90 " TYPESRC_LENG="88 " TYPESRC="mt_method_call_patterns TYPE TABLE OF ZIF_MOCKA_MOCKER_method=&gt;ty_s_method_call_pattern
+ <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MT_METHOD_CALLS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="7 " SRCCOLUMN1="4 " SRCROW2="7 " SRCCOLUMN2="82 " TYPESRC_LENG="81 " TYPESRC="MT_METHOD_CALLS type TABLE OF ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_METHOD_CALL_PATTERN
+"/>
+ <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MT_METHOD_CALL_PATTERNS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="5 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="4" SRCROW1="11 " SRCCOLUMN1="4 " SRCROW2="11 " SRCCOLUMN2="90 " TYPESRC_LENG="89 " TYPESRC="mt_method_call_patterns TYPE TABLE OF ZIF_MOCKA_MOCKER_method=&gt;ty_s_method_call_pattern
 "/>
  <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MV_METHOD_NAME" VERSION="1" LANGU="E" DESCRIPT="Vollständiger Komponentenname" EXPOSURE="1" STATE="1" EDITORDER="4 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="SEOCPDNAME" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
  <attribute CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="MV_TIMES_CALLED" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="6 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="I" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
@@ -81,12 +82,16 @@
   ENDIF.
 
 * map importing parameters to current method call pattern
-  DATA ls_changing_out LIKE LINE OF ms_current_method_call_pattern-importing.
+  DATA ls_changing_out TYPE zif_mocka_mocker_method=&gt;ty_s_name_value_pair.
   FIELD-SYMBOLS: &lt;ls_parameter&gt; LIKE LINE OF &lt;ls_method&gt;-parameters.
   DATA lv_index TYPE i.
   DATA lv_comp TYPE string.
 
-  FREE: ms_current_method_call_pattern-changing_out.
+  FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
+  LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    FREE: &lt;ls_current_call_pattern&gt;-changing_out.
+  ENDLOOP.
+
   READ TABLE &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WITH KEY parm_kind = &apos;C&apos;.
   IF sy-subrc NE 0.
     DATA lv_interface TYPE abap_abstypename.
@@ -126,7 +131,9 @@
         ls_changing_out-value = copy_value( lr_ref ).
     ENDCASE.
     ls_changing_out-parameter = &lt;ls_parameter&gt;-name.
-    APPEND ls_changing_out TO ms_current_method_call_pattern-changing_out.
+    LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+      APPEND ls_changing_out TO &lt;ls_current_call_pattern&gt;-changing_out.
+    ENDLOOP.
   ENDLOOP.
 
   ro_mocker_method = me.
@@ -145,16 +152,15 @@ ENDMETHOD.</source>
 ENDMETHOD.</source>
  </interfaceMethod>
  <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~EXPORTS">
-  <source>METHOD ZIF_MOCKA_MOCKER_method~exports.
+  <source>METHOD zif_mocka_mocker_method~exports.
 
   DATA lv_parameter_count TYPE i.
   DATA lv_actual_parameter_count TYPE i.
   DATA lr_ref TYPE REF TO data.
   FIELD-SYMBOLS &lt;lv_in&gt; TYPE any.
   FIELD-SYMBOLS &lt;lv_to&gt; TYPE any.
-*  IF i_p1 IS SUPPLIED.
+
   ADD 1 TO lv_parameter_count.
-*  ENDIF.
   IF i_p2 IS SUPPLIED.
     ADD 1 TO lv_parameter_count.
   ENDIF.
@@ -177,17 +183,15 @@ ENDMETHOD.</source>
     ADD 1 TO lv_parameter_count.
   ENDIF.
 
-
-
   FIELD-SYMBOLS &lt;ls_method&gt; TYPE abap_methdescr.
   DATA lo_objdescr TYPE REF TO cl_abap_objectdescr.
 
   lo_objdescr = mo_mocker-&gt;mo_objectdescr.
   READ TABLE lo_objdescr-&gt;methods ASSIGNING &lt;ls_method&gt; WITH KEY name = mv_method_name.
   IF sy-subrc NE 0.
-    RAISE EXCEPTION TYPE ZCX_MOCKA
+    RAISE EXCEPTION TYPE zcx_mocka
       EXPORTING
-        textid    = ZCX_MOCKA=&gt;no_such_method
+        textid    = zcx_mocka=&gt;no_such_method
         interface = mo_mocker-&gt;mv_interface
         method    = mv_method_name.
   ENDIF.
@@ -196,25 +200,32 @@ ENDMETHOD.</source>
     ADD 1 TO lv_actual_parameter_count.
   ENDLOOP.
   IF lv_parameter_count &gt; lv_actual_parameter_count.
-    RAISE EXCEPTION TYPE ZCX_MOCKA
+    RAISE EXCEPTION TYPE zcx_mocka
       EXPORTING
-        textid = ZCX_MOCKA=&gt;invalid_parameter_count.
+        textid = zcx_mocka=&gt;invalid_parameter_count.
   ENDIF.
 
 * map importing parameters to current method call pattern
-  DATA ls_exporting LIKE LINE OF ms_current_method_call_pattern-importing.
+  DATA ls_exporting TYPE zif_mocka_mocker_method=&gt;ty_s_name_value_pair.
+
   FIELD-SYMBOLS: &lt;ls_parameter&gt; LIKE LINE OF &lt;ls_method&gt;-parameters.
   DATA lv_index TYPE i.
   DATA lv_comp TYPE string.
 
-  FREE: ms_current_method_call_pattern-exporting.
+  FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
+  IF mt_current_method_call_pattern IS INITIAL.
+    APPEND INITIAL LINE TO mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+  ENDIF.
+  LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    FREE: &lt;ls_current_call_pattern&gt;-exporting.
+  ENDLOOP.
   READ TABLE &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WITH KEY parm_kind = &apos;E&apos;.
   IF sy-subrc NE 0.
     DATA lv_interface TYPE abap_abstypename.
-    lv_interface =  mo_mocker-&gt;ZIF_MOCKA_MOCKER~get_interface( ).
-    RAISE EXCEPTION TYPE ZCX_MOCKA
+    lv_interface =  mo_mocker-&gt;zif_mocka_mocker~get_interface( ).
+    RAISE EXCEPTION TYPE zcx_mocka
       EXPORTING
-        textid    = ZCX_MOCKA=&gt;no_exporting_parameters
+        textid    = zcx_mocka=&gt;no_exporting_parameters
         interface = lv_interface
         method    = mv_method_name.
   ENDIF.
@@ -247,7 +258,10 @@ ENDMETHOD.</source>
         ls_exporting-value = copy_value( lr_ref ).
     ENDCASE.
     ls_exporting-parameter = &lt;ls_parameter&gt;-name.
-    APPEND ls_exporting TO ms_current_method_call_pattern-exporting.
+
+    LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+      APPEND ls_exporting TO &lt;ls_current_call_pattern&gt;-exporting.
+    ENDLOOP.
   ENDLOOP.
 
   finalize_current_method_sign( ).
@@ -277,7 +291,7 @@ ENDMETHOD.</source>
 
   DATA lv_param_kind TYPE c.
   DATA lv_is_importing TYPE abap_bool VALUE abap_true.
-  DATA ls_method_call_pattern LIKE ms_current_method_call_pattern.
+  DATA ls_method_call_pattern LIKE LINE OF mt_current_method_call_pattern.
   IF lv_is_importing = abap_true.&quot;toDo: support changing parameters
     lv_param_kind = cl_abap_objectdescr=&gt;importing.
   ELSE.
@@ -425,13 +439,17 @@ ENDMETHOD.</source>
 ENDMETHOD.</source>
  </interfaceMethod>
  <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~RAISES">
-  <source>METHOD ZIF_MOCKA_MOCKER_method~raises.
-  CLEAR: ms_current_method_call_pattern-raises_by_name.
-  ms_current_method_call_pattern-raises = io_cx_root.
+  <source>METHOD zif_mocka_mocker_method~raises.
+  FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
+  LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    CLEAR: &lt;ls_current_call_pattern&gt;-raises_by_name.
+    &lt;ls_current_call_pattern&gt;-raises = io_cx_root.
+  ENDLOOP.
+  finalize_current_method_sign( ).
 ENDMETHOD.</source>
  </interfaceMethod>
  <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~RAISES_BY_NAME">
-  <source>METHOD ZIF_MOCKA_MOCKER_method~raises_by_name.
+  <source>METHOD zif_mocka_mocker_method~raises_by_name.
   DATA: ls_class_descr TYPE vseoclass,
         ls_seoclskey TYPE seoclskey,
         lv_exception TYPE seoclsname.
@@ -446,31 +464,34 @@ ENDMETHOD.</source>
     IMPORTING
       class  = ls_class_descr.
   IF ls_class_descr IS INITIAL.
-    lv_interface = mo_mocker-&gt;ZIF_MOCKA_MOCKER~get_interface( ).
-    RAISE EXCEPTION TYPE ZCX_MOCKA
+    lv_interface = mo_mocker-&gt;zif_mocka_mocker~get_interface( ).
+    RAISE EXCEPTION TYPE zcx_mocka
       EXPORTING
-        textid    = ZCX_MOCKA=&gt;no_such_exception
+        textid    = zcx_mocka=&gt;no_such_exception
         interface = lv_interface
         exception = lv_exception
         method    = mv_method_name.
   ENDIF.
   IF ls_class_descr-category NE seoc_category_exception.
-    RAISE EXCEPTION TYPE ZCX_MOCKA
+    RAISE EXCEPTION TYPE zcx_mocka
       EXPORTING
-        textid    = ZCX_MOCKA=&gt;invalid_exception
+        textid    = zcx_mocka=&gt;invalid_exception
         exception = lv_exception.
   ENDIF.
   IF ls_class_descr-clsabstrct = abap_true.
-    RAISE EXCEPTION TYPE ZCX_MOCKA
+    RAISE EXCEPTION TYPE zcx_mocka
       EXPORTING
-        textid    = ZCX_MOCKA=&gt;abstract_exception
+        textid    = zcx_mocka=&gt;abstract_exception
         exception = lv_exception.
   ENDIF.
-  FREE: ms_current_method_call_pattern-raises.
-  ms_current_method_call_pattern-raises_by_name = lv_exception.
-  APPEND ms_current_method_call_pattern TO mt_method_call_patterns.
 
-  FREE: ms_current_method_call_pattern.
+  FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
+  LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    FREE: &lt;ls_current_call_pattern&gt;-raises.
+    &lt;ls_current_call_pattern&gt;-raises_by_name = lv_exception.
+  ENDLOOP.
+
+  finalize_current_method_sign( ).
   ro_mocker_method = me.
 ENDMETHOD.</source>
  </interfaceMethod>
@@ -490,21 +511,26 @@ ENDMETHOD.</source>
 ENDMETHOD.</source>
  </interfaceMethod>
  <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~RETURNS">
-  <source>METHOD ZIF_MOCKA_MOCKER_method~returns.
+  <source>METHOD zif_mocka_mocker_method~returns.
   TRY.
-      me-&gt;ZIF_MOCKA_MOCKER_method~exports( i_return ).
-    CATCH ZCX_MOCKA.
+      me-&gt;zif_mocka_mocker_method~exports( i_return ).
+    CATCH zcx_mocka.
       DATA lr_ref TYPE REF TO data.
       FIELD-SYMBOLS: &lt;lv_in&gt; TYPE any, &lt;lv_to&gt; TYPE any.
       GET REFERENCE OF i_return INTO lr_ref.
 
       ASSIGN lr_ref-&gt;* TO &lt;lv_in&gt;.
-      CREATE DATA ms_current_method_call_pattern-returning LIKE &lt;lv_in&gt;.
-      ASSIGN ms_current_method_call_pattern-returning-&gt;* TO &lt;lv_to&gt;.
-      &lt;lv_to&gt; = &lt;lv_in&gt;.
-      APPEND ms_current_method_call_pattern TO mt_method_call_patterns.
 
-      FREE: ms_current_method_call_pattern.
+      FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
+      IF mt_current_method_call_pattern IS INITIAL.
+        APPEND INITIAL LINE TO mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+      ENDIF.
+
+      LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+        CREATE DATA &lt;ls_current_call_pattern&gt;-returning LIKE &lt;lv_in&gt;.
+        ASSIGN &lt;ls_current_call_pattern&gt;-returning-&gt;* TO &lt;lv_to&gt;.
+        &lt;lv_to&gt; = &lt;lv_in&gt;.
+      ENDLOOP.
   ENDTRY.
 
   finalize_current_method_sign( ).
@@ -517,9 +543,7 @@ ENDMETHOD.</source>
 ENDMETHOD.</source>
  </interfaceMethod>
  <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~WITH">
-  <source>METHOD ZIF_MOCKA_MOCKER_method~with.
-  finalize_current_method_sign( ).
-
+  <source>METHOD zif_mocka_mocker_method~with.
   DATA lt_params TYPE abap_parmbind_tab.
   DATA ls_param TYPE abap_parmbind.
   DATA lv_iv_is_importing TYPE abap_bool VALUE abap_true.
@@ -689,20 +713,20 @@ ENDMETHOD.</source>
   &lt;lv_out&gt; = &lt;lv_in&gt;.
 ENDMETHOD.</source>
  </method>
- <method CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="FINALIZE_CURRENT_METHOD_SIGN" VERSION="1" LANGU="E" DESCRIPT="internal - finalizes the current method recording" EXPOSURE="1" STATE="1" EDITORDER="7 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+ <method CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="FINALIZE_CURRENT_METHOD_SIGN" VERSION="1" LANGU="E" DESCRIPT="internal - finalizes the current method recording" EXPOSURE="1" STATE="1" EDITORDER="6 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
   <parameter CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="FINALIZE_CURRENT_METHOD_SIGN" SCONAME="RO_MOCKER" VERSION="1" LANGU="E" DESCRIPT="Beschreibt einen Mockup-Erzeuger" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="ZIF_MOCKA_MOCKER"/>
   <source>METHOD finalize_current_method_sign.
   ro_mocker = mo_mocker.
-  CHECK ms_current_method_call_pattern IS NOT INITIAL.
-  APPEND ms_current_method_call_pattern TO mt_method_call_patterns.
-  FREE: ms_current_method_call_pattern.
+  CHECK mt_current_method_call_pattern IS NOT INITIAL.
+  APPEND LINES OF mt_current_method_call_pattern TO mt_method_call_patterns.
+  FREE: mt_current_method_call_pattern.
 ENDMETHOD.</source>
  </method>
  <method CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="HAS_BEEN_CALLED_WITH" VERSION="1" LANGU="E" DESCRIPT="internal - resolve method output parameters" EXPOSURE="1" STATE="1" EDITORDER="4 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
   <parameter CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="HAS_BEEN_CALLED_WITH" SCONAME="IT_IMPORTING" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR"/>
   <parameter CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="HAS_BEEN_CALLED_WITH" SCONAME="IT_CHANGING_IN" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR" PAROPTIONL="X"/>
   <parameter CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CMPNAME="HAS_BEEN_CALLED_WITH" SCONAME="RV_HAS_BEEN_CALLED" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ABAP_BOOL"/>
-  <source>METHOD HAS_BEEN_CALLED_WITH.
+  <source>METHOD has_been_called_with.
   FIELD-SYMBOLS &lt;ls_method&gt; TYPE abap_methdescr.
   DATA lo_objdescr TYPE REF TO cl_abap_objectdescr.
   FIELD-SYMBOLS &lt;ls_method_call_pattern&gt; TYPE zif_mocka_mocker_method=&gt;ty_s_method_call_pattern.
@@ -714,7 +738,7 @@ ENDMETHOD.</source>
   ENDIF.
   CHECK &lt;ls_method&gt; IS ASSIGNED.
 
-  DATA ls_importing LIKE LINE OF ms_current_method_call_pattern-importing.
+  DATA ls_importing TYPE zif_mocka_mocker_method=&gt;ty_s_name_value_pair.
   FIELD-SYMBOLS: &lt;ls_parameter&gt; LIKE LINE OF &lt;ls_method&gt;-parameters.
   DATA lv_index TYPE i.
   DATA lv_comp TYPE string.
@@ -800,7 +824,7 @@ ENDMETHOD.</source>
 
   FIELD-SYMBOLS &lt;ls_method&gt; TYPE abap_methdescr.
   DATA lo_objdescr TYPE REF TO cl_abap_objectdescr.
-  FIELD-SYMBOLS &lt;ls_method_call_pattern&gt; TYPE ZIF_MOCKA_MOCKER_method=&gt;ty_s_method_call_pattern.
+  FIELD-SYMBOLS &lt;ls_method_call_pattern&gt; TYPE zif_mocka_mocker_method=&gt;ty_s_method_call_pattern.
 
   lo_objdescr = mo_mocker-&gt;mo_objectdescr.
   READ TABLE mo_mocker-&gt;mo_objectdescr-&gt;methods ASSIGNING &lt;ls_method&gt; WITH KEY name = mv_method_name.
@@ -809,7 +833,7 @@ ENDMETHOD.</source>
   ENDIF.
   CHECK &lt;ls_method&gt; IS ASSIGNED.
 
-  DATA ls_importing LIKE LINE OF ms_current_method_call_pattern-importing.
+  DATA ls_importing TYPE zif_mocka_mocker_method=&gt;ty_s_name_value_pair.
   FIELD-SYMBOLS: &lt;ls_parameter&gt; LIKE LINE OF &lt;ls_method&gt;-parameters.
   DATA lv_index TYPE i.
   DATA lv_comp TYPE string.
@@ -829,7 +853,7 @@ ENDMETHOD.</source>
         IF sy-subrc = 0.
           ASSIGN ls_importing-value-&gt;* TO &lt;lv_val&gt;.
           ASSIGN &lt;ls_importing&gt;-value-&gt;* TO &lt;lv_val_importing&gt;.
-          lv_equals = ZCL_MOCKA_VALUE_COMPARISON=&gt;assert_equals( act = &lt;lv_val_importing&gt; exp = &lt;lv_val&gt; ).
+          lv_equals = zcl_mocka_value_comparison=&gt;assert_equals( act = &lt;lv_val_importing&gt; exp = &lt;lv_val&gt; ).
         ELSE.
           IF &lt;ls_method_call_pattern&gt;-importing IS NOT INITIAL.
             lv_equals = abap_false.
@@ -851,7 +875,7 @@ ENDMETHOD.</source>
         IF sy-subrc = 0.
           ASSIGN ls_importing-value-&gt;* TO &lt;lv_val&gt;.
           ASSIGN &lt;ls_importing&gt;-value-&gt;* TO &lt;lv_val_importing&gt;.
-          lv_equals = ZCL_MOCKA_VALUE_COMPARISON=&gt;assert_equals( act = &lt;lv_val_importing&gt; exp = &lt;lv_val&gt; ).
+          lv_equals = zcl_mocka_value_comparison=&gt;assert_equals( act = &lt;lv_val_importing&gt; exp = &lt;lv_val&gt; ).
         ELSE.
           IF &lt;ls_method_call_pattern&gt;-changing_in IS NOT INITIAL.
             lv_equals = abap_false.
@@ -958,10 +982,33 @@ ENDMETHOD.</source>
   ENDIF.
 
 * map importing parameters to current method call pattern
-  DATA ls_importing LIKE LINE OF ms_current_method_call_pattern-importing.&quot;has the same structure as exporting arguments
+  DATA ls_importing TYPE zif_mocka_mocker_method=&gt;ty_s_name_value_pair.&quot;has the same structure as exporting arguments
   FIELD-SYMBOLS: &lt;ls_parameter&gt; LIKE LINE OF &lt;ls_method&gt;-parameters.
   DATA lv_index TYPE i.
   DATA lv_comp TYPE string.
+
+  FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
+  DATA lv_lines TYPE i.
+  DESCRIBE TABLE mt_current_method_call_pattern LINES lv_lines.
+
+  IF lv_lines &gt; 0.
+    READ TABLE mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt; INDEX lv_lines.
+    IF iv_is_importing = abap_true AND &lt;ls_current_call_pattern&gt;-importing IS NOT INITIAL.
+      APPEND INITIAL LINE TO mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    ENDIF.
+    IF iv_is_importing = abap_false AND &lt;ls_current_call_pattern&gt;-changing_in IS NOT INITIAL.
+      APPEND INITIAL LINE TO mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    ENDIF.
+    IF &lt;ls_current_call_pattern&gt;-changing_out IS NOT INITIAL
+      OR &lt;ls_current_call_pattern&gt;-exporting IS NOT INITIAL
+      OR &lt;ls_current_call_pattern&gt;-returning IS NOT INITIAL
+      OR &lt;ls_current_call_pattern&gt;-raises IS NOT INITIAL
+      OR &lt;ls_current_call_pattern&gt;-raises_by_name IS NOT INITIAL.
+      APPEND INITIAL LINE TO mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+    ENDIF.
+  ELSE.
+    APPEND INITIAL LINE TO mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
+  ENDIF.
 
   LOOP AT &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WHERE parm_kind = lv_param_kind.
     ADD 1 TO lv_index.
@@ -992,10 +1039,11 @@ ENDMETHOD.</source>
         ls_importing-value = copy_value( lr_ref ).
     ENDCASE.
     ls_importing-parameter = &lt;ls_parameter&gt;-name.
+
     IF iv_is_importing = abap_true.
-      APPEND ls_importing TO ms_current_method_call_pattern-importing.
+      APPEND ls_importing TO &lt;ls_current_call_pattern&gt;-importing.
     ELSE.
-      APPEND ls_importing TO ms_current_method_call_pattern-changing_in.
+      APPEND ls_importing TO &lt;ls_current_call_pattern&gt;-changing_in.
     ENDIF.
   ENDLOOP.
 

@@ -151,7 +151,7 @@
         ENDIF.
       ELSE.
         APPEND &apos;PROTECTED SECTION.&apos; TO lt_code.
-        APPEND &apos;DATA: mo_mocker TYPE REF TO ZIF_MOCKA_MOCKER.&apos; TO lt_code.
+        APPEND &apos;DATA: mo_mocker TYPE REF TO ZIF_MOCKA_MOCKER.&apos; TO lt_code. &quot;#EC NOTEXT
       ENDIF.
       IF mv_is_interface_mock = abap_false.
         LOOP AT mo_objectdescr-&gt;methods ASSIGNING &lt;ls_method&gt; WHERE is_class = abap_false AND name NE &apos;CONSTRUCTOR&apos;.
@@ -182,7 +182,7 @@
       ENDIF.
 
       IF lv_is_public_section = abap_true.
-        APPEND &apos;METHODS constructor IMPORTING !io_mocker TYPE REF TO ZIF_MOCKA_MOCKER !it_attributes type ABAP_ATTRDESCR_TAB&apos; TO lt_code.
+        APPEND &apos;METHODS constructor IMPORTING !io_mocker TYPE REF TO ZIF_MOCKA_MOCKER !it_attributes type ABAP_ATTRDESCR_TAB&apos; TO lt_code. &quot;#EC NOTEXT
 
         READ TABLE mo_objectdescr-&gt;methods ASSIGNING &lt;ls_method&gt; WITH KEY name = &apos;CONSTRUCTOR&apos;.
         IF sy-subrc = 0.
@@ -221,9 +221,9 @@
     CONCATENATE &apos;CLASS&apos; lv_classname &apos;IMPLEMENTATION.&apos; INTO lv_line SEPARATED BY space.
     APPEND lv_line TO lt_code.
 
-    APPEND &apos;METHOD constructor.&apos; TO lt_code.
+    APPEND &apos;METHOD constructor.&apos; TO lt_code.                &quot;#EC NOTEXT
     IF mv_is_interface_mock = abap_false.
-      APPEND &apos;call method super-&gt;constructor&apos; TO lt_code.
+      APPEND &apos;call method super-&gt;constructor&apos; TO lt_code.   &quot;#EC NOTEXT
       READ TABLE mo_objectdescr-&gt;methods ASSIGNING &lt;ls_method&gt; WITH KEY name = &apos;CONSTRUCTOR&apos;.
       IF sy-subrc = 0.
         CLEAR: lt_temp_code.
@@ -254,12 +254,12 @@
       ENDIF.
       APPEND &apos;.&apos; TO lt_code.
     ENDIF.
-    APPEND &apos;mo_mocker = io_mocker.&apos; TO lt_code.
+    APPEND &apos;mo_mocker = io_mocker.&apos; TO lt_code.             &quot;#EC NOTEXT
 
 * map attributes by constructor
-    APPEND &apos;DATA lo_attribute TYPE REF TO zif_mocka_mocker_attribute.&apos; TO lt_code.
-    APPEND &apos;FIELD-SYMBOLS &lt;l_value&gt; TYPE ANY.&apos; TO lt_code.
-    APPEND &apos;DATA lr_value TYPE REF TO data.&apos; TO lt_code.
+    APPEND &apos;DATA lo_attribute TYPE REF TO zif_mocka_mocker_attribute.&apos; TO lt_code. &quot;#EC NOTEXT
+    APPEND &apos;FIELD-SYMBOLS &lt;l_value&gt; TYPE ANY.&apos; TO lt_code.  &quot;#EC NOTEXT
+    APPEND &apos;DATA lr_value TYPE REF TO data.&apos; TO lt_code.    &quot;#EC NOTEXT
 
     FIELD-SYMBOLS &lt;ls_attribute&gt; TYPE abap_attrdescr.
     DATA lo_attribute TYPE REF TO zif_mocka_mocker_attribute.
@@ -273,16 +273,16 @@
 
       lo_attribute = me-&gt;zif_mocka_mocker~attribute( &lt;ls_attribute&gt;-name ).
 
-      CONCATENATE &apos;lo_attribute = mo_mocker-&gt;attribute( &apos;&apos;&apos; &lt;ls_attribute&gt;-name &apos;&apos;&apos; ).&apos; INTO lv_line.
+      CONCATENATE &apos;lo_attribute = mo_mocker-&gt;attribute( &apos;&apos;&apos; &lt;ls_attribute&gt;-name &apos;&apos;&apos; ).&apos; INTO lv_line. &quot;#EC NOTEXT
       APPEND lv_line TO lt_code.
-      APPEND &apos;lr_value = lo_attribute-&gt;return( ).&apos; TO lt_code.
-      APPEND &apos;IF lr_value IS BOUND.&apos; TO lt_code.
-      APPEND &apos;ASSIGN lr_value-&gt;* TO &lt;l_value&gt;.&apos; TO lt_code.
+      APPEND &apos;lr_value = lo_attribute-&gt;return( ).&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;IF lr_value IS BOUND.&apos; TO lt_code.            &quot;#EC NOTEXT
+      APPEND &apos;ASSIGN lr_value-&gt;* TO &lt;l_value&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
       IF mv_is_interface_mock = abap_false.
-        CONCATENATE &lt;ls_attribute&gt;-name &apos;= &lt;l_value&gt;.&apos; INTO lv_line SEPARATED BY space.
+        CONCATENATE &lt;ls_attribute&gt;-name &apos;= &lt;l_value&gt;.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
       ELSE.
         CONCATENATE mv_interface &apos;~&apos; &lt;ls_attribute&gt;-name INTO lv_line.
-        CONCATENATE lv_line &apos;= &lt;l_value&gt;.&apos; INTO lv_line SEPARATED BY space.
+        CONCATENATE lv_line &apos;= &lt;l_value&gt;.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
       ENDIF.
       APPEND lv_line TO lt_code.
       APPEND &apos;ENDIF.&apos; TO lt_code.
@@ -314,29 +314,29 @@
       CONCATENATE &apos;METHOD&apos; lv_line &apos;.&apos; INTO lv_line SEPARATED BY space.
       APPEND lv_line TO lt_code.
 
-      APPEND &apos;DATA: lr_return TYPE REF TO DATA.&apos; TO lt_code.
-      APPEND &apos;DATA: lv_exception TYPE seoclsname.&apos; TO lt_code.
-      APPEND &apos;DATA: lo_mocker_method TYPE REF TO ZIF_MOCKA_MOCKER_METHOD.&apos; TO lt_code.
-      APPEND &apos;DATA: lo_mocker_method_runtime TYPE REF TO ZIF_MOCKA_MOCKER_METHOD_RUNTIM.&apos; TO lt_code.
-      APPEND &apos;FIELD-SYMBOLS: &lt;lv_return&gt; TYPE any.&apos; TO lt_code.
+      APPEND &apos;DATA: lr_return TYPE REF TO DATA.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA: lv_exception TYPE seoclsname.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA: lo_mocker_method TYPE REF TO ZIF_MOCKA_MOCKER_METHOD.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA: lo_mocker_method_runtime TYPE REF TO ZIF_MOCKA_MOCKER_METHOD_RUNTIM.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;FIELD-SYMBOLS: &lt;lv_return&gt; TYPE any.&apos; TO lt_code. &quot;#EC NOTEXT
       IF &lt;ls_method&gt;-alias_for IS NOT INITIAL.
-        CONCATENATE &apos;lo_mocker_method ?= mo_mocker-&gt;method( &apos;&apos;&apos; &lt;ls_method&gt;-alias_for &apos;&apos;&apos; ).&apos; INTO lv_line.
+        CONCATENATE &apos;lo_mocker_method ?= mo_mocker-&gt;method( &apos;&apos;&apos; &lt;ls_method&gt;-alias_for &apos;&apos;&apos; ).&apos; INTO lv_line. &quot;#EC NOTEXT
       ELSE.
-        CONCATENATE &apos;lo_mocker_method ?= mo_mocker-&gt;method( &apos;&apos;&apos; &lt;ls_method&gt;-name &apos;&apos;&apos; ).&apos; INTO lv_line.
+        CONCATENATE &apos;lo_mocker_method ?= mo_mocker-&gt;method( &apos;&apos;&apos; &lt;ls_method&gt;-name &apos;&apos;&apos; ).&apos; INTO lv_line. &quot;#EC NOTEXT
       ENDIF.
       APPEND lv_line TO lt_code.
 
-      APPEND &apos;DATA ls_importing TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA ls_changing_in TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA ls_exporting TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA ls_changing_out TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA lt_importing TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA lt_changing_in TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA lt_exporting TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;DATA lt_changing_out TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;FIELD-SYMBOLS &lt;ls_exporting&gt; TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code.
-      APPEND &apos;FIELD-SYMBOLS &lt;lv_exporting_out&gt; TYPE any.&apos; TO lt_code.
-      APPEND &apos;FIELD-SYMBOLS &lt;lv_exporting_from_mocker&gt; TYPE any.&apos; TO lt_code.
+      APPEND &apos;DATA ls_importing TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA ls_changing_in TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA ls_exporting TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA ls_changing_out TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA lt_importing TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA lt_changing_in TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA lt_exporting TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;DATA lt_changing_out TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_T_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;FIELD-SYMBOLS &lt;ls_exporting&gt; TYPE ZIF_MOCKA_MOCKER_METHOD=&gt;TY_S_NAME_VALUE_PAIR.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;FIELD-SYMBOLS &lt;lv_exporting_out&gt; TYPE any.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;FIELD-SYMBOLS &lt;lv_exporting_from_mocker&gt; TYPE any.&apos; TO lt_code. &quot;#EC NOTEXT
 
 *   map IMPORTING parameters
       LOOP AT &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WHERE parm_kind = &apos;I&apos;.
@@ -345,37 +345,37 @@
           CONCATENATE &apos;IF&apos; &lt;ls_parameter&gt;-name &apos;IS SUPPLIED.&apos; INTO lv_line SEPARATED BY space.
         ENDIF.
         APPEND lv_line TO lt_code.
-        CONCATENATE &apos;ls_importing-parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line.
+        CONCATENATE &apos;ls_importing-parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line. &quot;#EC NOTEXT
         APPEND lv_line TO lt_code.
-        CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_importing-value.&apos; INTO lv_line SEPARATED BY space.
+        CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_importing-value.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
         APPEND lv_line TO lt_code.
-        APPEND &apos;APPEND ls_importing TO lt_importing.&apos; TO lt_code.
+        APPEND &apos;APPEND ls_importing TO lt_importing.&apos; TO lt_code. &quot;#EC NOTEXT
         IF &lt;ls_parameter&gt;-is_optional = abap_true.
           APPEND &apos;ENDIF.&apos; TO lt_code.
         ENDIF.
       ENDLOOP.
 *   map CHANGING parameters
       LOOP AT &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WHERE parm_kind = &apos;C&apos;.
-        CONCATENATE &apos;ls_changing_in-parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line.
+        CONCATENATE &apos;ls_changing_in-parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line. &quot;#EC NOTEXT
         APPEND lv_line TO lt_code.
         IF &lt;ls_parameter&gt;-is_optional = abap_true.
           CONCATENATE &apos;IF&apos; &lt;ls_parameter&gt;-name &apos;IS SUPPLIED.&apos; INTO lv_line SEPARATED BY space.
         ENDIF.
         APPEND lv_line TO lt_code.
-        CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_changing_in-value.&apos; INTO lv_line SEPARATED BY space.
+        CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_changing_in-value.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
         APPEND lv_line TO lt_code.
-        APPEND &apos;APPEND ls_changing_in TO lt_changing_in.&apos; TO lt_code.
+        APPEND &apos;APPEND ls_changing_in TO lt_changing_in.&apos; TO lt_code. &quot;#EC NOTEXT
         IF &lt;ls_parameter&gt;-is_optional = abap_true.
           APPEND &apos;ENDIF.&apos; TO lt_code.
         ENDIF.
       ENDLOOP.
 
 *   register method call
-      APPEND &apos;lo_mocker_method_runtime ?= lo_mocker_method.&apos; TO lt_code.
-      APPEND &apos;lo_mocker_method_runtime-&gt;increase_times_called( ).&apos; TO lt_code.
-      APPEND &apos;lo_mocker_method_runtime-&gt;REGISTER_HAS_BEEN_CALLED_WITH( it_importing = lt_importing it_changing_in = lt_changing_in ).&apos; TO lt_code.
-*   is there any exception registered?
-      APPEND &apos;lv_exception = lo_mocker_method-&gt;raise( it_importing = lt_importing it_changing_in = lt_changing_in ).&apos; TO lt_code.
+      APPEND &apos;lo_mocker_method_runtime ?= lo_mocker_method.&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;lo_mocker_method_runtime-&gt;increase_times_called( ).&apos; TO lt_code. &quot;#EC NOTEXT
+      APPEND &apos;lo_mocker_method_runtime-&gt;REGISTER_HAS_BEEN_CALLED_WITH( it_importing = lt_importing it_changing_in = lt_changing_in ).&apos; TO lt_code. &quot;#EC NOTEXT
+*     is there any exception registered?
+      APPEND &apos;lv_exception = lo_mocker_method-&gt;raise( it_importing = lt_importing it_changing_in = lt_changing_in ).&apos; TO lt_code. &quot;#EC NOTEXT
 
       ls_method_key-clsname = mv_interface.
       ls_method_key-cmpname = &lt;ls_method&gt;-name.
@@ -402,14 +402,17 @@
         IF sy-subrc = 0.
           lv_is_class_based_exception = me-&gt;is_exception_class( &lt;ls_exception&gt;-sconame ).
         ENDIF.
+        IF lt_exceptions IS INITIAL.
+          lv_is_class_based_exception = abap_true.
+        ENDIF.
       ENDIF.
       IF lv_is_class_based_exception = abap_true.
-        APPEND &apos;DATA lo_cx_exc TYPE REF TO cx_root.&apos; TO lt_code.
-        APPEND &apos;IF lv_exception IS NOT INITIAL.&apos; TO lt_code.
-        APPEND &apos;  TRANSLATE lv_exception TO UPPER CASE.&apos; TO lt_code.
-        APPEND &apos;  CREATE OBJECT lo_cx_exc TYPE (lv_exception).&apos; TO lt_code.
-        APPEND &apos;  RAISE EXCEPTION lo_cx_exc.&apos; TO lt_code.
-        APPEND &apos;ENDIF.&apos; TO lt_code.
+        APPEND &apos;DATA lo_cx_exc TYPE REF TO cx_root.&apos; TO lt_code. &quot;#EC NOTEXT
+        APPEND &apos;IF lv_exception IS NOT INITIAL.&apos; TO lt_code. &quot;#EC NOTEXT
+        APPEND &apos;  TRANSLATE lv_exception TO UPPER CASE.&apos; TO lt_code. &quot;#EC NOTEXT
+        APPEND &apos;  CREATE OBJECT lo_cx_exc TYPE (lv_exception).&apos; TO lt_code. &quot;#EC NOTEXT
+        APPEND &apos;  RAISE EXCEPTION lo_cx_exc.&apos; TO lt_code.   &quot;#EC NOTEXT
+        APPEND &apos;ENDIF.&apos; TO lt_code.                         &quot;#EC NOTEXT
       ENDIF.
 
 *   call mocker method to retrieve values
@@ -428,28 +431,28 @@
       ENDIF.
 
       IF lv_has_changing_parameter = abap_true OR lv_has_exporting_parameter = abap_true.
-        APPEND &apos;CALL METHOD lo_mocker_method-&gt;export&apos; TO lt_code.
+        APPEND &apos;CALL METHOD lo_mocker_method-&gt;export&apos; TO lt_code. &quot;#EC NOTEXT
       ENDIF.
 
       IF lv_has_returning_parameter = abap_true.
-        APPEND &apos;CALL METHOD lo_mocker_method-&gt;return&apos; TO lt_code.
+        APPEND &apos;CALL METHOD lo_mocker_method-&gt;return&apos; TO lt_code. &quot;#EC NOTEXT
       ENDIF.
 
       IF lv_has_changing_parameter = abap_true
         OR lv_has_exporting_parameter = abap_true
         OR lv_has_returning_parameter = abap_true.
-        APPEND &apos;EXPORTING it_importing = lt_importing it_changing_in = lt_changing_in&apos; TO lt_code.
+        APPEND &apos;EXPORTING it_importing = lt_importing it_changing_in = lt_changing_in&apos; TO lt_code. &quot;#EC NOTEXT
       ENDIF.
 
 *   map RETURNING parameter, if any
       IF lv_has_returning_parameter = abap_true.
         APPEND &apos;RECEIVING&apos; TO lt_code.
-        APPEND &apos;r_result = lr_return.&apos; TO lt_code.
+        APPEND &apos;r_result = lr_return.&apos; TO lt_code.          &quot;#EC NOTEXT
         READ TABLE &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WITH KEY parm_kind = &apos;R&apos;.
         IF sy-subrc = 0.
-          APPEND &apos;IF lr_return IS BOUND.&apos; TO lt_code.
-          APPEND &apos;ASSIGN lr_return-&gt;* TO &lt;lv_return&gt;.&apos; TO lt_code.
-          CONCATENATE &lt;ls_parameter&gt;-name &apos; = &lt;lv_return&gt;.&apos; INTO lv_line SEPARATED BY space.
+          APPEND &apos;IF lr_return IS BOUND.&apos; TO lt_code.       &quot;#EC NOTEXT
+          APPEND &apos;ASSIGN lr_return-&gt;* TO &lt;lv_return&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
+          CONCATENATE &lt;ls_parameter&gt;-name &apos; = &lt;lv_return&gt;.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
           APPEND lv_line TO lt_code.
           APPEND &apos;ENDIF.&apos; TO lt_code.
         ENDIF.
@@ -463,25 +466,25 @@
 
 
         IF lv_has_exporting_parameter = abap_true.
-          APPEND &apos;et_exporting = lt_exporting&apos; TO lt_code.
+          APPEND &apos;et_exporting = lt_exporting&apos; TO lt_code.  &quot;#EC NOTEXT
         ENDIF.
         IF lv_has_changing_parameter = abap_true.
-          APPEND &apos;et_changing_out = lt_changing_out&apos; TO lt_code.
+          APPEND &apos;et_changing_out = lt_changing_out&apos; TO lt_code. &quot;#EC NOTEXT
         ENDIF.
         APPEND &apos;.&apos; TO lt_code.
 
         LOOP AT &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WHERE parm_kind = &apos;E&apos;.
           CONCATENATE &apos;FREE: &apos; &lt;ls_parameter&gt;-name &apos;.&apos; INTO lv_line SEPARATED BY space.
           APPEND lv_line TO lt_code.
-          CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_exporting-value.&apos; INTO lv_line SEPARATED BY space.
+          CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_exporting-value.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
           APPEND lv_line TO lt_code.
-          CONCATENATE &apos;READ TABLE lt_exporting ASSIGNING &lt;ls_exporting&gt; WITH KEY parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line.
+          CONCATENATE &apos;READ TABLE lt_exporting ASSIGNING &lt;ls_exporting&gt; WITH KEY parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line. &quot;#EC NOTEXT
           APPEND lv_line TO lt_code.
-          APPEND &apos;IF sy-subrc = 0.&apos; TO lt_code.
-          APPEND &apos;ASSIGN ls_exporting-value-&gt;* TO &lt;lv_exporting_out&gt;.&apos; TO lt_code.
-          APPEND &apos;ASSIGN &lt;ls_exporting&gt;-value-&gt;* TO &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code.
-          APPEND &apos;&lt;lv_exporting_out&gt; = &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code.
-          APPEND &apos;ENDIF.&apos; TO lt_code.
+          APPEND &apos;IF sy-subrc = 0.&apos; TO lt_code.             &quot;#EC NOTEXT
+          APPEND &apos;ASSIGN ls_exporting-value-&gt;* TO &lt;lv_exporting_out&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
+          APPEND &apos;ASSIGN &lt;ls_exporting&gt;-value-&gt;* TO &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
+          APPEND &apos;&lt;lv_exporting_out&gt; = &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
+          APPEND &apos;ENDIF.&apos; TO lt_code.                       &quot;#EC NOTEXT
         ENDLOOP.
 
         LOOP AT &lt;ls_method&gt;-parameters ASSIGNING &lt;ls_parameter&gt; WHERE parm_kind = &apos;C&apos;.
@@ -489,14 +492,14 @@
             CONCATENATE &apos;IF&apos; &lt;ls_parameter&gt;-name &apos;IS SUPPLIED.&apos; INTO lv_line SEPARATED BY space.
           ENDIF.
           APPEND lv_line TO lt_code.
-          CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_changing_out-value.&apos; INTO lv_line SEPARATED BY space.
+          CONCATENATE &apos;GET REFERENCE OF&apos; &lt;ls_parameter&gt;-name &apos;into ls_changing_out-value.&apos; INTO lv_line SEPARATED BY space. &quot;#EC NOTEXT
           APPEND lv_line TO lt_code.
-          CONCATENATE &apos;READ TABLE lt_changing_out ASSIGNING &lt;ls_exporting&gt; WITH KEY parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line.
+          CONCATENATE &apos;READ TABLE lt_changing_out ASSIGNING &lt;ls_exporting&gt; WITH KEY parameter = &apos;&apos;&apos; &lt;ls_parameter&gt;-name &apos;&apos;&apos;.&apos; INTO lv_line. &quot;#EC NOTEXT
           APPEND lv_line TO lt_code.
-          APPEND &apos;IF sy-subrc = 0.&apos; TO lt_code.
-          APPEND &apos;ASSIGN ls_changing_out-value-&gt;* TO &lt;lv_exporting_out&gt;.&apos; TO lt_code.
-          APPEND &apos;ASSIGN &lt;ls_exporting&gt;-value-&gt;* TO &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code.
-          APPEND &apos;&lt;lv_exporting_out&gt; = &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code.
+          APPEND &apos;IF sy-subrc = 0.&apos; TO lt_code.             &quot;#EC NOTEXT
+          APPEND &apos;ASSIGN ls_changing_out-value-&gt;* TO &lt;lv_exporting_out&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
+          APPEND &apos;ASSIGN &lt;ls_exporting&gt;-value-&gt;* TO &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
+          APPEND &apos;&lt;lv_exporting_out&gt; = &lt;lv_exporting_from_mocker&gt;.&apos; TO lt_code. &quot;#EC NOTEXT
           APPEND &apos;ENDIF.&apos; TO lt_code.
           IF &lt;ls_parameter&gt;-is_optional = abap_true.
             APPEND &apos;ENDIF.&apos; TO lt_code.
@@ -797,10 +800,8 @@
         clskey = ls_clskey
       IMPORTING
         class  = ls_class.
-    IF sy-subrc = 0.
-      IF ls_class-category = 40.
-        rv_is_exception = abap_true.
-      ENDIF.
+    IF ls_class-category = 40.
+      rv_is_exception = abap_true.
     ENDIF.
   ENDMETHOD.                    &quot;is_exception_class</source>
  </method>
