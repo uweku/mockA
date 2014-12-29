@@ -2850,6 +2850,7 @@ CLASS lcl_test_mocker DEFINITION FOR TESTING.
     METHODS get_both_by_optional_param FOR TESTING.
     METHODS raises_exception FOR TESTING.
     METHODS raises_exception_wo_with FOR TESTING.
+    METHODS raises_exception_wo_with_2 FOR TESTING.
     METHODS is_in_time_by_changing_param FOR TESTING.
     METHODS is_in_time_by_chng_param_multi FOR TESTING.
     METHODS optional_params FOR TESTING.
@@ -3349,15 +3350,12 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     DATA lo_in_time TYPE REF TO zif_mocka_is_in_time_info.
 
     lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;ZIF_MOCKA_IS_IN_TIME_INFO&apos; ).
-*       create valid parameter combination - using EXPORTING parameters
+*   create valid parameter combination - using EXPORTING parameters
     CLEAR: lv_has_exception_been_raised.
     lo_mocker_method = lo_mocker-&gt;method( &apos;IS_IN_TIME&apos; ).
     lo_mocker_method-&gt;raises_by_name( &apos;zcx_mocka_in_time_exception&apos; ).&quot;intentionally name the valid exception in lower case
 
-    lo_mocker_method-&gt;with( i_p1 = &apos;LH&apos; i_p2 = 402 i_p3 = &apos;20121109&apos; ).
-    lo_mocker_method-&gt;returns( abap_false ).
-
-*       this call creates the mockup
+*   this call creates the mockup
     lo_in_time ?= lo_mocker-&gt;generate_mockup( ).
     cl_aunit_assert=&gt;assert_not_initial( lo_in_time ).
 
@@ -3374,6 +3372,40 @@ CLASS lcl_test_mocker IMPLEMENTATION.
 
   ENDMETHOD.                    &quot;raises_exception_wo_with
 
+  METHOD raises_exception_wo_with_2.
+    DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
+    DATA lo_mocker TYPE REF TO zif_mocka_mocker.
+    DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
+    CLEAR: lv_has_exception_been_raised.
+    DATA lo_in_time TYPE REF TO zif_mocka_is_in_time_info.
+    DATA lo_cx_mocka_in_time_exception TYPE REF TO zcx_mocka_in_time_exception.
+    TRY.
+        RAISE EXCEPTION TYPE zcx_mocka_in_time_exception.
+      CATCH zcx_mocka_in_time_exception INTO lo_cx_mocka_in_time_exception.
+    ENDTRY.
+
+    lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( iv_interface = &apos;ZIF_MOCKA_IS_IN_TIME_INFO&apos; ).
+*   create valid parameter combination - using EXPORTING parameters
+    CLEAR: lv_has_exception_been_raised.
+    lo_mocker_method = lo_mocker-&gt;method( &apos;IS_IN_TIME&apos; ).
+    lo_mocker_method-&gt;raises( lo_cx_mocka_in_time_exception ).&quot;intentionally name the valid exception in lower case
+
+*   this call creates the mockup
+    lo_in_time ?= lo_mocker-&gt;generate_mockup( ).
+    cl_aunit_assert=&gt;assert_not_initial( lo_in_time ).
+
+    TRY.
+        lv_has_exception_been_raised = abap_false.
+        lo_in_time-&gt;is_in_time( ).
+      CATCH zcx_mocka_in_time_exception.
+        lv_has_exception_been_raised = abap_true.
+      CATCH cx_root.
+        lv_has_exception_been_raised = abap_false.&quot;since it is the wrong exception
+    ENDTRY.
+    cl_aunit_assert=&gt;assert_not_initial( lv_has_exception_been_raised ).
+    lv_has_exception_been_raised = abap_false.
+
+  ENDMETHOD.                    &quot;raises_exception_wo_with_2
   METHOD is_in_time_by_chng_param_multi.
     DATA lv_has_exception_been_raised TYPE abap_bool VALUE abap_false.
     DATA lo_mocker TYPE REF TO zif_mocka_mocker.
