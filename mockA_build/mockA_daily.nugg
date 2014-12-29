@@ -1409,6 +1409,10 @@ ENDMETHOD.</source>
   </interfaceMethod>
   <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER_METHOD" CPDNAME="ZIF_MOCKA_MOCKER_METHOD~RAISES">
    <source>METHOD zif_mocka_mocker_method~raises.
+  IF mt_current_method_call_pattern IS INITIAL.
+    APPEND INITIAL LINE TO mt_current_method_call_pattern.
+  ENDIF.
+
   FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
   LOOP AT mt_current_method_call_pattern ASSIGNING &lt;ls_current_call_pattern&gt;.
     CLEAR: &lt;ls_current_call_pattern&gt;-raises_by_name.
@@ -1453,6 +1457,10 @@ ENDMETHOD.</source>
       EXPORTING
         textid    = zcx_mocka=&gt;abstract_exception
         exception = lv_exception.
+  ENDIF.
+
+  IF mt_current_method_call_pattern IS INITIAL.
+    APPEND INITIAL LINE TO mt_current_method_call_pattern.
   ENDIF.
 
   FIELD-SYMBOLS &lt;ls_current_call_pattern&gt; LIKE LINE OF mt_current_method_call_pattern.
