@@ -134,6 +134,8 @@ START-OF-SELECTION.
         APPEND object TO objects.
         object-obj_name = 'ZMOCKA_DEMO'.
         APPEND object TO objects.
+        object-obj_name = 'ZTEST_CL_MOCKA_CLASS_GEN'.
+        APPEND object TO objects.
 *        object-obj_name = 'ZAKE_MOCKA'.
 *        APPEND object TO objects.
 

@@ -354,9 +354,11 @@
   ro_mockup ?= try_create_by_generated_class( ).
 
   DATA ls_generated_class TYPE ty_s_generated_class.
-  ls_generated_class-name = mv_interface.
-  ls_generated_class-technical_name = mv_generated_class.
-  APPEND ls_generated_class TO mt_generated_classes.
+  IF mv_is_interface_mock = abap_true.
+    ls_generated_class-name = mv_interface.
+    ls_generated_class-technical_name = mv_generated_class.
+    APPEND ls_generated_class TO mt_generated_classes.
+  ENDIF.
 ENDMETHOD.                    &quot;ZIF_MOCKA_MOCKER~generate_mockup</source>
  </interfaceMethod>
  <interfaceMethod CLSNAME="ZCL_MOCKA_MOCKER" CPDNAME="ZIF_MOCKA_MOCKER~GET_INTERFACE">
