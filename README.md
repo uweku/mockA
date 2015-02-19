@@ -20,8 +20,6 @@ For tutorials and further information please see
 
 
 Contributors:
-[Uwe Kunath](https://uwekunath.wordpress.com/)
-
-[leogistics GmbH](http://www.leogistics.de/)
-
-[Damir Majer](http://majer-consulting.com/)
+*[Uwe Kunath](https://uwekunath.wordpress.com/)
+*[leogistics GmbH](http://www.leogistics.de/)
+*[Damir Majer](http://majer-consulting.com/)
