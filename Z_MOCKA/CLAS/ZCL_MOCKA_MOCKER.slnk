@@ -822,9 +822,15 @@ ENDMETHOD.</source>
   DATA lv_message TYPE string.
 
   APPEND &apos;lv_exception = lo_mocker_method-&gt;raise( it_importing = lt_importing it_changing_in = lt_changing_in ).&apos; TO ct_code. &quot;#EC NOTEXT
-
-  ls_method_key-clsname = mv_interface.
-  ls_method_key-cmpname = is_method-name.
+  
+  FIND FIRST OCCURRENCE OF '~' IN <ls_method>-name.
+  IF sy-subrc EQ 0.
+    SPLIT <ls_method>-name AT '~' INTO ls_method_key-clsname ls_method_key-cmpname.
+  ELSE.
+    ls_method_key-clsname = mv_interface.
+    ls_method_key-cmpname = <ls_method>-name.
+  ENDIF.
+  
   CALL FUNCTION &apos;SEO_METHOD_SIGNATURE_GET&apos;
     EXPORTING
       mtdkey       = ls_method_key
@@ -893,11 +899,17 @@ ENDMETHOD.</source>
   <parameter CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="RESOLVE_METHOD" SCONAME="IS_METHOD" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_METHDESCR"/>
   <parameter CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="RESOLVE_METHOD" SCONAME="RO_METHOD_MOCK" VERSION="1" LANGU="E" DESCRIPT="beschreibt eine zu simulierende Methode" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="ZIF_MOCKA_MOCKER_METHOD"/>
   <source>METHOD resolve_method.
-    IF is_method-alias_for IS NOT INITIAL.
-      ro_method_mock = me-&gt;zif_mocka_mocker~method( is_method-alias_for ).
-    ELSE.
+    
+	"IF is_method-alias_for IS NOT INITIAL.
+	" I'm not sure why this would be needed. Public and protected aliases should
+	" be inherited and private aliases wouldn't matter anyway? 
+	" It's causing issues when I'm mocking a class and setting the return
+	" value for an interface method implemented in that class that has
+	" an alias... 
+	"  ro_method_mock = me-&gt;zif_mocka_mocker~method( is_method-alias_for ).
+    "ELSE.
       ro_method_mock = me-&gt;zif_mocka_mocker~method( is_method-name ).
-    ENDIF.
+    "ENDIF.
   ENDMETHOD.                    &quot;resolve_method</source>
  </method>
  <method CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="TRY_CREATE_BY_GENERATED_CLASS" VERSION="1" LANGU="E" EXPOSURE="0" STATE="1" EDITORDER="10 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
