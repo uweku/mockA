@@ -865,8 +865,13 @@ ENDMETHOD.</source>
 
   APPEND &apos;lv_exception = lo_mocker_method-&gt;raise( it_importing = lt_importing it_changing_in = lt_changing_in ).&apos; TO ct_code. &quot;#EC NOTEXT
 
-  ls_method_key-clsname = mv_interface.
-  ls_method_key-cmpname = is_method-name.
+  FIND FIRST OCCURRENCE OF &apos;~&apos; IN is_method-name.
+  IF sy-subrc EQ 0.
+    SPLIT is_method-name AT &apos;~&apos; INTO ls_method_key-clsname ls_method_key-cmpname.
+  ELSE.
+    ls_method_key-clsname = mv_interface.
+    ls_method_key-cmpname = is_method-name.
+  ENDIF.
   CALL FUNCTION &apos;SEO_METHOD_SIGNATURE_GET&apos;
     EXPORTING
       mtdkey       = ls_method_key
@@ -935,12 +940,17 @@ ENDMETHOD.</source>
    <parameter CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="RESOLVE_METHOD" SCONAME="IS_METHOD" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_METHDESCR"/>
    <parameter CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="RESOLVE_METHOD" SCONAME="RO_METHOD_MOCK" VERSION="1" LANGU="E" DESCRIPT="beschreibt eine zu simulierende Methode" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="ZIF_MOCKA_MOCKER_METHOD"/>
    <source>METHOD resolve_method.
-    IF is_method-alias_for IS NOT INITIAL.
-      ro_method_mock = me-&gt;zif_mocka_mocker~method( is_method-alias_for ).
-    ELSE.
-      ro_method_mock = me-&gt;zif_mocka_mocker~method( is_method-name ).
-    ENDIF.
-  ENDMETHOD.                    &quot;resolve_method</source>
+  IF is_method-alias_for IS NOT INITIAL AND mv_is_interface_mock = abap_true.
+    &quot; I&apos;m not sure why this would be needed. Public and protected aliases should
+    &quot; be inherited and private aliases wouldn&apos;t matter anyway?
+    &quot; It&apos;s causing issues when I&apos;m mocking a class and setting the return
+    &quot; value for an interface method implemented in that class that has
+    &quot; an alias...
+    ro_method_mock = me-&gt;zif_mocka_mocker~method( is_method-alias_for ).
+  ELSE.
+    ro_method_mock = me-&gt;zif_mocka_mocker~method( is_method-name ).
+  ENDIF.
+ENDMETHOD.                    &quot;resolve_method</source>
   </method>
   <method CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="TRY_CREATE_BY_GENERATED_CLASS" VERSION="1" LANGU="E" EXPOSURE="0" STATE="1" EDITORDER="10 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZCL_MOCKA_MOCKER" CMPNAME="TRY_CREATE_BY_GENERATED_CLASS" SCONAME="RO_MOCKUP" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="OBJECT"/>
