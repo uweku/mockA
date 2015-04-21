@@ -147,7 +147,7 @@
         IF lo_mocker_method IS NOT INITIAL.
           lv_generate_method = lo_mocker_method-&gt;has_registered_call_pattern( ).
         ENDIF.
-        IF lv_generate_method = abap_false.
+        IF lv_generate_method = abap_false and <ls_method>-is_abstract eq abap_false.
           CONTINUE.
         ELSE.
           lv_code_redefinition = &apos;REDEFINITION&apos;.
@@ -189,7 +189,7 @@
       IF lo_mocker_method IS NOT INITIAL.
         lv_generate_method = lo_mocker_method-&gt;has_registered_call_pattern( ).
       ENDIF.
-      IF lv_generate_method = abap_false.
+      IF lv_generate_method = abap_false and <ls_method>-is_abstract eq abap_false.
         CONTINUE.
       ENDIF.
     ENDIF.
