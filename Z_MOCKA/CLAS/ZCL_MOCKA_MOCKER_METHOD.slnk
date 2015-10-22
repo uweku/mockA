@@ -11,9 +11,6 @@
 *&quot;* components in the private section</localTypes>
  <localMacros>*&quot;* use this source file for any macro definitions you need
 *&quot;* in the implementation part of the class</localMacros>
- <textPool>
-  <language SPRAS="E"/>
- </textPool>
  <typeUsage CLSNAME="ZCL_MOCKA_MOCKER_METHOD" TYPEGROUP="ABAP" VERSION="1" TPUTYPE="0" IMPLICIT="X"/>
  <typeUsage CLSNAME="ZCL_MOCKA_MOCKER_METHOD" TYPEGROUP="SEOC" VERSION="1" TPUTYPE="0" EXPLICIT="X"/>
  <forwardDeclaration>ABAP</forwardDeclaration>

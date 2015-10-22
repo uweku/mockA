@@ -138,6 +138,7 @@ CLASS lcl_test_mocker DEFINITION FOR TESTING.
     METHODS teardown.
     METHODS do_not_reuse_class_impl FOR TESTING.
     METHODS reuse_interface_impl FOR TESTING.
+    METHODS mock_protected_method FOR TESTING.
 ENDCLASS.                    &quot;lcl_test_mocker DEFINITION
 
 *----------------------------------------------------------------------*
@@ -197,5 +198,15 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     ).
   ENDMETHOD.                    &quot;do_not_reuse_class_impl
 
+  METHOD mock_protected_method.
+    DATA lo_mocker TYPE REF TO zif_mocka_mocker.
+    DATA lo_mocker_method TYPE REF TO zif_mocka_mocker_method.
+    lo_mocker = zcl_mocka_mocker=&gt;zif_mocka_mocker~mock( &apos;ZCL_MOCKA_MOCKER&apos; ).
+    lo_mocker_method = lo_mocker-&gt;method( &apos;CHECK_UNIT_TEST_EXECUTION&apos; ).
+    lo_mocker_method-&gt;returns( abap_false ).
+
+    lo_mocker ?= lo_mocker-&gt;generate_mockup( ).&quot;should not cause an exception
+    cl_abap_unit_assert=&gt;assert_not_initial( lo_mocker ).
+  ENDMETHOD.                    &quot;mock_protected_method
 ENDCLASS.                    &quot;lcl_test_mocker IMPLEMENTATION</source>
 </PROG>
