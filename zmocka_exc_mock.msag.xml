@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>D</SPRSL>
+     <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>D</SPRSL>
+     <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Ungültige Anzahl an Parametern übergeben</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>D</SPRSL>
+     <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Das Interface &amp;1 ist unbekannt</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>D</SPRSL>
+     <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Die Methode &amp;1 des Interfaces &amp;2 ist unbekannt</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>D</SPRSL>
+     <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Die Methode &amp;1 des Interfaces &amp;2 besitzt keine EXPORTING-Parameter</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>D</SPRSL>
+     <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Die Methode &amp;1 des Interfaces &amp;2 besitzt keine RETURNING-Parameter</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>D</SPRSL>
+     <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Die Ausnahme &amp;1 existiert nicht für die Methode &amp;2 des Interfaces &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>D</SPRSL>
+     <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>&amp;1 ist keine gültige Exception-Klasse</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>D</SPRSL>
+     <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>&amp;1 ist eine abstrakte Exception-Klasse und kann nicht verwendet</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>D</SPRSL>
+     <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Die Methode &amp;1 des Interfaces &amp;2 besitzt keine CHANGING-Parameter</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>D</SPRSL>
+     <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Unit Tests können nicht ausgeführt werden. Siehe SAUNIT_CLIENT_SETUP</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>D</SPRSL>
+     <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Attribut &amp;1 ist im Interface &amp;2 nicht bekannt</TEXT>
+    </T100>
+   </T100>
+   <I18N_LANGS>
+    <LANGU>E</LANGU>
+   </I18N_LANGS>
+   <T100T>
+    <T100T>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMOCKA_EXC_MOCK</ARBGB>
+     <STEXT>Message class for exception texts (ZCX_MOCKA)</STEXT>
+    </T100T>
+   </T100T>
+   <T100_TEXTS>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;1</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>001</MSGNR>
+     <TEXT>Invalid parameter count in method call</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>002</MSGNR>
+     <TEXT>The interface &amp;1 is unknown</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>003</MSGNR>
+     <TEXT>Method &amp;1 of interface &amp;2 is unknown</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>004</MSGNR>
+     <TEXT>Method &amp;1 of interface &amp;2 has no EXPORTING parameters</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>005</MSGNR>
+     <TEXT>Method &amp;1 of interface &amp;2 has no RETURNING parameters</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>006</MSGNR>
+     <TEXT>Exception &amp;1 not known in method &amp;2 of interface &amp;3</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>007</MSGNR>
+     <TEXT>&amp;1 is not a valid exception class</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>008</MSGNR>
+     <TEXT>&amp;1 is an abstract exception class and cannot be used</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>009</MSGNR>
+     <TEXT>Method &amp;1 of interface &amp;2 has no CHANGING parameters</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>010</MSGNR>
+     <TEXT>Unit Test execution is not allowed in this client=&gt;Tx SAUNIT_CLIENT_SETUP</TEXT>
+    </item>
+    <item>
+     <SPRSL>E</SPRSL>
+     <MSGNR>011</MSGNR>
+     <TEXT>Attribute &amp;1 of interface &amp;2 is unknown</TEXT>
+    </item>
+   </T100_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

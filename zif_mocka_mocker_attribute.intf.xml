@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_MOCKA_MOCKER_ATTRIBUTE</CLSNAME>
+    <VERSION>1</VERSION>
+    <LANGU>E</LANGU>
+    <DESCRIPT>describes an attribute which is to be mocked</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_ATTRIBUTE</CLSNAME>
+     <CMPNAME>IS_VALUE_SPECIFIED</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>is the value specified?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_ATTRIBUTE</CLSNAME>
+     <CMPNAME>RETURN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>returns the registered value</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_ATTRIBUTE</CLSNAME>
+     <CMPNAME>RETURNS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>registers the value</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

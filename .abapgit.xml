@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+ <asx:values>
+  <DATA>
+   <MASTER_LANGUAGE>D</MASTER_LANGUAGE>
+   <STARTING_FOLDER>/</STARTING_FOLDER>
+   <FOLDER_LOGIC>PREFIX</FOLDER_LOGIC>
+   <IGNORE>
+    <item>/.gitignore</item>
+    <item>/LICENSE</item>
+    <item>/README.md</item>
+    <item>/package.json</item>
+    <item>/.travis.yml</item>
+    <item>/ZAKE script/Readme.txt</item>
+    <item>/ZAKE script/ZAKE_MOCKA.txt</item>
+    <item>/Z_MOCKA/CLAS/ZCL_MOCKA_FLIGHT_OBSERVER.slnk</item>
+    <item>/Z_MOCKA/CLAS/ZCL_MOCKA_HELPER_MOCKER.slnk</item>
+    <item>/Z_MOCKA/CLAS/ZCL_MOCKA_MOCKER.slnk</item>
+    <item>/Z_MOCKA/CLAS/ZCL_MOCKA_MOCKER_ATTRIBUTE.slnk</item>
+    <item>/Z_MOCKA/CLAS/ZCL_MOCKA_MOCKER_METHOD.slnk</item>
+    <item>/Z_MOCKA/CLAS/ZCL_MOCKA_VALUE_COMPARISON.slnk</item>
+    <item>/Z_MOCKA/CLAS/ZCX_MOCKA.slnk</item>
+    <item>/Z_MOCKA/CLAS/ZCX_MOCKA_IN_TIME_EXCEPTION.slnk</item>
+    <item>/Z_MOCKA/INTF/ZIF_MOCKA_FLIGHT_ALERT_PROCESS.slnk</item>
+    <item>/Z_MOCKA/INTF/ZIF_MOCKA_IS_IN_TIME_INFO.slnk</item>
+    <item>/Z_MOCKA/INTF/ZIF_MOCKA_MOCKER.slnk</item>
+    <item>/Z_MOCKA/INTF/ZIF_MOCKA_MOCKER_ATTRIBUTE.slnk</item>
+    <item>/Z_MOCKA/INTF/ZIF_MOCKA_MOCKER_METHOD.slnk</item>
+    <item>/Z_MOCKA/INTF/ZIF_MOCKA_MOCKER_METHOD_RUNTIM.slnk</item>
+    <item>/Z_MOCKA/MSAG/ZMOCKA_EXC_MOCK.slnk</item>
+    <item>/Z_MOCKA/PROG/ZMOCKA_DEMO.slnk</item>
+    <item>/Z_MOCKA/PROG/ZTEST_CL_MOCKA_CLASS_GEN.slnk</item>
+    <item>/Z_MOCKA/PROG/ZTEST_CL_MOCKA_FLIGHT_OBSERVER.slnk</item>
+    <item>/Z_MOCKA/PROG/ZTEST_CL_MOCKA_MOCKER.slnk</item>
+    <item>/mockA_build/mockA_daily.nugg</item>
+    <item>/mockA_build/mockA_daily.nugg.zip</item>
+   </IGNORE>
+  </DATA>
+ </asx:values>
+</asx:abap>

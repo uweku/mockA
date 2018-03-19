@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_MOCKA_FLIGHT_OBSERVER</CLSNAME>
+    <VERSION>1</VERSION>
+    <LANGU>D</LANGU>
+    <DESCRIPT>Sample-class for unit tests (Mocking-Framework)</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_FLIGHT_OBSERVER</CLSNAME>
+     <CMPNAME>MO_ALERT_PROCESSOR</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Mocking Framework Example: Alert-Prozessor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_FLIGHT_OBSERVER</CLSNAME>
+     <CMPNAME>MO_ALERT_PROCESSOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Mocking Framework Example: Alert-Prozessor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_FLIGHT_OBSERVER</CLSNAME>
+     <CMPNAME>MO_IS_IN_TIME_ACCESS</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Beispiel-Interface für Mocking-Framework Test</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_FLIGHT_OBSERVER</CLSNAME>
+     <CMPNAME>MO_IS_IN_TIME_ACCESS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Example-Interface for test of Mocking-Framework</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_FLIGHT_OBSERVER</CLSNAME>
+     <CMPNAME>OBSERVE_FLIGHT</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>checks a flight</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_FLIGHT_OBSERVER</CLSNAME>
+     <CMPNAME>OBSERVE_FLIGHT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>checks a flight</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

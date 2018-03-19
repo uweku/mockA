@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_MOCKA_MOCKER</CLSNAME>
+    <VERSION>1</VERSION>
+    <LANGU>D</LANGU>
+    <DESCRIPT>implements the creator of mock objects</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>MO_OBJECTDESCR</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Run Time Type Services</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>MO_OBJECTDESCR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Run Time Type Services</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>MV_IS_INTERFACE_MOCK</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Ist ein Interface zu mocken?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>MV_IS_INTERFACE_MOCK</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Ist ein Interface zu mocken?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>TY_S_METHODS</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>beschreibt eine zu simulierende Methode</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>TY_S_METHODS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>beschreibt eine zu simulierende Methode</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

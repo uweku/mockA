@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_MOCKA_MOCKER_METHOD_RUNTIM</CLSNAME>
+    <VERSION>1</VERSION>
+    <LANGU>D</LANGU>
+    <DESCRIPT>describes the access to a method&apos;s runtime information</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD_RUNTIM</CLSNAME>
+     <CMPNAME>INCREASE_TIMES_CALLED</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>increase method&apos;s call count</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD_RUNTIM</CLSNAME>
+     <CMPNAME>REGISTER_HAS_BEEN_CALLED_WITH</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>registers actually passed IMPORTING parameters</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

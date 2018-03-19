@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_MOCKA_MOCKER</CLSNAME>
+    <VERSION>1</VERSION>
+    <LANGU>E</LANGU>
+    <DESCRIPT>describes a creator of mock objects</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>ATTRIBUTE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>specifies the to-be-mocked attribute</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>GENERATE_MOCKUP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>generates the mock object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>GET_INTERFACE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the mock object&apos;s interface</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>HAS_ANY_METHOD_BEEN_CALLED</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>has any method been called?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>HAS_METHOD_BEEN_CALLED</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>has the method been called?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>METHOD</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>specifies the to-be-mocked method</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>METHOD_CALL_COUNT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>how often has the method been called?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>MOCK</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>creates a new mocker-instance</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER</CLSNAME>
+     <CMPNAME>PASS_TO_SUPER_CONSTRUCTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>registers super-constructor parameters - IMPORTING</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

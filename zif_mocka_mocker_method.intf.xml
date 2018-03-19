@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+    <VERSION>1</VERSION>
+    <LANGU>E</LANGU>
+    <DESCRIPT>describes a method which is to be mocked</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>CHANGES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>registers importing/returning parameters - CHANGING</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>EXPORT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get EXPORTING parameters based on call pattern</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>EXPORTS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>registers returning parameters - EXPORTING</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>FINALIZE_CURRENT_METHOD_SIGN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>finalizes the current method recording</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>GENERATE_MOCKUP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>generates the mock object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>GET_ALL_RAISES_BY_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get all registered exceptions</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>HAS_BEEN_CALLED_WITH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>has been called with the specified IMPORTING parameters?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>HAS_METHOD_BEEN_CALLED</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>has the method been called?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>HAS_REGISTERED_CALL_PATTERN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>has the method registered call patterns?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>RAISE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the exception, based on call pattern</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>RAISES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>register an exception by object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>RAISES_BY_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>register an exception by its name</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>RETURN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get RETURNING parameters based on call pattern</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>RETURNS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>registers returning parameter - RETURNING</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>TIMES_CALLED</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the method&apos;s call count</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>WITH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>registers importing parameters - IMPORTING</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>WITH_CHANGING</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>registers importing parameters - CHANGING</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+    <VERSION>1</VERSION>
+    <LANGU>D</LANGU>
+    <DESCRIPT>implements a single mock-method</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <CLSFINAL>X</CLSFINAL>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>FINALIZE_CURRENT_METHOD_SIGN</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>internal - finalizes the current method recording</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>FINALIZE_CURRENT_METHOD_SIGN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>internal - finalizes the current method recording</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>HAS_BEEN_CALLED_WITH</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>internal - resolve method output parameters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>HAS_BEEN_CALLED_WITH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>internal - resolve method output parameters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>INCREASE_CALL_COUNT</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>internal - increase method call count</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>INCREASE_CALL_COUNT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>internal - increase method call count</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>MO_MOCKER</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Beschreibt einen Mock-Erzeuger</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>MO_MOCKER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Beschreibt einen Mock-Erzeuger</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>MV_METHOD_NAME</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Vollständiger Komponentenname</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>MV_METHOD_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Vollständiger Komponentenname</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>RESOLVE_METHOD_OUTPUT</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>internal - resolve method output parameters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>RESOLVE_METHOD_OUTPUT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>internal - resolve method output parameters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>WITH_INTERNAL</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>internal - register method call parameters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MOCKA_MOCKER_METHOD</CLSNAME>
+     <CMPNAME>WITH_INTERNAL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>internal - register method call parameters</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>
