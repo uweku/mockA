@@ -1033,7 +1033,7 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     APPEND ls_param_list TO lt_param_list.
 
     lo_mocker = zcl_mocka_mocker=>zif_mocka_mocker~mock( iv_interface = 'IF_FPM_GUIBB_LIST' ).
-    lo_mocker_method = lo_mocker->method( 'IF_FPM_GUIBB_LIST~GET_PARAMETER_LIST' )."currently only works for method aliases
+    lo_mocker_method = lo_mocker->method( 'IF_FPM_GUIBB~GET_PARAMETER_LIST' )."currently only works for method aliases
     lo_mocker_method->with( )->returns( lt_param_list ).
 
     lo_fake ?= lo_mocker->generate_mockup( ).
