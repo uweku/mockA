@@ -193,7 +193,7 @@ CLASS lcl_test_mocker IMPLEMENTATION.
     TRY.
         lo_mocker = zcl_mocka_mocker=>zif_mocka_mocker~mock( iv_interface = 'ZIF_MOCKA_IS_IN_TIME_INFO' ).
         lo_mocker_method = lo_mocker->method( 'IS_IN_TIME' ).
-        lo_mocker_method->with( i_p1 = 'LH' i_p2 = 402 i_p3 = 20121108 i_p4 = 'INVALID_PARAM').
+        lo_mocker_method->with( i_p1 = 'LH' i_p2 = 402 i_p3 = 20121108 i_p4 = 'INVALID_PARAM' ).
       CATCH zcx_mocka.
         lv_has_exception_been_raised = abap_true.
     ENDTRY.
